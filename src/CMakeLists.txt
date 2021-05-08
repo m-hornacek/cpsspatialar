@@ -20,17 +20,17 @@ ADD_SUBDIRECTORY(apps/applyHomography)
 
 FILE(COPY
 	# OpenCV
-	"${CPSSPATIALAR_BASEDIR}/external/opencv/build/bin/Release/opencv_calib3d451.dll"
-	"${CPSSPATIALAR_BASEDIR}/external/opencv/build/bin/Release/opencv_core451.dll"
-	"${CPSSPATIALAR_BASEDIR}/external/opencv/build/bin/Release/opencv_features2d451.dll"
-	"${CPSSPATIALAR_BASEDIR}/external/opencv/build/bin/Release/opencv_highgui451.dll"
-	"${CPSSPATIALAR_BASEDIR}/external/opencv/build/bin/Release/opencv_imgproc451.dll"
+	"${CPSSPATIALAR_BASEDIR}/src/external/opencv/build/bin/Release/opencv_calib3d451.dll"
+	"${CPSSPATIALAR_BASEDIR}/src/external/opencv/build/bin/Release/opencv_core451.dll"
+	"${CPSSPATIALAR_BASEDIR}/src/external/opencv/build/bin/Release/opencv_features2d451.dll"
+	"${CPSSPATIALAR_BASEDIR}/src/external/opencv/build/bin/Release/opencv_highgui451.dll"
+	"${CPSSPATIALAR_BASEDIR}/src/external/opencv/build/bin/Release/opencv_imgproc451.dll"
 
 	# freeglut
-	"${CPSSPATIALAR_BASEDIR}/external/freeglut/bin/freeglut.dll"
+	"${CPSSPATIALAR_BASEDIR}/src/external/freeglut/bin/freeglut.dll"
 	
 	# glew
-	"${CPSSPATIALAR_BASEDIR}/external/glew/bin/Release/x64/glew32.dll"
+	"${CPSSPATIALAR_BASEDIR}/src/external/glew/bin/Release/x64/glew32.dll"
 
 	DESTINATION "${CPSSPATIALAR_BASEDIR}/build/bin/Release"
 )
