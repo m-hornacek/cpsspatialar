@@ -1,1 +1,3 @@
 # cpsspatialar
+
+![](docs/splash.png)
