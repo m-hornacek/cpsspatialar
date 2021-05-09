@@ -27,10 +27,10 @@ FILE(COPY
 	"${CPSSPATIALAR_BASEDIR}/src/external/opencv/build/bin/Release/opencv_imgproc451.dll"
 
 	# freeglut
-	"${CPSSPATIALAR_BASEDIR}/src/external/freeglut/bin/freeglut.dll"
+	"${CPSSPATIALAR_BASEDIR}/src/external/freeglut/bin/x64/freeglut.dll"
 	
 	# glew
-	"${CPSSPATIALAR_BASEDIR}/src/external/glew/bin/Release/x64/glew32.dll"
+	"${CPSSPATIALAR_BASEDIR}/src/external/glew/bin/Release/glew32.dll"
 
 	DESTINATION "${CPSSPATIALAR_BASEDIR}/build/bin/Release"
 )

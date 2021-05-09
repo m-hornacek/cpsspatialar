@@ -1,3 +1,7 @@
+# Custom (cpsspatialar)
+build/
+external/
+
 # Prerequisites
 *.d
 

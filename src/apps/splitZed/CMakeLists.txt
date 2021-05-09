@@ -6,23 +6,25 @@ SET(CPSSPATIALAR_BASEDIR ${CMAKE_CURRENT_SOURCE_DIR}/../../)
 SET(CPSLIB_DIR ${CPSSPATIALAR_BASEDIR}/cpslib)
 SET(EIGEN_DIR ${CPSSPATIALAR_BASEDIR}/external/eigen/)
 SET(FREEGLUT_DIR ${CPSSPATIALAR_BASEDIR}/external/freeglut/)
-SET(GL_DIR ${CPSSPATIALAR_BASEDIR}/external/GL/)
+SET(GLEW_DIR ${CPSSPATIALAR_BASEDIR}/external/glew/)
+SET(GLFW_DIR ${CPSSPATIALAR_BASEDIR}/external/glfw/)
 SET(OPENCV_DIR ${CPSSPATIALAR_BASEDIR}/external/opencv/)
 
 LINK_DIRECTORIES(
 	${CPSSPATIALAR_BASEDIR}/build/cpslib
-	${FREEGLUT_DIR}/lib
-	${GL_DIR}/lib
+	${FREEGLUT_DIR}/lib/x64
+	${GLEW_DIR}/lib/Release
+	${GLFW_DIR}/build/src/Release
 	${OPENCV_DIR}/build/lib/Release
 )
 
 INCLUDE_DIRECTORIES(
 	${CPSSPATIALAR_BASEDIR}/cpslib/libgeom
 	${CPSSPATIALAR_BASEDIR}/external
-	
 	${EIGEN_DIR}
 	${FREEGLUT_DIR}/include
-	${GL_DIR}
+	${GLEW_DIR}/include
+	${GLFW_DIR}/include
 	${OPENCV_DIR}/build
 	${OPENCV_DIR}/include
 	${OPENCV_DIR}/modules/calib3d/include

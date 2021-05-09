@@ -22,14 +22,11 @@
 #include <ctime>
 
 #include <GL/glew.h>
-#include <GL/glfw3.h>
-#include <GL/glfw3native.h>
 #include <GL/glut.h>
+#include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
 
 #include "Eigen/Geometry"
-
-// explicitly including the OpenCV libraries for C - i.e., cv.h and highgui.h - would cause conflicts with FLANN (required by PCL)
-//#include "opencv2/opencv.hpp"
 
 #include "opencv2/core.hpp"
 #include "opencv2/imgproc.hpp"
