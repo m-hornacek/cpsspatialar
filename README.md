@@ -3,7 +3,7 @@
 ![](docs/splash.png)
 
 
-## Building the Code in Microsoft Visual Studio 2019
+## Building the Code in Visual Studio 2019
 
 Cf. the last section of the [docs](docs/docs.pdf)...
 
