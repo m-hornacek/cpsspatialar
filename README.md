@@ -1,4 +1,4 @@
-# cpsspatialar
+# cpsspatialar Framework
 
 ![](docs/splash.png)
 
