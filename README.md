@@ -1,4 +1,4 @@
-# cpsspatialar Framework
+# cpsspatialar Framework for Projector-based Spatial Augmented Reality
 
 ![](docs/splash.png)
 
