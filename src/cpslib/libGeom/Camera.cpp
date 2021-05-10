@@ -86,10 +86,7 @@ Camera::Camera(cv::Mat& K33d, cv::Mat& R33d, cv::Mat& T13d, int width, int heigh
 	P34d_ = cv::Mat(3, 4, CV_64F);
 	cv::gemm(K33d, Rt34d, 1.0, cv::Mat(), 0.0, P34d_);
 
-	K33d_ = cv::Mat(3, 3, CV_64F);
 	K33d.copyTo(K33d_);
-
-	R33d_ = cv::Mat(3, 3, CV_64F);
 	R33d.copyTo(R33d_);
 
 	principalPt_ = cv::Vec2d();

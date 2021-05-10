@@ -7,14 +7,14 @@ PointCloud::PointCloud()
 
 PointCloud::PointCloud(const PointCloud& points)
 {
-	points_ = new std::vector<cv::Point3f>(*points.points_);
+	points_ = std::vector<cv::Point3f>(points.points_);
 
 	hasDisplayList_ = false;
 }
 
 PointCloud::PointCloud(std::vector<cv::Point3f>& points)
 {
-	points_ = new std::vector<cv::Point3f>(points);
+	points_ = std::vector<cv::Point3f>(points);
 
 	hasDisplayList_ = false;
 }
@@ -27,9 +27,9 @@ void PointCloud::initPointsDisplayList()
 	displayList_ = glGenLists(1);
 	glNewList(displayList_, GL_COMPILE);
 
-	for (int x = 0; x < points_->size(); x++)
+	for (int x = 0; x < points_.size(); x++)
 	{
-		cv::Vec3f pt = points_->at(x);
+		cv::Vec3f pt = points_.at(x);
 
 		glBegin(GL_POINTS);
 			glVertex3f(pt[0], pt[1], pt[2]);
