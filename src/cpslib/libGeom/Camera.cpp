@@ -4,20 +4,20 @@ Camera::Camera()
 {
 	f_mm_ = CCDWidth_ = CCDHeight_ = -1;
 
-	P34d_ = new cv::Mat(3, 4, CV_64F);
+	P34d_ = cv::Mat(3, 4, CV_64F);
 
-	principalPt_ = new cv::Vec2d();
-	K33d_ = new cv::Mat(3, 3, CV_64F);
-	KInv33d_ = new cv::Mat(3, 3, CV_64F);
-	R33d_ = new cv::Mat(3, 3, CV_64F);
-	M33d_ = new cv::Mat(3, 3, CV_64F);
-	MInv33d_ = new cv::Mat(3, 3, CV_64F);
-	C_ = new cv::Vec3d();
-	lookDir_ = new cv::Vec3d();
-	t_ = new cv::Vec3d();
-	Rt34d_ = new cv::Mat(3, 4, CV_64F);
-	Rt44d_ = new cv::Mat(4, 4, CV_64F);
-	RtInv44d_ = new cv::Mat(4, 4, CV_64F);
+	principalPt_ = cv::Vec2d();
+	K33d_ = cv::Mat(3, 3, CV_64F);
+	KInv33d_ = cv::Mat(3, 3, CV_64F);
+	R33d_ = cv::Mat(3, 3, CV_64F);
+	M33d_ = cv::Mat(3, 3, CV_64F);
+	MInv33d_ = cv::Mat(3, 3, CV_64F);
+	C_ = cv::Vec3d();
+	lookDir_ = cv::Vec3d();
+	t_ = cv::Vec3d();
+	Rt34d_ = cv::Mat(3, 4, CV_64F);
+	Rt44d_ = cv::Mat(4, 4, CV_64F);
+	RtInv44d_ = cv::Mat(4, 4, CV_64F);
 
 	hasDisplayList_ = false;
 }
@@ -32,31 +32,31 @@ Camera::Camera(const Camera& cam)
 	f_ = cam.f_;
 	f_mm_ = cam.f_mm_;
 
-	P34d_ = new cv::Mat(3, 4, CV_64F);
-	K33d_ = new cv::Mat(3, 3, CV_64F);
-	KInv33d_ = new cv::Mat(3, 3, CV_64F);
-	R33d_ = new cv::Mat(3, 3, CV_64F);
-	M33d_ = new cv::Mat(3, 3, CV_64F);
-	MInv33d_ = new cv::Mat(3, 3, CV_64F);
-	Rt34d_ = new cv::Mat(3, 4, CV_64F);
-	Rt44d_ = new cv::Mat(4, 4, CV_64F);
-	RtInv44d_ = new cv::Mat(4, 4, CV_64F);
+	P34d_ = cv::Mat(3, 4, CV_64F);
+	K33d_ = cv::Mat(3, 3, CV_64F);
+	KInv33d_ = cv::Mat(3, 3, CV_64F);
+	R33d_ = cv::Mat(3, 3, CV_64F);
+	M33d_ = cv::Mat(3, 3, CV_64F);
+	MInv33d_ = cv::Mat(3, 3, CV_64F);
+	Rt34d_ = cv::Mat(3, 4, CV_64F);
+	Rt44d_ = cv::Mat(4, 4, CV_64F);
+	RtInv44d_ = cv::Mat(4, 4, CV_64F);
 
-	cam.P34d_->copyTo(*P34d_);
-	cam.K33d_->copyTo(*K33d_);
-	cam.KInv33d_->copyTo(*KInv33d_);
-	cam.R33d_->copyTo(*R33d_);
-	cam.M33d_->copyTo(*M33d_);
-	cam.MInv33d_->copyTo(*MInv33d_);
-	cam.Rt34d_->copyTo(*Rt34d_);
-	cam.P34d_->copyTo(*P34d_);
-	cam.Rt44d_->copyTo(*Rt44d_);
-	cam.RtInv44d_->copyTo(*RtInv44d_);
+	cam.P34d_.copyTo(P34d_);
+	cam.K33d_.copyTo(K33d_);
+	cam.KInv33d_.copyTo(KInv33d_);
+	cam.R33d_.copyTo(R33d_);
+	cam.M33d_.copyTo(M33d_);
+	cam.MInv33d_.copyTo(MInv33d_);
+	cam.Rt34d_.copyTo(Rt34d_);
+	cam.P34d_.copyTo(P34d_);
+	cam.Rt44d_.copyTo(Rt44d_);
+	cam.RtInv44d_.copyTo(RtInv44d_);
 
-	principalPt_ = new cv::Vec2d((*cam.principalPt_)[0], (*cam.principalPt_)[1]);
-	lookDir_ = new cv::Vec3d((*cam.lookDir_)[0], (*cam.lookDir_)[1], (*cam.lookDir_)[2]);
-	C_ = new cv::Vec3d((*cam.C_)[0], (*cam.C_)[1], (*cam.C_)[2]);
-	t_ = new cv::Vec3d((*cam.t_)[0], (*cam.t_)[1], (*cam.t_)[2]);
+	principalPt_ = cv::Vec2d((cam.principalPt_)[0], (cam.principalPt_)[1]);
+	lookDir_ = cv::Vec3d((cam.lookDir_)[0], (cam.lookDir_)[1], (cam.lookDir_)[2]);
+	C_ = cv::Vec3d((cam.C_)[0], (cam.C_)[1], (cam.C_)[2]);
+	t_ = cv::Vec3d((cam.t_)[0], (cam.t_)[1], (cam.t_)[2]);
 
 	hasDisplayList_ = false;
 }
@@ -83,25 +83,25 @@ Camera::Camera(cv::Mat& K33d, cv::Mat& R33d, cv::Mat& T13d, int width, int heigh
 	Rt34d.at<double>(1, 3) = T13d.at<double>(0, 1);
 	Rt34d.at<double>(2, 3) = T13d.at<double>(0, 2);
 
-	P34d_ = new cv::Mat(3, 4, CV_64F);
-	cv::gemm(K33d, Rt34d, 1.0, cv::Mat(), 0.0, *P34d_);
+	P34d_ = cv::Mat(3, 4, CV_64F);
+	cv::gemm(K33d, Rt34d, 1.0, cv::Mat(), 0.0, P34d_);
 
-	K33d_ = new cv::Mat(3, 3, CV_64F);
-	K33d.copyTo(*K33d_);
+	K33d_ = cv::Mat(3, 3, CV_64F);
+	K33d.copyTo(K33d_);
 
-	R33d_ = new cv::Mat(3, 3, CV_64F);
-	R33d.copyTo(*R33d_);
+	R33d_ = cv::Mat(3, 3, CV_64F);
+	R33d.copyTo(R33d_);
 
-	principalPt_ = new cv::Vec2d();
-	KInv33d_ = new cv::Mat(3, 3, CV_64F);
-	M33d_ = new cv::Mat(3, 3, CV_64F);
-	MInv33d_ = new cv::Mat(3, 3, CV_64F);
-	C_ = new cv::Vec3d();
-	lookDir_ = new cv::Vec3d();
-	t_ = new cv::Vec3d();
-	Rt34d_ = new cv::Mat(3, 4, CV_64F);
-	Rt44d_ = new cv::Mat(4, 4, CV_64F);
-	RtInv44d_ = new cv::Mat(4, 4, CV_64F);
+	principalPt_ = cv::Vec2d();
+	KInv33d_ = cv::Mat(3, 3, CV_64F);
+	M33d_ = cv::Mat(3, 3, CV_64F);
+	MInv33d_ = cv::Mat(3, 3, CV_64F);
+	C_ = cv::Vec3d();
+	lookDir_ = cv::Vec3d();
+	t_ = cv::Vec3d();
+	Rt34d_ = cv::Mat(3, 4, CV_64F);
+	Rt44d_ = cv::Mat(4, 4, CV_64F);
+	RtInv44d_ = cv::Mat(4, 4, CV_64F);
 
 	hasDisplayList_ = false;
 	initVariables();
@@ -111,67 +111,67 @@ Camera::Camera(cv::Mat& K33d, cv::Mat& R33d, cv::Mat& T13d, int width, int heigh
 
 void Camera::initVariables()
 {
-	f_ = K33d_->at<double>(1, 1);
+	f_ = K33d_.at<double>(1, 1);
 
-	(*principalPt_)[0] = K33d_->at<double>(0, 2);
-	(*principalPt_)[1] = K33d_->at<double>(1, 2);
+	principalPt_[0] = K33d_.at<double>(0, 2);
+	principalPt_[1] = K33d_.at<double>(1, 2);
 
 	// compute M = KR
-	cv::gemm(*K33d_, *R33d_, 1.0, cv::Mat(), 0.0, *M33d_);
+	cv::gemm(K33d_, R33d_, 1.0, cv::Mat(), 0.0, M33d_);
 
 	// compute M inverse
-	cv::invert(*M33d_, *MInv33d_, cv::DECOMP_SVD);
+	cv::invert(M33d_, MInv33d_, cv::DECOMP_SVD);
 
 	// compute K inverse
-	cv::invert(*K33d_, *KInv33d_, cv::DECOMP_SVD);
+	cv::invert(K33d_, KInv33d_, cv::DECOMP_SVD);
 
 	// compute camera center
-	(*C_)[0] = -(MInv33d_->at<double>(0, 0) * P34d_->at<double>(0, 3) + MInv33d_->at<double>(0, 1) * P34d_->at<double>(1, 3) + MInv33d_->at<double>(0, 2) * P34d_->at<double>(2, 3));
-	(*C_)[1] = -(MInv33d_->at<double>(1, 0) * P34d_->at<double>(0, 3) + MInv33d_->at<double>(1, 1) * P34d_->at<double>(1, 3) + MInv33d_->at<double>(1, 2) * P34d_->at<double>(2, 3));
-	(*C_)[2] = -(MInv33d_->at<double>(2, 0) * P34d_->at<double>(0, 3) + MInv33d_->at<double>(2, 1) * P34d_->at<double>(1, 3) + MInv33d_->at<double>(2, 2) * P34d_->at<double>(2, 3));
+	C_[0] = -(MInv33d_.at<double>(0, 0) * P34d_.at<double>(0, 3) + MInv33d_.at<double>(0, 1) * P34d_.at<double>(1, 3) + MInv33d_.at<double>(0, 2) * P34d_.at<double>(2, 3));
+	C_[1] = -(MInv33d_.at<double>(1, 0) * P34d_.at<double>(0, 3) + MInv33d_.at<double>(1, 1) * P34d_.at<double>(1, 3) + MInv33d_.at<double>(1, 2) * P34d_.at<double>(2, 3));
+	C_[2] = -(MInv33d_.at<double>(2, 0) * P34d_.at<double>(0, 3) + MInv33d_.at<double>(2, 1) * P34d_.at<double>(1, 3) + MInv33d_.at<double>(2, 2) * P34d_.at<double>(2, 3));
 
 	// compute look direction
-	(*lookDir_)[0] = -R33d_->at<double>(2, 0);
-	(*lookDir_)[1] = -R33d_->at<double>(2, 1);
-	(*lookDir_)[2] = -R33d_->at<double>(2, 2);
+	lookDir_[0] = -R33d_.at<double>(2, 0);
+	lookDir_[1] = -R33d_.at<double>(2, 1);
+	lookDir_[2] = -R33d_.at<double>(2, 2);
 
 	// compute translation vector (rigid body)
-	(*t_)[0] = -(R33d_->at<double>(0, 0) * (*C_)[0] + R33d_->at<double>(0, 1) * (*C_)[1] + R33d_->at<double>(0, 2) * (*C_)[2]);
-	(*t_)[1] = -(R33d_->at<double>(1, 0) * (*C_)[0] + R33d_->at<double>(1, 1) * (*C_)[1] + R33d_->at<double>(1, 2) * (*C_)[2]);
-	(*t_)[2] = -(R33d_->at<double>(2, 0) * (*C_)[0] + R33d_->at<double>(2, 1) * (*C_)[1] + R33d_->at<double>(2, 2) * (*C_)[2]);
+	t_[0] = -(R33d_.at<double>(0, 0) * C_[0] + R33d_.at<double>(0, 1) * C_[1] + R33d_.at<double>(0, 2) * C_[2]);
+	t_[1] = -(R33d_.at<double>(1, 0) * C_[0] + R33d_.at<double>(1, 1) * C_[1] + R33d_.at<double>(1, 2) * C_[2]);
+	t_[2] = -(R33d_.at<double>(2, 0) * C_[0] + R33d_.at<double>(2, 1) * C_[1] + R33d_.at<double>(2, 2) * C_[2]);
 
-	Rt44d_->at<double>(0, 0) = R33d_->at<double>(0, 0);
-	Rt44d_->at<double>(1, 0) = R33d_->at<double>(1, 0);
-	Rt44d_->at<double>(2, 0) = R33d_->at<double>(2, 0);
-	Rt44d_->at<double>(3, 0) = 0;
-	Rt44d_->at<double>(0, 1) = R33d_->at<double>(0, 1);
-	Rt44d_->at<double>(1, 1) = R33d_->at<double>(1, 1);
-	Rt44d_->at<double>(2, 1) = R33d_->at<double>(2, 1);
-	Rt44d_->at<double>(3, 1) = 0;
-	Rt44d_->at<double>(0, 2) = R33d_->at<double>(0, 2);
-	Rt44d_->at<double>(1, 2) = R33d_->at<double>(1, 2);
-	Rt44d_->at<double>(2, 2) = R33d_->at<double>(2, 2);
-	Rt44d_->at<double>(3, 2) = 0;
-	Rt44d_->at<double>(0, 3) = (*t_)[0];
-	Rt44d_->at<double>(1, 3) = (*t_)[1];
-	Rt44d_->at<double>(2, 3) = (*t_)[2];
-	Rt44d_->at<double>(3, 3) = 1;
+	Rt44d_.at<double>(0, 0) = R33d_.at<double>(0, 0);
+	Rt44d_.at<double>(1, 0) = R33d_.at<double>(1, 0);
+	Rt44d_.at<double>(2, 0) = R33d_.at<double>(2, 0);
+	Rt44d_.at<double>(3, 0) = 0;
+	Rt44d_.at<double>(0, 1) = R33d_.at<double>(0, 1);
+	Rt44d_.at<double>(1, 1) = R33d_.at<double>(1, 1);
+	Rt44d_.at<double>(2, 1) = R33d_.at<double>(2, 1);
+	Rt44d_.at<double>(3, 1) = 0;
+	Rt44d_.at<double>(0, 2) = R33d_.at<double>(0, 2);
+	Rt44d_.at<double>(1, 2) = R33d_.at<double>(1, 2);
+	Rt44d_.at<double>(2, 2) = R33d_.at<double>(2, 2);
+	Rt44d_.at<double>(3, 2) = 0;
+	Rt44d_.at<double>(0, 3) = t_[0];
+	Rt44d_.at<double>(1, 3) = t_[1];
+	Rt44d_.at<double>(2, 3) = t_[2];
+	Rt44d_.at<double>(3, 3) = 1;
 
-	Rt34d_->at<double>(0, 0) = Rt44d_->at<double>(0, 0);
-	Rt34d_->at<double>(1, 0) = Rt44d_->at<double>(1, 0);
-	Rt34d_->at<double>(2, 0) = Rt44d_->at<double>(2, 0);
-	Rt34d_->at<double>(0, 1) = Rt44d_->at<double>(0, 1);
-	Rt34d_->at<double>(1, 1) = Rt44d_->at<double>(1, 1);
-	Rt34d_->at<double>(2, 1) = Rt44d_->at<double>(2, 1);
-	Rt34d_->at<double>(0, 2) = Rt44d_->at<double>(0, 2);
-	Rt34d_->at<double>(1, 2) = Rt44d_->at<double>(1, 2);
-	Rt34d_->at<double>(2, 2) = Rt44d_->at<double>(2, 2);
-	Rt34d_->at<double>(0, 3) = Rt44d_->at<double>(0, 3);
-	Rt34d_->at<double>(1, 3) = Rt44d_->at<double>(1, 3);
-	Rt34d_->at<double>(2, 3) = Rt44d_->at<double>(2, 3);
+	Rt34d_.at<double>(0, 0) = Rt44d_.at<double>(0, 0);
+	Rt34d_.at<double>(1, 0) = Rt44d_.at<double>(1, 0);
+	Rt34d_.at<double>(2, 0) = Rt44d_.at<double>(2, 0);
+	Rt34d_.at<double>(0, 1) = Rt44d_.at<double>(0, 1);
+	Rt34d_.at<double>(1, 1) = Rt44d_.at<double>(1, 1);
+	Rt34d_.at<double>(2, 1) = Rt44d_.at<double>(2, 1);
+	Rt34d_.at<double>(0, 2) = Rt44d_.at<double>(0, 2);
+	Rt34d_.at<double>(1, 2) = Rt44d_.at<double>(1, 2);
+	Rt34d_.at<double>(2, 2) = Rt44d_.at<double>(2, 2);
+	Rt34d_.at<double>(0, 3) = Rt44d_.at<double>(0, 3);
+	Rt34d_.at<double>(1, 3) = Rt44d_.at<double>(1, 3);
+	Rt34d_.at<double>(2, 3) = Rt44d_.at<double>(2, 3);
 
 	// rigid body motion giving the camera's pose in the world coordinate frame
-	cv::invert(*Rt44d_, *RtInv44d_, cv::DECOMP_SVD);
+	cv::invert(Rt44d_, RtInv44d_, cv::DECOMP_SVD);
 
 	if (width_ != -1 && height_ != -1 && CCDWidth_ != -1)
 	{
@@ -267,27 +267,27 @@ void Camera::scale(float imScalingFactor)
 		height_ *= imScalingFactor;
 	}
 
-	K33d_->at<double>(0, 0) *= imScalingFactor;
-	K33d_->at<double>(1, 1) *= imScalingFactor;
-	K33d_->at<double>(0, 2) *= imScalingFactor;
-	K33d_->at<double>(1, 2) *= imScalingFactor;
+	K33d_.at<double>(0, 0) *= imScalingFactor;
+	K33d_.at<double>(1, 1) *= imScalingFactor;
+	K33d_.at<double>(0, 2) *= imScalingFactor;
+	K33d_.at<double>(1, 2) *= imScalingFactor;
 
-	f_ = K33d_->at<double>(1, 1);
+	f_ = K33d_.at<double>(1, 1);
 
-	(*principalPt_)[0] = K33d_->at<double>(0, 2);
-	(*principalPt_)[1] = K33d_->at<double>(1, 2);
+	principalPt_[0] = K33d_.at<double>(0, 2);
+	principalPt_[1] = K33d_.at<double>(1, 2);
 
 	// compute M = KR
-	cv::gemm(*K33d_, *R33d_, 1.0, cv::Mat(), 0.0, *M33d_);
+	cv::gemm(K33d_, R33d_, 1.0, cv::Mat(), 0.0, M33d_);
 
 	// compute M inverse
-	cv::invert(*M33d_, *MInv33d_, cv::DECOMP_SVD);
+	cv::invert(M33d_, MInv33d_, cv::DECOMP_SVD);
 
 	// compute K inverse
-	cv::invert(*K33d_, *KInv33d_, cv::DECOMP_SVD);
+	cv::invert(K33d_, KInv33d_, cv::DECOMP_SVD);
 
-	P34d_ = new cv::Mat(3, 4, CV_64F);
-	cv::gemm(*K33d_, *Rt34d_, 1.0, cv::Mat(), 0.0, *P34d_);
+	P34d_ = cv::Mat(3, 4, CV_64F);
+	cv::gemm(K33d_, Rt34d_, 1.0, cv::Mat(), 0.0, P34d_);
 
 	glDeleteLists(displayList_, 1);
 	initDisplayList();
@@ -296,14 +296,14 @@ void Camera::scale(float imScalingFactor)
 void Camera::rotate(cv::Mat rotToApply33d)
 {
 	cv::Mat oldR33d;
-	R33d_->copyTo(oldR33d);
+	R33d_.copyTo(oldR33d);
 
 	cv::Mat R33d(3, 3, CV_64F);
 	cv::gemm(rotToApply33d, oldR33d, 1.0, cv::Mat(), 0.0, R33d);
 
-	cv::Vec3d t(-(R33d.at<double>(0, 0) * (*C_)[0] + R33d.at<double>(0, 1) * (*C_)[1] + R33d.at<double>(0, 2) * (*C_)[2]),
-		-(R33d.at<double>(1, 0) * (*C_)[0] + R33d.at<double>(1, 1) * (*C_)[1] + R33d.at<double>(1, 2) * (*C_)[2]),
-		-(R33d.at<double>(2, 0) * (*C_)[0] + R33d.at<double>(2, 1) * (*C_)[1] + R33d.at<double>(2, 2) * (*C_)[2]));
+	cv::Vec3d t(-(R33d.at<double>(0, 0) * C_[0] + R33d.at<double>(0, 1) * C_[1] + R33d.at<double>(0, 2) * C_[2]),
+		-(R33d.at<double>(1, 0) * C_[0] + R33d.at<double>(1, 1) * C_[1] + R33d.at<double>(1, 2) * C_[2]),
+		-(R33d.at<double>(2, 0) * C_[0] + R33d.at<double>(2, 1) * C_[1] + R33d.at<double>(2, 2) * C_[2]));
 
 	cv::Mat Rt34d(3, 4, CV_64F);
 	Rt34d.at<double>(0, 0) = R33d.at<double>(0, 0);
@@ -319,10 +319,10 @@ void Camera::rotate(cv::Mat rotToApply33d)
 	Rt34d.at<double>(1, 3) = t[1];
 	Rt34d.at<double>(2, 3) = t[2];
 
-	P34d_ = new cv::Mat(3, 4, CV_64F);
-	cv::gemm(*K33d_, Rt34d, 1.0, cv::Mat(), 0.0, *P34d_);
+	P34d_ = cv::Mat(3, 4, CV_64F);
+	cv::gemm(K33d_, Rt34d, 1.0, cv::Mat(), 0.0, P34d_);
 
-	initVariables(); // TODO: some of the computation here is redundant...
+	initVariables();
 	glDeleteLists(displayList_, 1);
 	initDisplayList();
 }
@@ -354,7 +354,7 @@ void Camera::displayWorld(float r, float g, float b)
 
 	glColor3f(r, g, b);
 	glPushMatrix();
-	glMultMatrixd(Ancillary::flattenMat44d(*RtInv44d_));
+	glMultMatrixd(Ancillary::flattenMat44d(RtInv44d_));
 	glCallList(displayList_);
 	glPopMatrix();
 	glFlush();
@@ -364,9 +364,9 @@ cv::Vec2f Camera::projectLocal(cv::Vec3f ptInLocalCoordFrame)
 {
 	cv::Vec2f ret;
 
-	ret[0] = K33d_->at<double>(0, 0) * ptInLocalCoordFrame[0] + K33d_->at<double>(0, 1) * ptInLocalCoordFrame[1] + K33d_->at<double>(0, 2) * ptInLocalCoordFrame[2];
-	ret[1] = K33d_->at<double>(1, 0) * ptInLocalCoordFrame[0] + K33d_->at<double>(1, 1) * ptInLocalCoordFrame[1] + K33d_->at<double>(1, 2) * ptInLocalCoordFrame[2];
-	double s = K33d_->at<double>(2, 0) * ptInLocalCoordFrame[0] + K33d_->at<double>(2, 1) * ptInLocalCoordFrame[1] + K33d_->at<double>(2, 2) * ptInLocalCoordFrame[2];
+	ret[0] = K33d_.at<double>(0, 0) * ptInLocalCoordFrame[0] + K33d_.at<double>(0, 1) * ptInLocalCoordFrame[1] + K33d_.at<double>(0, 2) * ptInLocalCoordFrame[2];
+	ret[1] = K33d_.at<double>(1, 0) * ptInLocalCoordFrame[0] + K33d_.at<double>(1, 1) * ptInLocalCoordFrame[1] + K33d_.at<double>(1, 2) * ptInLocalCoordFrame[2];
+	double s = K33d_.at<double>(2, 0) * ptInLocalCoordFrame[0] + K33d_.at<double>(2, 1) * ptInLocalCoordFrame[1] + K33d_.at<double>(2, 2) * ptInLocalCoordFrame[2];
 
 	ret[0] /= s;
 	ret[1] /= s;
@@ -378,9 +378,9 @@ cv::Vec2f Camera::projectWorld(cv::Vec3f ptInWorldCoordFrame)
 {
 	cv::Vec2f ret;
 
-	ret[0] = P34d_->at<double>(0, 0) * ptInWorldCoordFrame[0] + P34d_->at<double>(0, 1) * ptInWorldCoordFrame[1] + P34d_->at<double>(0, 2) * ptInWorldCoordFrame[2] + P34d_->at<double>(0, 3);
-	ret[1] = P34d_->at<double>(1, 0) * ptInWorldCoordFrame[0] + P34d_->at<double>(1, 1) * ptInWorldCoordFrame[1] + P34d_->at<double>(1, 2) * ptInWorldCoordFrame[2] + P34d_->at<double>(1, 3);
-	double s = P34d_->at<double>(2, 0) * ptInWorldCoordFrame[0] + P34d_->at<double>(2, 1) * ptInWorldCoordFrame[1] + P34d_->at<double>(2, 2) * ptInWorldCoordFrame[2] + P34d_->at<double>(2, 3);
+	ret[0] = P34d_.at<double>(0, 0) * ptInWorldCoordFrame[0] + P34d_.at<double>(0, 1) * ptInWorldCoordFrame[1] + P34d_.at<double>(0, 2) * ptInWorldCoordFrame[2] + P34d_.at<double>(0, 3);
+	ret[1] = P34d_.at<double>(1, 0) * ptInWorldCoordFrame[0] + P34d_.at<double>(1, 1) * ptInWorldCoordFrame[1] + P34d_.at<double>(1, 2) * ptInWorldCoordFrame[2] + P34d_.at<double>(1, 3);
+	double s = P34d_.at<double>(2, 0) * ptInWorldCoordFrame[0] + P34d_.at<double>(2, 1) * ptInWorldCoordFrame[1] + P34d_.at<double>(2, 2) * ptInWorldCoordFrame[2] + P34d_.at<double>(2, 3);
 
 	ret[0] /= s;
 	ret[1] /= s;
@@ -390,32 +390,10 @@ cv::Vec2f Camera::projectWorld(cv::Vec3f ptInWorldCoordFrame)
 
 cv::Vec3f Camera::backprojectLocal(cv::Vec2f pixel)
 {
-	return Ancillary::Mat33dTimesVec3d(*KInv33d_, cv::Vec3d(pixel[0], pixel[1], 1));
-}
-
-void Camera::serialize(std::string pathToYML)
-{
-	// serialize CV_64F matrix P34d_ to yml
-	cv::FileStorage fs(pathToYML, cv::FileStorage::WRITE);
-
-	fs << "P" << *P34d_;
+	return Ancillary::Mat33dTimesVec3d(KInv33d_, cv::Vec3d(pixel[0], pixel[1], 1));
 }
 
 Camera::~Camera()
 {
-	delete principalPt_;
-	delete lookDir_;
-
-	delete C_;
-	delete P34d_;
-	delete M33d_;
-	delete MInv33d_;
-	delete K33d_;
-	delete R33d_;
-	delete t_;
-	delete Rt34d_;
-	delete Rt44d_;
-	delete RtInv44d_;
-
 	glDeleteLists(displayList_, 1);
 }
