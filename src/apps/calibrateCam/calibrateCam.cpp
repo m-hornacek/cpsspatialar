@@ -150,7 +150,7 @@ int main(int argc, char** argv)
 
     // compute 0 camera intrinsics
     std::cout << "Computing intrinsics of cam0" << std::endl;
-    std::cout << "RMS: " << cv::calibrateCamera(chessboardObjectPts, cam0ChessboardImPts, cam0ImSize,
+    std::cout << "RMS (cam0): " << cv::calibrateCamera(chessboardObjectPts, cam0ChessboardImPts, cam0ImSize,
         cam0K, cam0DistCoeffs, cam0Rs, cam0Ts, cv::CALIB_FIX_ASPECT_RATIO) << std::endl << std::endl;
 
     cv::Mat cam0R = cv::Mat::eye(cv::Size(3, 3), CV_64F);
@@ -183,7 +183,7 @@ int main(int argc, char** argv)
 
         // compute 1 camera intrinsics
         std::cout << "Computing intrinsics of cam1" << std::endl;
-        std::cout << "RMS: " << calibrateCamera(chessboardObjectPts, cam1ChessboardImPts, cam1ImSize,
+        std::cout << "RMS (cam1): " << calibrateCamera(chessboardObjectPts, cam1ChessboardImPts, cam1ImSize,
             cam1K, cam1DistCoeffs, cam1Rs, cam1Ts, CALIB_FIX_ASPECT_RATIO) << std::endl << std::endl;
 
         std::cout << cam1K << std::endl << std::endl;
@@ -193,7 +193,7 @@ int main(int argc, char** argv)
 
         // compute pose (cam1R, cam1T) of cam1 w.r.t. cam0
         std::cout << "Computing pose of cam1 relative to cam0" << std::endl;
-        std::cout << "RMS: " << cv::stereoCalibrate(chessboardObjectPts,
+        std::cout << "RMS (stereo): " << cv::stereoCalibrate(chessboardObjectPts,
             cam0ChessboardImPts, cam1ChessboardImPts,
             cam0K, cam0DistCoeffs,
             cam1K, cam1DistCoeffs,

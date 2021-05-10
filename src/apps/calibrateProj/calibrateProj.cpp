@@ -1047,11 +1047,11 @@ int main(int argc, char** argv)
     std::vector<cv::Mat> planeRs, planeTs;
 
     // use not to calibrate camera (we provide camera parameters and keep them fixed), but to obtain plane for each image in cam coordinate frame
-    cout << "RMS: " << cv::calibrateCamera(chessboardObjectPts, camChessboardImPts, camSize,
+    cout << "RMS (plane recovery): " << cv::calibrateCamera(chessboardObjectPts, camChessboardImPts, camSize,
         camK, camDistCoeffs, planeRs, planeTs,
         cv::CALIB_USE_INTRINSIC_GUESS | cv::CALIB_FIX_PRINCIPAL_POINT | cv::CALIB_FIX_FOCAL_LENGTH |
         cv::CALIB_FIX_K1 | cv::CALIB_FIX_K2 | cv::CALIB_FIX_K3 | cv::CALIB_FIX_K4 | cv::CALIB_FIX_K5 | cv::CALIB_FIX_K6 |
-        cv::CALIB_ZERO_TANGENT_DIST) << endl << endl;
+        cv::CALIB_ZERO_TANGENT_DIST) << endl;
 
     // compute circles object points by intersecting circle pixel back-projections with ground plane
     std::vector<std::vector<cv::Point3f>> circlesObjectPts;
@@ -1099,14 +1099,11 @@ int main(int argc, char** argv)
     vector<cv::Mat> projRs, projTs;
 
     // compute projector calibration (inverse R,t gives per-image projector pose in cam coordinate frame?)
-    cout << "RMS: " << cv::calibrateCamera(circlesObjectPts, circlesProjPts, projSize,
+    cout << "RMS (projector calibration): " << cv::calibrateCamera(circlesObjectPts, circlesProjPts, projSize,
         projK, projDistCoeffs, projRs, projTs,
         cv::CALIB_USE_INTRINSIC_GUESS | cv::CALIB_FIX_ASPECT_RATIO | cv::CALIB_FIX_PRINCIPAL_POINT |
         cv::CALIB_FIX_K1 | cv::CALIB_FIX_K2 | cv::CALIB_FIX_K3 | cv::CALIB_FIX_K4 | cv::CALIB_FIX_K5 | cv::CALIB_FIX_K6 |
         cv::CALIB_ZERO_TANGENT_DIST) << endl;
-
-    cout << projK << endl;
-    cout << projDistCoeffs << endl;
 
     for (int numIm = 0; numIm < numIms; numIm++)
     {
@@ -1167,11 +1164,6 @@ int main(int argc, char** argv)
             projK, camToProjR, camToProjT,
             projSize.width, projSize.height, 0.015));
 
-        cout << projK << endl;
-        cout << camToProjR << endl;
-        cout << camToProjT << endl;
-        cout << projSize << endl;
-
         cv::Mat planeRigid;
         plane->getRigid(planeRigid);
 
@@ -1206,8 +1198,6 @@ int main(int argc, char** argv)
             projK, virtualProjR, virtualProjT,
             projSize.width, projSize.height, 0.015));
 
-        cout << "homography: " << H << endl;
-
         cv::Mat outIm;
         cv::warpPerspective(projIm, outIm, H, projSize);
 
@@ -1222,8 +1212,6 @@ int main(int argc, char** argv)
             projSize.width, projSize.height, 0.015));
 
         computePlaneInducedHomography(*plane, cams[1], cams[3], H);
-
-        cout << "homography final: " << H << endl;
 
         cv::warpPerspective(projIm, outIm, H, projSize);
 
@@ -1254,53 +1242,53 @@ int main(int argc, char** argv)
         glfwPollEvents();
 
         /* Navigation handling (I could not figure out how to handle key combinations using keyboard callback) */
-        if (glfwGetKey(window, 'W') && glfwGetKey(window, 'D'))								/* NE */
+        if (glfwGetKey(window, GLFW_KEY_UP) && glfwGetKey(window, GLFW_KEY_RIGHT))					/* NE */
         {
             cloudX += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
             cloudY -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, 'S') && glfwGetKey(window, 'D'))						/* SE */
+        else if (glfwGetKey(window, GLFW_KEY_DOWN) && glfwGetKey(window, GLFW_KEY_RIGHT))			/* SE */
         {
             cloudX += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
             cloudY += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, 'S') && glfwGetKey(window, 'A'))						/* SW */
+        else if (glfwGetKey(window, GLFW_KEY_DOWN) && glfwGetKey(window, GLFW_KEY_LEFT))			/* SW */
         {
             cloudX -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
             cloudY += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, 'W') && glfwGetKey(window, 'A'))						/* NW */
+        else if (glfwGetKey(window, GLFW_KEY_UP) && glfwGetKey(window, GLFW_KEY_LEFT))              /* NW */
         {
             cloudX -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
             cloudY -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, 'W'))										            /* N */
+        else if (glfwGetKey(window, GLFW_KEY_UP))					                                /* N */
         {
             cloudY -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, 'D'))											        /* E */
+        else if (glfwGetKey(window, GLFW_KEY_RIGHT))								                /* E */
         {
             cloudX += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, 'S'))											        /* S */
+        else if (glfwGetKey(window, GLFW_KEY_DOWN))						                            /* S */
         {
             cloudY += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, 'A'))											        /* W */
+        else if (glfwGetKey(window, GLFW_KEY_LEFT))									                /* W */
         {
             cloudX -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
