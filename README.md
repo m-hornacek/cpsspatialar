@@ -1,7 +1,5 @@
 # cpsspatialar
 
-Spatial augmented reality (SAR) is a branch of augmented reality whereby the augmentation of the scene is carried out using a projector. While pointing a projector at a scene and projecting an image is on its own not a challenge, doing so in a manner such that the projected content appear to be naturally part of the scene is more tricky. The cpsspatialar framework tackles precisely this application domain.
-
 ## Building the Code in Visual Studio 2019
 
 Cf. the last section of the [docs](docs/docs.pdf)...
