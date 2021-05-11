@@ -6,7 +6,7 @@ Cf. the last section of the [docs](docs/docs.pdf)...
 
 ## Sample Invocations
 
-Cf. [here](docs/sample_invocations.txt) for sample invocations of [`splitZed`](src/apps/splitZed) (for splitting images acquired using a [Zed 2 stereo camera](https://www.stereolabs.com/zed-2/) into a left and right frame, respectively), [`calibrateCam`](src/apps/calibrateCam) (for calibrating a single camera or a stereo camera), [`calibrateProj`](src/apps/calibrateProj) (for calibrating a projector and outputting homographies as described in the [docs](docs/docs.pdf)), and [`applyHomography`](src/apps/applyHomography) (for warping an image in accordance with such a homography).
+Cf. [here](docs/sample_invocations.txt) for sample invocations of [`splitZed`](src/apps/splitZed) (for splitting images acquired using a [Zed 2 stereo camera](https://www.stereolabs.com/zed-2/) into a left and right frame, respectively), [`calibrateCam`](src/apps/calibrateCam) (for calibrating a single camera or a stereo camera as described in the [docs](docs/docs.pdf)), [`calibrateProj`](src/apps/calibrateProj) (for calibrating a projector and outputting homographies as described in the [docs](docs/docs.pdf)), and [`applyHomography`](src/apps/applyHomography) (for warping an image in accordance with such a homography).
 
 Find the corresponding sample images [here](docs/sample_data), to be used for running the sample invocations as of `calibrateCam` (i.e., the images were acquired using a Zed 2 but were split using `splitZed`, with only the images of the left camera pushed to GitHub).
 
