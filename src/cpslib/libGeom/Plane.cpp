@@ -5,7 +5,7 @@ Plane::Plane(const Plane & plane)
 	normal_ = cv::Vec3d(plane.normal_);
 	distance_ = plane.distance_;
 
-	rigid_ = cv::Mat::eye(cv::Size(4, 4), CV_64F);
+	plane.rigid_.copyTo(rigid_);
 }
 
 Plane::Plane(cv::Mat & rigid)
@@ -67,35 +67,19 @@ void Plane::display(double radius, float pointSize)
 	glPointSize(pointSize);
 	glColor3f(0.75, 0.75, 0.75);
 
-	cv::Mat rot(cv::Size(3, 3), CV_64F);
-	for (int y = 0; y < 3; y++)
-		for (int x = 0; x < 3; x++)
-			rot.at<double>(y, x) = rigid_.at<double>(y, x);
-
 	// 3D coordinates of plane corner points
 
-	cv::Vec3d centerPoint = intersect(cv::Vec3d(0, 0, 1));
-
 	cv::Vec3d ulCanonical = cv::Vec3d(-radius, -radius, 0);
-	cv::Vec3d ul3D = Ancillary::Mat33dTimesVec3d(rot, ulCanonical);
-	ul3D += centerPoint;
+	cv::Vec3d ul3D = Ancillary::Mat44dTimesVec3dHomog(rigid_, ulCanonical);
 
 	cv::Vec3d urCanonical = cv::Vec3d(radius, -radius, 0);
-	cv::Vec3d ur3D = Ancillary::Mat33dTimesVec3d(rot, urCanonical);
-	ur3D += centerPoint;
+	cv::Vec3d ur3D = Ancillary::Mat44dTimesVec3dHomog(rigid_, urCanonical);
 
 	cv::Vec3d llCanonical = cv::Vec3d(-radius, radius, 0);
-	cv::Vec3d ll3D = Ancillary::Mat33dTimesVec3d(rot, llCanonical);
-	ll3D += centerPoint;
+	cv::Vec3d ll3D = Ancillary::Mat44dTimesVec3dHomog(rigid_, llCanonical);
 
 	cv::Vec3d lrCanonical = cv::Vec3d(radius, radius, 0);
-	cv::Vec3d lr3D = Ancillary::Mat33dTimesVec3d(rot, lrCanonical);
-	lr3D += centerPoint;
-
-	//cv::Vec3d ul3D = intersect(cv::Vec3d(-radius,  radius, 1));
-	//cv::Vec3d ur3D = intersect(cv::Vec3d( radius,  radius, 1));
-	//cv::Vec3d ll3D = intersect(cv::Vec3d(-radius, -radius, 1));
-	//cv::Vec3d lr3D = intersect(cv::Vec3d( radius, -radius, 1));
+	cv::Vec3d lr3D = Ancillary::Mat44dTimesVec3dHomog(rigid_, lrCanonical);
 
 	// normal
 
