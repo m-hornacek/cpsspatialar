@@ -10,8 +10,6 @@ Cf. [here](docs/sample_invocations.txt) (find the corresponding sample images [h
 
 ## Navigating the 3D Viewer of `calibrateProj`
 
-![](docs/splash.png)
-
 Besides serving to calibrate the projector and compute homographies, `calibrateProj` enables visualizing the geometric setup for a selected input calibration image (indicated using the `visImIdx` argument); important keys for navigating the 3D viewer:
 
 * **F1**: align OpenGL's camera pose with currently selected **camera/projector's pose**
@@ -19,3 +17,5 @@ Besides serving to calibrate the projector and compute homographies, `calibrateP
 * **F3**: display various distances in meters
 * **F4**: display center points of circles pattern as projected to ground plane by (i) projector (red) or by (ii) final virtual projector (green); note that warping the circles pattern image by the output homography has exactly the effect of **viewing the green points from the viewpoint of the original projector** (this is the sanity check 
 * **ESC**: exit
+
+![](docs/splash.png)
