@@ -1241,7 +1241,6 @@ int main(int argc, char** argv)
         pointCloud2Circles = new PointCloud(circlesObjectPtsVirtual_);
     }
 
-    
     glutInit(&argc, argv);
     reshape(-1, -1);
 
@@ -1251,53 +1250,53 @@ int main(int argc, char** argv)
         glfwPollEvents();
 
         /* Navigation handling (I could not figure out how to handle key combinations using keyboard callback) */
-        if (glfwGetKey(window, GLFW_KEY_UP) && glfwGetKey(window, GLFW_KEY_RIGHT))					/* NE */
+        if ((glfwGetKey(window, GLFW_KEY_UP) || glfwGetKey(window, 'W')) && (glfwGetKey(window, GLFW_KEY_RIGHT) || glfwGetKey(window, 'D'))) // NE
         {
             cloudX += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
             cloudY -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, GLFW_KEY_DOWN) && glfwGetKey(window, GLFW_KEY_RIGHT))			/* SE */
+        else if ((glfwGetKey(window, GLFW_KEY_DOWN) || glfwGetKey(window, 'S')) && (glfwGetKey(window, GLFW_KEY_RIGHT) || glfwGetKey(window, 'D'))) // SE
         {
             cloudX += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
             cloudY += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, GLFW_KEY_DOWN) && glfwGetKey(window, GLFW_KEY_LEFT))			/* SW */
+        else if ((glfwGetKey(window, GLFW_KEY_DOWN) || glfwGetKey(window, 'S')) && (glfwGetKey(window, GLFW_KEY_LEFT) || glfwGetKey(window, 'A'))) // SW
         {
             cloudX -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
             cloudY += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, GLFW_KEY_UP) && glfwGetKey(window, GLFW_KEY_LEFT))              /* NW */
+        else if ((glfwGetKey(window, GLFW_KEY_UP) || glfwGetKey(window, 'W')) && (glfwGetKey(window, GLFW_KEY_LEFT) || glfwGetKey(window, 'A'))) // NW
         {
             cloudX -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
             cloudY -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, GLFW_KEY_UP))					                                /* N */
+        else if (glfwGetKey(window, GLFW_KEY_UP) || glfwGetKey(window, 'W')) // N
         {
             cloudY -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, GLFW_KEY_RIGHT))								                /* E */
+        else if (glfwGetKey(window, GLFW_KEY_RIGHT) || glfwGetKey(window, 'D'))	// E
         {
             cloudX += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, GLFW_KEY_DOWN))						                            /* S */
+        else if (glfwGetKey(window, GLFW_KEY_DOWN) || glfwGetKey(window, 'S')) // S
         {
             cloudY += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, GLFW_KEY_LEFT))									                /* W */
+        else if (glfwGetKey(window, GLFW_KEY_LEFT) || glfwGetKey(window, 'A')) // W
         {
             cloudX -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
