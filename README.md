@@ -8,7 +8,7 @@ Cf. the last section of the [docs](docs/docs.pdf)...
 
 Cf. [here](docs/sample_invocations.txt) (find the corresponding sample images [here](docs/sample_data))...
 
-## Navigating the 3D Viewer of `calibrateProj`
+## 3D Viewer of `calibrateProj`
 
 Besides serving to calibrate the projector and compute homographies, `calibrateProj` enables visualizing the geometric setup for a selected input calibration image (indicated using the `visImIdx` argument):
 
