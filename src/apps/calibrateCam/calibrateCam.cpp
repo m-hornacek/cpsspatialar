@@ -93,7 +93,7 @@ void findChessboardImPts(String windowTitle, String inDir, int numIms, cv::Size 
         cv::resize(imVis, imVis, cv::Size(imVis.cols * 0.5, imVis.rows * 0.5));
 
         cv::imshow(ss.str(), imVis);
-        cv::waitKey(10);
+        cv::waitKey(5);
     }
 }
 

@@ -3,7 +3,7 @@
  *   michael.hornacek@gmail.com
  *   IMW-CPS TU Vienna, Austria
  *
- *   calibrateProj <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <imDir> <camPath> <circlesImPath> <verticalNegOffset> [<visImIdx>]
+ *   calibrateProj <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <imDir> <cam0Path> <circlesImPath> <verticalNegOffset> [<visImIdx>]
  *
  *   Example invocation:
  *   calibrateProj 0.0565 4 6 4 11 C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\out 14 C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outLeft C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_0.yml C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\acircles_pattern_960x600.png 1.75 3
@@ -55,7 +55,9 @@ vector<vector<Mat>> capturedPattern;
 PointCloud * pointCloud;
 PointCloud * pointCloudCircles;
 PointCloud* pointCloud2Circles;
-Plane * plane;
+Plane * planeVis;
+
+std::vector<Plane> planes;
 
 cv::Vec3d projCamIntersection;
 cv::Vec3d projPlaneIntersection;
@@ -102,7 +104,7 @@ static const char* keys =
     "{@outDir | | ...}"
     "{@numIms | | ...}"
     "{@imDir | | ...}"
-    "{@camPath | | ...}"
+    "{@cam0Path | | ...}"
     "{@circlesImPath | | ...}"
     "{@verticalNegOffset | | ...}"
     "{@visImIdx | | ...}"
@@ -110,7 +112,7 @@ static const char* keys =
 
 void help()
 {
-    cout << "./calibrate <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <imDir> <camPath> <circlesImPath> <verticalNegOffset> [<visImIdx>\n"
+    cout << "./calibrate <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <imDir> <cam0Path> <circlesImPath> <verticalNegOffset> [<visImIdx>\n"
         << endl;
 }
 
@@ -229,7 +231,7 @@ void display()
                 1.0, 0.0, 0.0, ss3.str().c_str());
         }
 
-        cv::Vec3d planePt = plane->intersect(cv::Vec3d(0, 0, 1));
+        cv::Vec3d planePt = planeVis->intersect(cv::Vec3d(0, 0, 1));
 
         displayText(
             planePt[0] + offset,
@@ -244,7 +246,7 @@ void display()
         else
             pointCloudCircles->display(pointSize, 1, 0, 0);
 
-        plane->display(2.5, pointSize);
+        planeVis->display(2.5, pointSize);
         
 
         glFlush();
@@ -724,7 +726,7 @@ void findChessboardAndCirclesImPts(String inDir, int numIms, Size chessboardPatt
         cv::resize(imVis, imVis, cv::Size(imVis.cols * 0.5, imVis.rows * 0.5));
 
         cv::imshow(ss2.str(), imVis);
-        cv::waitKey(10);
+        cv::waitKey(5);
     }
 }
 
@@ -1007,7 +1009,7 @@ int main(int argc, char** argv)
     cv::findCirclesGrid(projImGray, circlesPatternSize, circlesProjPts_, cv::CALIB_CB_ASYMMETRIC_GRID);
     cv::drawChessboardCorners(projImVis, circlesPatternSize, circlesProjPts_, true);
     cv::imshow("projected image (with detected circles)", projImVis);
-    cv::waitKey(10);
+    cv::waitKey(5);
 
     // store copy of circles projector points once per input image
     std::vector<std::vector<cv::Point2f>> circlesProjPts;
@@ -1035,8 +1037,6 @@ int main(int argc, char** argv)
         camK, camR, camT,
         imWidth, imHeight, 0.015));
 
-    std::cout << "detecting circles..." << std::endl;
-
     // get circles and chessboard image points determine corresponding plane parameters
     std::vector<std::vector<cv::Point2f>> camChessboardImPts, camCirclesImPts;
     findChessboardAndCirclesImPts(imDir, numIms,
@@ -1047,7 +1047,7 @@ int main(int argc, char** argv)
     std::vector<cv::Mat> planeRs, planeTs;
 
     // use not to calibrate camera (we provide camera parameters and keep them fixed), but to obtain plane for each image in cam coordinate frame
-    cout << "RMS (plane recovery): " << cv::calibrateCamera(chessboardObjectPts, camChessboardImPts, camSize,
+    cout << "RMS (camera resection/plane recovery): " << cv::calibrateCamera(chessboardObjectPts, camChessboardImPts, camSize,
         camK, camDistCoeffs, planeRs, planeTs,
         cv::CALIB_USE_INTRINSIC_GUESS | cv::CALIB_FIX_PRINCIPAL_POINT | cv::CALIB_FIX_FOCAL_LENGTH |
         cv::CALIB_FIX_K1 | cv::CALIB_FIX_K2 | cv::CALIB_FIX_K3 | cv::CALIB_FIX_K4 | cv::CALIB_FIX_K5 | cv::CALIB_FIX_K6 |
@@ -1079,13 +1079,22 @@ int main(int argc, char** argv)
             circlesObjectPts_.push_back(cv::Point3d(intersection[0], intersection[1], intersection[2]));
         }
         circlesObjectPts.push_back(circlesObjectPts_);
+        planes.push_back(Plane(planeRigid));
 
         // for visualization
         if (numIm == visImIdx)
         {
             pointCloudCircles = new PointCloud(circlesObjectPts_);
 
-            plane = new Plane(planeRigid);
+            cv::Mat centroidRigid = cv::Mat::eye(cv::Size(4, 4), CV_64F);
+            centroidRigid.at<double>(0, 3) = chessboardSqSize * (chessboardDimsX - 1) * 0.5;
+            centroidRigid.at<double>(1, 3) = chessboardSqSize * (chessboardDimsY - 1) * 0.5;
+            centroidRigid.at<double>(2, 3) = 0;
+
+            cv::Mat planeRigidVis;
+            cv::gemm(planeRigid, centroidRigid, 1.0, cv::Mat(), 0.0, planeRigidVis);
+
+            planeVis = new Plane(planeRigid);
         }
     }
 
@@ -1129,16 +1138,15 @@ int main(int argc, char** argv)
             projSize.width, projSize.height, 0.015);
 
         cv::Mat H;
-        //computeBirdsEyeViewHomography(*plane, proj, H, cv::Mat(), cv::Mat());
 
         cv::Mat alignedVirtualProjR, alignedVirtualProjT;
-        computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(*plane, cams[0], proj, verticalOffset, alignedVirtualProjR, alignedVirtualProjT);
+        computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], proj, verticalOffset, alignedVirtualProjR, alignedVirtualProjT);
 
         Camera transformedProj(
             projK, alignedVirtualProjR, alignedVirtualProjT,
             projSize.width, projSize.height, 0.015);
 
-        computePlaneInducedHomography(*plane, proj, transformedProj, H);
+        computePlaneInducedHomography(planes[numIm], proj, transformedProj, H);
 
         // write out homography
         stringstream ssH;
@@ -1150,7 +1158,6 @@ int main(int argc, char** argv)
         fsH.release();
     }
 
-    
 
     // visualization
     {
@@ -1165,7 +1172,9 @@ int main(int argc, char** argv)
             projSize.width, projSize.height, 0.015));
 
         cv::Mat planeRigid;
-        plane->getRigid(planeRigid);
+        planes[numIm].getRigid(planeRigid);
+
+        cout << planeRigid << endl;
 
         std::vector<cv::Point3f> transformedChessboardObjectPts;
         for (int i = 0; i < chessboardObjectPts_.size(); i++)
@@ -1179,7 +1188,7 @@ int main(int argc, char** argv)
         pointCloud = new PointCloud(transformedChessboardObjectPts);
         
 
-        Plane planeProjLocal(plane->getNormal(), plane->getDistance());
+        Plane planeProjLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
         planeProjLocal.rigidTransform(cams[1].getRt44());
 
         cv::Vec3d projPlaneIntersectionLocal = planeProjLocal.intersect(
@@ -1187,13 +1196,13 @@ int main(int argc, char** argv)
 
         projPlaneIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[1].getRt44Inv(), projPlaneIntersectionLocal);
 
-        cv::Vec3d projCamIntersectionLocal = plane->intersect(
+        cv::Vec3d projCamIntersectionLocal = planes[numIm].intersect(
             cams[0].backprojectLocal(cv::Point2f(camSize.width * 0.5, camSize.height * 0.5)));
 
         projCamIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[1].getRt44Inv(), projCamIntersectionLocal);
 
         cv::Mat H, virtualProjR, virtualProjT;
-        computeBirdsEyeViewHomography(*plane, cams[1], H, virtualProjR, virtualProjT);
+        computeBirdsEyeViewHomography(planes[numIm], cams[1], H, virtualProjR, virtualProjT);
         cams.push_back(Camera(
             projK, virtualProjR, virtualProjT,
             projSize.width, projSize.height, 0.015));
@@ -1202,23 +1211,23 @@ int main(int argc, char** argv)
         cv::warpPerspective(projIm, outIm, H, projSize);
 
         cv::imshow("warped image (w.r.t. virtual projector)", outIm);
-        cv::waitKey(10);
+        cv::waitKey(5);
 
         cv::Mat alignedVirtualProjR, alignedVirtualProjT;
-        computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(*plane, cams[0], cams[1], verticalOffset, alignedVirtualProjR, alignedVirtualProjT);
+        computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], cams[1], verticalOffset, alignedVirtualProjR, alignedVirtualProjT);
 
         cams.push_back(Camera(
             projK, alignedVirtualProjR, alignedVirtualProjT,
             projSize.width, projSize.height, 0.015));
 
-        computePlaneInducedHomography(*plane, cams[1], cams[3], H);
+        computePlaneInducedHomography(planes[numIm], cams[1], cams[3], H);
 
         cv::warpPerspective(projIm, outIm, H, projSize);
 
         cv::imshow("warped image (w.r.t. final virtual projector)", outIm);
-        cv::waitKey(10);
+        cv::waitKey(5);
 
-        Plane planeProjVirtualLocal(plane->getNormal(), plane->getDistance());
+        Plane planeProjVirtualLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
         planeProjVirtualLocal.rigidTransform(cams[3].getRt44());
 
         vector<Point3f> circlesObjectPtsVirtual_;
