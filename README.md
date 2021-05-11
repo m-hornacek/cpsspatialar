@@ -13,6 +13,8 @@ Cf. [here](docs/sample_invocations.txt) (find the corresponding sample images [h
 
 ## Navigating the 3D Viewer of `calibrateProj`
 
+Besides serving to calibrate the projector and compute homographies, `calibrateProj` enables visualizing the geometric setup for a selected input calibration image (indicated using the `visImIdx` argument); important keys for navigating the 3D viewer:
+
 * F1: align OpenGL viewport with currently selected camera/projector
 * F2: switch to next camera/projector; order: (i) camera, (ii) projector, (iii) virtual projector (obtained by getting projector to point downwards to ground plane by rotating about intersection point with ground plane of projector's view direction), (iv) final virtual projector (virtual projector additonally rotated with respect to axes of camera and optionally placed lower towards ground plane)
 * F3: display various distances
