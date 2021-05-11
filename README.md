@@ -14,7 +14,7 @@ Cf. [here](docs/sample_invocations.txt) (find the corresponding sample images [h
 ## Navigating the 3D Viewer of `calibrateProj`
 
 * F1: align OpenGL viewport with currently selected camera/projector
-* F2: switch to next camera/projector; order: camera, projector, virtual projector, virtual projector (final)
-* F3:
-* F4:
+* F2: switch to next camera/projector; order: (i) camera, (ii) projector, (iii) virtual projector (obtained by getting projector to point downwards to ground plane by rotating about intersection point with ground plane of projector's view direction), (iv) final virtual projector (virtual projector additonally rotated with respect to axes of camera and optionally placed lower towards ground plane)
+* F3: display distances
+* F4: display center points of circles pattern as projected to ground plane by (i) projector (red) or by (ii) final virtual projector (green) 
 * ESC: exit
