@@ -193,6 +193,8 @@ void display()
                 str = "virtual projector";
             else if (i == 3)
                 str = "virtual projector (final)";
+            else if (i == 4)
+                str = "virtual camera";
 
             cv::Vec3d C = cams[i].getC();
 
@@ -356,7 +358,7 @@ void keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
     case GLFW_KEY_F3:
         if (action == GLFW_RELEASE || action == GLFW_REPEAT)
         {
-            showVirtual = !showVirtual;
+            showDistances = !showDistances;
 
             newEvent = true;
             display();
@@ -365,7 +367,7 @@ void keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
     case GLFW_KEY_F4:
         if (action == GLFW_RELEASE || action == GLFW_REPEAT)
         {
-            showImVis = !showImVis;
+            showVirtual = !showVirtual;
 
             newEvent = true;
             display();
@@ -374,7 +376,7 @@ void keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
     case GLFW_KEY_F5:
         if (action == GLFW_RELEASE || action == GLFW_REPEAT)
         {
-            showDistances = !showDistances;
+            showImVis = !showImVis;
 
             newEvent = true;
             display();
@@ -898,16 +900,15 @@ void computeBirdsEyeViewVirtualCam(Plane& plane, Camera& cam, float verticalOffs
     outVirtualCamT.at<double>(2, 0) = cvVirtualCamRigidGlobal.at<double>(2, 3);
 }
 
-void computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(Plane& plane, Camera& cam, Camera& proj, float verticalOffset, cv::Mat& outProjR, cv::Mat& outProjT)
+void computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(Plane& plane, Camera& cam, Camera& proj, float verticalOffset, cv::Mat& outCamR, cv::Mat& outCamT, cv::Mat& outProjR, cv::Mat& outProjT)
 {
-    cv::Mat cvVirtualCamR, cvVirtualCamT;
-    computeBirdsEyeViewVirtualCam(plane, cam, 0, cvVirtualCamR, cvVirtualCamT);
+    computeBirdsEyeViewVirtualCam(plane, cam, 0, outCamR, outCamT);
 
     cv::Mat cvVirtualProjR, cvVirtualProjT;
     computeBirdsEyeViewVirtualCam(plane, proj, verticalOffset, cvVirtualProjR, cvVirtualProjT);
 
     Eigen::Matrix3d virtualCamR;
-    cv::cv2eigen(cvVirtualCamR, virtualCamR);
+    cv::cv2eigen(outCamR, virtualCamR);
 
     Eigen::Matrix3d virtualProjR;
     cv::cv2eigen(cvVirtualProjR, virtualProjR);
@@ -922,7 +923,7 @@ void computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(Plane& plane, Camera& c
     // recompute virtualProjT w.r.t. virtualProjC and virtualCamR
     virtualProjT = -virtualCamR * virtualProjC;
 
-    cvVirtualCamR.copyTo(outProjR);
+    outCamR.copyTo(outProjR);
 
     outProjT = cv::Mat::zeros(3, 1, CV_64F);
     outProjT.at<double>(0, 0) = virtualProjT[0];
@@ -1013,7 +1014,6 @@ int main(int argc, char** argv)
     if (argc == 14)
     {
         visImPath = parser.get<String>(12);
-        std::cout << visImPath << std::endl;
         hasVisIm = true;
     }
 
@@ -1180,8 +1180,8 @@ int main(int argc, char** argv)
 
         cv::Mat H;
 
-        cv::Mat alignedVirtualProjR, alignedVirtualProjT;
-        computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], proj, verticalOffset, alignedVirtualProjR, alignedVirtualProjT);
+        cv::Mat virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT;
+        computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], proj, verticalOffset, virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT);
 
         Camera transformedProj(
             projK, alignedVirtualProjR, alignedVirtualProjT,
@@ -1214,8 +1214,6 @@ int main(int argc, char** argv)
 
         cv::Mat planeRigid;
         planes[numIm].getRigid(planeRigid);
-
-        cout << planeRigid << endl;
 
         std::vector<cv::Point3f> transformedChessboardObjectPts;
         for (int i = 0; i < chessboardObjectPts_.size(); i++)
@@ -1254,12 +1252,16 @@ int main(int argc, char** argv)
         cv::imshow("warped image (w.r.t. virtual projector homography)", outIm);
         cv::waitKey(5);
 
-        cv::Mat alignedVirtualProjR, alignedVirtualProjT;
-        computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], cams[1], verticalOffset, alignedVirtualProjR, alignedVirtualProjT);
+        cv::Mat virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT;
+        computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], cams[1], verticalOffset, virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT);
 
         cams.push_back(Camera(
             projK, alignedVirtualProjR, alignedVirtualProjT,
             projSize.width, projSize.height, 0.015));
+
+        cams.push_back(Camera(
+            camK, virtualCamR, virtualCamT,
+            camSize.width, camSize.height, 0.015));
 
         computePlaneInducedHomography(planes[numIm], cams[1], cams[3], H);
 
