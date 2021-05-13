@@ -1148,7 +1148,7 @@ int main(int argc, char** argv)
 
     vector<cv::Mat> projRs, projTs;
 
-    // compute projector calibration (inverse R,t gives per-image projector pose in cam coordinate frame?)
+    // compute projector calibration
     cout << "RMS (projector calibration): " << cv::calibrateCamera(circlesObjectPts, circlesProjPts, projSize,
         projK, projDistCoeffs, projRs, projTs,
         cv::CALIB_USE_INTRINSIC_GUESS | cv::CALIB_FIX_ASPECT_RATIO | cv::CALIB_FIX_PRINCIPAL_POINT |
