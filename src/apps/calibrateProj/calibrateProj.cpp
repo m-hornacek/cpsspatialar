@@ -3,10 +3,10 @@
  *   michael.hornacek@gmail.com
  *   IMW-CPS TU Vienna, Austria
  *
- *   calibrateProj <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <imDir> <cam0Path> <circlesImPath> <verticalNegOffset> [<visImIdx>]
+ *   calibrateProj <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <imDir> <cam0Path> <circlesImPath> <verticalNegOffset> [<visImIdx>] [<visIm>]
  *
  *   Example invocation:
- *   calibrateProj 0.0565 4 6 4 11 C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\out 14 C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outLeft C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_0.yml C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\acircles_pattern_960x600.png 1.75 3
+ *   calibrateProj 0.0565 4 6 4 11 C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\out 14 C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outLeft C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_0.yml C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\acircles_pattern_960x600.png 1.75 3 C:\Users\micha\Desktop\spatial-ar\in_out\applyHomography\holodeck.png
  */
 
 
@@ -36,6 +36,7 @@ GLFWwindow * window;
 
 bool showDistances;
 bool showVirtual;
+bool showImVis;
 
 /* Camera variables */
 GLdouble defaultCameraDist, defaultCameraYaw, defaultCameraRoll;
@@ -55,6 +56,8 @@ vector<vector<Mat>> capturedPattern;
 PointCloud * pointCloud;
 PointCloud * pointCloudCircles;
 PointCloud* pointCloud2Circles;
+PointCloud* pointCloudImVis;
+PointCloud* pointCloud2ImVis;
 Plane * planeVis;
 
 std::vector<Plane> planes;
@@ -108,11 +111,12 @@ static const char* keys =
     "{@circlesImPath | | ...}"
     "{@verticalNegOffset | | ...}"
     "{@visImIdx | | ...}"
+    "{@visIm | | ...}"
 };
 
 void help()
 {
-    cout << "./calibrate <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <imDir> <cam0Path> <circlesImPath> <verticalNegOffset> [<visImIdx>\n"
+    cout << "./calibrate <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <imDir> <cam0Path> <circlesImPath> <verticalNegOffset> [<visImIdx>] [<visIm>]\n"
         << endl;
 }
 
@@ -151,6 +155,25 @@ void display()
         glMultMatrixd(flip);
 
         glMultMatrixd(Ancillary::flattenMat44d(cams[camIdx].getRt44()));
+
+        pointCloud->display(pointSize, 0, 0, 1);
+
+        if (showImVis)
+        {
+            if (showVirtual)
+                pointCloud2ImVis->display(pointSize);
+            else
+                pointCloudImVis->display(pointSize);
+        }
+        else
+        {
+            if (showVirtual)
+                pointCloud2Circles->display(pointSize, 0, 1, 0);
+            else
+                pointCloudCircles->display(pointSize, 1, 0, 0);
+        }
+
+        planeVis->display(2.5, pointSize);
 
         float offset = 0.02;
         for (int i = 0; i < cams.size(); i++)
@@ -239,14 +262,7 @@ void display()
             planePt[2] - offset,
             1.0, 0.0, 0.0, "ground plane");
 
-        pointCloud->display(pointSize, 0, 0, 1);
-       
-        if (showVirtual)
-            pointCloud2Circles->display(pointSize, 0, 1, 0);
-        else
-            pointCloudCircles->display(pointSize, 1, 0, 0);
 
-        planeVis->display(2.5, pointSize);
         
 
         glFlush();
@@ -347,6 +363,15 @@ void keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
         }
         break;
     case GLFW_KEY_F4:
+        if (action == GLFW_RELEASE || action == GLFW_REPEAT)
+        {
+            showImVis = !showImVis;
+
+            newEvent = true;
+            display();
+        }
+        break;
+    case GLFW_KEY_F5:
         if (action == GLFW_RELEASE || action == GLFW_REPEAT)
         {
             showDistances = !showDistances;
@@ -484,6 +509,7 @@ void init(double w, double h)
 
     showDistances = false;
     showVirtual = false;
+    showImVis = false;
 
     cursorPrevX = 0;
     cursorPrevY = 0;
@@ -979,8 +1005,17 @@ int main(int argc, char** argv)
     float verticalOffset = -parser.get<float>(10);
 
     int visImIdx = 0;
-    if (argc == 13)
+    if (argc >= 13)
         visImIdx = parser.get<int>(11);
+
+    string visImPath;
+    bool hasVisIm = false;
+    if (argc == 14)
+    {
+        visImPath = parser.get<String>(12);
+        std::cout << visImPath << std::endl;
+        hasVisIm = true;
+    }
 
     cv::Size chessboardPatternSize(chessboardDimsX, chessboardDimsY);
     cv::Size circlesPatternSize(circlesDimsX, circlesDimsY);
@@ -1010,6 +1045,12 @@ int main(int argc, char** argv)
     cv::drawChessboardCorners(projImVis, circlesPatternSize, circlesProjPts_, true);
     cv::imshow("projected image (with detected circles)", projImVis);
     cv::waitKey(5);
+
+    cv::Mat visIm;
+    if (hasVisIm)
+        visIm = cv::imread(visImPath);
+    else
+        projIm.copyTo(visIm);
 
     // store copy of circles projector points once per input image
     std::vector<std::vector<cv::Point2f>> circlesProjPts;
@@ -1208,9 +1249,9 @@ int main(int argc, char** argv)
             projSize.width, projSize.height, 0.015));
 
         cv::Mat outIm;
-        cv::warpPerspective(projIm, outIm, H, projSize);
+        cv::warpPerspective(visIm, outIm, H, projSize);
 
-        cv::imshow("warped image (w.r.t. virtual projector)", outIm);
+        cv::imshow("warped image (w.r.t. virtual projector homography)", outIm);
         cv::waitKey(5);
 
         cv::Mat alignedVirtualProjR, alignedVirtualProjT;
@@ -1222,10 +1263,25 @@ int main(int argc, char** argv)
 
         computePlaneInducedHomography(planes[numIm], cams[1], cams[3], H);
 
-        cv::warpPerspective(projIm, outIm, H, projSize);
+        cv::warpPerspective(visIm, outIm, H, projSize);
 
-        cv::imshow("warped image (w.r.t. final virtual projector)", outIm);
+        cv::imshow("warped image (w.r.t. final virtual projector homography)", outIm);
         cv::waitKey(5);
+
+        vector<Point3f> imVisPts, imVisColors;
+        for (int y = 0; y < projSize.height; y += 3)
+        {
+            for (int x = 0; x < projSize.width; x += 3)
+            {
+                cv::Vec3d intersectionLocal = planeProjLocal.intersect(cams[1].backprojectLocal(cv::Point2f(x, y)));
+                cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[1].getRt44Inv(), intersectionLocal);
+                imVisPts.push_back(cv::Point3d(intersectionGlobal[0], intersectionGlobal[1], intersectionGlobal[2]));
+
+                cv::Vec3b color = visIm.at<cv::Vec3b>(cv::Point2f(x, y));
+                imVisColors.push_back(cv::Point3d(color[2] / 255., color[1] / 255., color[0] / 255.));
+            }
+        }
+        pointCloudImVis = new PointCloud(imVisPts, imVisColors);
 
         Plane planeProjVirtualLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
         planeProjVirtualLocal.rigidTransform(cams[3].getRt44());
@@ -1237,8 +1293,22 @@ int main(int argc, char** argv)
             cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[3].getRt44Inv(), intersectionLocal);
             circlesObjectPtsVirtual_.push_back(cv::Point3d(intersectionGlobal[0], intersectionGlobal[1], intersectionGlobal[2]));
         }
-
         pointCloud2Circles = new PointCloud(circlesObjectPtsVirtual_);
+
+        vector<Point3f> imVis2Pts, imVis2Colors;
+        for (int y = 0; y < projSize.height; y += 3)
+        {
+            for (int x = 0; x < projSize.width; x += 3)
+            {
+                cv::Vec3d intersectionLocal = planeProjVirtualLocal.intersect(cams[3].backprojectLocal(cv::Point2f(x, y)));
+                cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[3].getRt44Inv(), intersectionLocal);
+                imVis2Pts.push_back(cv::Point3d(intersectionGlobal[0], intersectionGlobal[1], intersectionGlobal[2]));
+
+                cv::Vec3b color = visIm.at<cv::Vec3b>(cv::Point2f(x, y));
+                imVis2Colors.push_back(cv::Point3d(color[2] / 255., color[1] / 255., color[0] / 255.));
+            }
+        }
+        pointCloud2ImVis = new PointCloud(imVis2Pts, imVis2Colors);
     }
 
     glutInit(&argc, argv);
