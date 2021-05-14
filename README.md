@@ -25,5 +25,5 @@ Important keys for navigating the 3D viewer:
 * **F5**: toggle between **projecting to the ground plane** the (i) center points of the [circles pattern image](https://github.com/m-hornacek/cpsspatialar/blob/main/docs/sample_data/acircles_pattern_960x600.png) and (ii) an optional visualization image (if not provided, defaults to circles pattern image)
 * **F6**:  toggle beween projecting the center points or visualization image described for F4 (i) from the [projector](docs/projector.png) or (ii) from the [final virtual projector](docs/final_virtual_projector.png); note that viewing the latter from the viewpoint of the projector has the same effect as the corresponding final homography
 * **space bar**: toggle interpreting mouse movements for controlling the rotational component of OpenGL's camera
-* **arrow keys**: move the camera center of OpenGL's camera
+* **arrow keys + mouse wheel**: move the camera center of OpenGL's camera
 * **ESC**: exit
