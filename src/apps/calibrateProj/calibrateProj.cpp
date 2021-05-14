@@ -53,6 +53,8 @@ int projWidth, projHeight;
 int numPatterns;
 vector<vector<Mat>> capturedPattern;
 
+cv::Vec3d centroidChessboardObjectPts;
+
 PointCloud * pointCloud;
 PointCloud * pointCloudCircles;
 PointCloud* pointCloud2Circles;
@@ -130,6 +132,16 @@ void displayText(float x, float y, float z, float r, float g, float b, const cha
     }
 }
 
+void displayText(float x, float y, float r, float g, float b, const char* string)
+{
+    glColor3f(r, g, b);
+    glWindowPos2i(x, y);
+
+    while (*string) {
+        glutBitmapCharacter(GLUT_BITMAP_8_BY_13, *string++);
+    }
+}
+
 void display()
 {
     glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
@@ -190,16 +202,34 @@ void display()
             else if (i == 1)
                 str = "projector";
             else if (i == 2)
-                str = "virtual projector";
+                str = "virtual projector (downward)";
             else if (i == 3)
                 str = "virtual projector (final)";
             else if (i == 4)
-                str = "virtual camera";
+                str = "virtual camera (downward)";
 
             cv::Vec3d C = cams[i].getC();
 
-            displayText(C[0] + offset, C[1] + offset, C[2] - offset, 1.0, 0.0, 0.0, str);
+            if (camIdx == i)
+            {
+                std::stringstream ss;
+                ss << "Rendering according to " << string(str);
+
+                displayText(15, 20, 0, 0, 0, ss.str().c_str());
+            }
+
+            float additionalOffset = 0;
+            if (i == 4)
+                additionalOffset = 0.03;
+
+            displayText(C[0] + offset, C[1] + offset, C[2] - offset + additionalOffset, 0, 0, 0, str);
         }
+
+        displayText(
+            centroidChessboardObjectPts[0] + offset,
+            centroidChessboardObjectPts[1] + offset,
+            centroidChessboardObjectPts[2] - offset,
+            0, 0, 0, "ground plane");
 
         if (showDistances)
         {
@@ -220,7 +250,7 @@ void display()
                 projPlaneIntersection[0] + (projC - projPlaneIntersection)[0] * 0.5 + offset,
                 projPlaneIntersection[1] + (projC - projPlaneIntersection)[1] * 0.5 + offset,
                 projPlaneIntersection[2] + (projC - projPlaneIntersection)[2] * 0.5 - offset,
-                1.0, 0.0, 0.0, ss1.str().c_str());
+                0, 0, 0, ss1.str().c_str());
 
             glBegin(GL_LINES);
             glVertex3f(0, 0, 0);
@@ -233,7 +263,7 @@ void display()
             ss2 << distCamLeftProj << " m";
 
             displayText(projC[0] * 0.5 + offset, projC[1] * 0.5 + offset, projC[2] * 0.5 - offset,
-                1.0, 0.0, 0.0, ss2.str().c_str());
+                0, 0, 0, ss2.str().c_str());
 
 
             cv::Vec3d virtualProjC = cams[3].getC();
@@ -253,19 +283,8 @@ void display()
                 projPlaneIntersection[0] + (virtualProjC - projPlaneIntersection)[0] * 0.5 + offset,
                 projPlaneIntersection[1] + (virtualProjC - projPlaneIntersection)[1] * 0.5 + offset,
                 projPlaneIntersection[2] + (virtualProjC - projPlaneIntersection)[2] * 0.5 - offset,
-                1.0, 0.0, 0.0, ss3.str().c_str());
+                0, 0, 0, ss3.str().c_str());
         }
-
-        cv::Vec3d planePt = planeVis->intersect(cv::Vec3d(0, 0, 1));
-
-        displayText(
-            planePt[0] + offset,
-            planePt[1] + offset,
-            planePt[2] - offset,
-            1.0, 0.0, 0.0, "ground plane");
-
-
-        
 
         glFlush();
         glfwSwapBuffers(window);
@@ -276,13 +295,19 @@ void display()
 
 void reshape(int width, int height)
 {
+    if (width == -1)
+        width = glutGet(GLUT_SCREEN_WIDTH);
+
+    if (height == -1)
+        height = glutGet(GLUT_SCREEN_HEIGHT);
+
     float scaleFactor = 1.0;
 
 	float w = cams[camIdx].getWidth();
     float h = cams[camIdx].getHeight();
 
-    //if (w > width)
-    //    scaleFactor = 0.5;
+    if (w > width || h > height)
+        scaleFactor = 0.5;
 
     w *= scaleFactor;
     h *= scaleFactor;
@@ -358,7 +383,11 @@ void keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
     case GLFW_KEY_F3:
         if (action == GLFW_RELEASE || action == GLFW_REPEAT)
         {
-            showDistances = !showDistances;
+            camIdx--;
+            if (camIdx < 0)
+                camIdx = cams.size() - 1;
+
+            reshape(-1, -1);
 
             newEvent = true;
             display();
@@ -367,13 +396,22 @@ void keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
     case GLFW_KEY_F4:
         if (action == GLFW_RELEASE || action == GLFW_REPEAT)
         {
-            showVirtual = !showVirtual;
+            showDistances = !showDistances;
 
             newEvent = true;
             display();
         }
         break;
     case GLFW_KEY_F5:
+        if (action == GLFW_RELEASE || action == GLFW_REPEAT)
+        {
+            showVirtual = !showVirtual;
+
+            newEvent = true;
+            display();
+        }
+        break;
+    case GLFW_KEY_F6:
         if (action == GLFW_RELEASE || action == GLFW_REPEAT)
         {
             showImVis = !showImVis;
@@ -533,6 +571,7 @@ void init(double w, double h)
     radius = 50;
 
     camIdx = 0;
+    centroidChessboardObjectPts = cv::Vec3d(0, 0, 0);
 
     initCloudX = 0;
     initCloudY = 0;
@@ -904,11 +943,31 @@ void computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(Plane& plane, Camera& c
 {
     computeBirdsEyeViewVirtualCam(plane, cam, 0, outCamR, outCamT);
 
-    cv::Mat cvVirtualProjR, cvVirtualProjT;
-    computeBirdsEyeViewVirtualCam(plane, proj, verticalOffset, cvVirtualProjR, cvVirtualProjT);
-
     Eigen::Matrix3d virtualCamR;
     cv::cv2eigen(outCamR, virtualCamR);
+
+    Eigen::Vector3d virtualCamT(
+        outCamT.at<double>(0, 0),
+        outCamT.at<double>(1, 0),
+        outCamT.at<double>(2, 0));
+
+    //Eigen::Vector3d virtualCamC = -virtualCamR.inverse() * virtualCamT;
+
+    cv::Vec3d cvCamC = cam.getC();
+    Eigen::Vector3d camC(
+        cvCamC[0],
+        cvCamC[1],
+        cvCamC[2]);
+
+    // recompute virtualCamT w.r.t. camC and virtualCamR
+    virtualCamT = -virtualCamR * camC;
+
+    outCamT.at<double>(0, 0) = virtualCamT[0];
+    outCamT.at<double>(1, 0) = virtualCamT[1];
+    outCamT.at<double>(2, 0) = virtualCamT[2];
+
+    cv::Mat cvVirtualProjR, cvVirtualProjT;
+    computeBirdsEyeViewVirtualCam(plane, proj, verticalOffset, cvVirtualProjR, cvVirtualProjT);
 
     Eigen::Matrix3d virtualProjR;
     cv::cv2eigen(cvVirtualProjR, virtualProjR);
@@ -1033,7 +1092,6 @@ int main(int argc, char** argv)
     for (int numIm = 0; numIm < numIms; numIm++)
         chessboardObjectPts.push_back(chessboardObjectPts_);
 
-
     // compute circles projector points
     std::vector<cv::Point2f> circlesProjPts_;
     cv::Mat projIm = cv::imread(circlesImPath);
@@ -1126,15 +1184,6 @@ int main(int argc, char** argv)
         if (numIm == visImIdx)
         {
             pointCloudCircles = new PointCloud(circlesObjectPts_);
-
-            cv::Mat centroidRigid = cv::Mat::eye(cv::Size(4, 4), CV_64F);
-            centroidRigid.at<double>(0, 3) = chessboardSqSize * (chessboardDimsX - 1) * 0.5;
-            centroidRigid.at<double>(1, 3) = chessboardSqSize * (chessboardDimsY - 1) * 0.5;
-            centroidRigid.at<double>(2, 3) = 0;
-
-            cv::Mat planeRigidVis;
-            cv::gemm(planeRigid, centroidRigid, 1.0, cv::Mat(), 0.0, planeRigidVis);
-
             planeVis = new Plane(planeRigid);
         }
     }
@@ -1222,7 +1271,11 @@ int main(int argc, char** argv)
             cv::Vec3d outPt = Ancillary::Mat44dTimesVec3dHomog(planeRigid, pt);
 
             transformedChessboardObjectPts.push_back(cv::Point3f(outPt[0], outPt[1], outPt[2]));
+            centroidChessboardObjectPts += outPt;
         }
+        centroidChessboardObjectPts[0] /= chessboardObjectPts_.size();
+        centroidChessboardObjectPts[1] /= chessboardObjectPts_.size();
+        centroidChessboardObjectPts[2] /= chessboardObjectPts_.size();
 
         pointCloud = new PointCloud(transformedChessboardObjectPts);
         
