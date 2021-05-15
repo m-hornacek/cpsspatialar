@@ -14,11 +14,12 @@ ADD_SUBDIRECTORY(cpslib/libCalib)
 ADD_SUBDIRECTORY(cpslib/libGeom)
 
 # apps
-ADD_SUBDIRECTORY(apps/splitZed)
-ADD_SUBDIRECTORY(apps/calibrateCam)
-ADD_SUBDIRECTORY(apps/calibrateProj)
 ADD_SUBDIRECTORY(apps/applyHomography)
 ADD_SUBDIRECTORY(apps/applyUndistortion)
+ADD_SUBDIRECTORY(apps/calibrateCam)
+ADD_SUBDIRECTORY(apps/calibrateProj)
+ADD_SUBDIRECTORY(apps/prepareIm)
+ADD_SUBDIRECTORY(apps/splitZed)
 
 FILE(COPY
 	# OpenCV

@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.19.0)
 
-PROJECT(applyHomography)
+PROJECT(prepareIm)
  
 SET(CPSSPATIALAR_BASEDIR ${CMAKE_CURRENT_SOURCE_DIR}/../../)
 SET(CPSLIB_DIR ${CPSSPATIALAR_BASEDIR}/cpslib)
@@ -40,11 +40,11 @@ INCLUDE_DIRECTORIES(
 	${OPENCV_DIR}/3rdparty/include
 )
 
-ADD_EXECUTABLE(applyHomography
-	applyHomography.cpp
+ADD_EXECUTABLE(prepareIm
+	prepareIm.cpp
 )
 
-TARGET_LINK_LIBRARIES(applyHomography
+TARGET_LINK_LIBRARIES(prepareIm
 	optimized libGeom
 	optimized glfw3
 	optimized freeglut
