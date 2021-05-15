@@ -18,7 +18,6 @@ ADD_SUBDIRECTORY(apps/applyHomography)
 ADD_SUBDIRECTORY(apps/applyUndistortion)
 ADD_SUBDIRECTORY(apps/calibrateCam)
 ADD_SUBDIRECTORY(apps/calibrateProj)
-ADD_SUBDIRECTORY(apps/prepareIm)
 ADD_SUBDIRECTORY(apps/splitZed)
 
 FILE(COPY
