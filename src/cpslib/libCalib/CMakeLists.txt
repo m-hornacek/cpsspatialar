@@ -1,9 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.19.0)
 
-PROJECT(calibrateCam)
- 
+PROJECT(libCalib)
+
 SET(CPSSPATIALAR_BASEDIR ${CMAKE_CURRENT_SOURCE_DIR}/../../)
-SET(CPSLIB_DIR ${CPSSPATIALAR_BASEDIR}/cpslib)
 SET(EIGEN_DIR ${CPSSPATIALAR_BASEDIR}/external/eigen/)
 SET(FREEGLUT_DIR ${CPSSPATIALAR_BASEDIR}/external/freeglut/)
 SET(GLEW_DIR ${CPSSPATIALAR_BASEDIR}/external/glew/)
@@ -11,16 +10,11 @@ SET(GLFW_DIR ${CPSSPATIALAR_BASEDIR}/external/glfw/)
 SET(OPENCV_DIR ${CPSSPATIALAR_BASEDIR}/external/opencv/)
 
 LINK_DIRECTORIES(
-	${CPSSPATIALAR_BASEDIR}/build/cpslib
-	${FREEGLUT_DIR}/lib/x64
-	${GLEW_DIR}/lib/Release
-	${GLFW_DIR}/build/src/Release
-	${OPENCV_DIR}/build/lib/Release
+	${OPENCV_DIR/lib}
 )
 
 INCLUDE_DIRECTORIES(
-	${CPSSPATIALAR_BASEDIR}/cpslib/libCalib
-	${CPSSPATIALAR_BASEDIR}/cpslib/libGeom
+	${CMAKE_CURRENT_SOURCE_DIR}
 	${CPSSPATIALAR_BASEDIR}/external
 	${EIGEN_DIR}
 	${FREEGLUT_DIR}/include
@@ -41,23 +35,25 @@ INCLUDE_DIRECTORIES(
 	${OPENCV_DIR}/3rdparty/include
 )
 
-ADD_EXECUTABLE(calibrateCam
-	calibrateCam.cpp
+ADD_LIBRARY(libCalib
+	CalibPattern.cpp
+	CalibPattern.h
 )
 
-TARGET_LINK_LIBRARIES(calibrateCam
-	optimized libCalib
-	optimized libGeom
-	optimized glfw3
-	optimized freeglut
-	optimized glew32
-	optimized opencv_calib3d451
-	optimized opencv_core451
-	optimized opencv_flann451
-	optimized opencv_features2d451
-	optimized opencv_highgui451
-	optimized opencv_imgproc451
-	optimized opencv_imgcodecs451
-	optimized opencv_imgproc451
-	optimized opencv_videoio451
+ADD_CUSTOM_COMMAND(TARGET libCalib
+	POST_BUILD
+		COMMAND ${CMAKE_COMMAND}
+			-DInputLibPath="${CPSSPATIALAR_BASEDIR}/build/lib/Debug/libCalibd.lib"
+			-DOutputLibPath="${CPSSPATIALAR_BASEDIR}/build/lib/libCalibd.lib"
+			-P "${CPSSPATIALAR_BASEDIR}/rename.cmake"
+		COMMAND ${CMAKE_COMMAND}
+			-DInputLibPath="${CPSSPATIALAR_BASEDIR}/build/lib/Release/libCalib.lib"
+			-DOutputLibPath="${CPSSPATIALAR_BASEDIR}/build/lib/libCalib.lib"
+			-P "${CPSSPATIALAR_BASEDIR}/rename.cmake"
+)
+
+SET_TARGET_PROPERTIES(libCalib
+    PROPERTIES
+        DEBUG_POSTFIX d
+        ARCHIVE_OUTPUT_DIRECTORY "${CPSSPATIALAR_BASEDIR}/build/lib"
 )

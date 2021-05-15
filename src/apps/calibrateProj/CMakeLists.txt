@@ -19,7 +19,8 @@ LINK_DIRECTORIES(
 )
 
 INCLUDE_DIRECTORIES(
-	${CPSSPATIALAR_BASEDIR}/cpslib/libgeom
+	${CPSSPATIALAR_BASEDIR}/cpslib/libCalib
+	${CPSSPATIALAR_BASEDIR}/cpslib/libGeom
 	${CPSSPATIALAR_BASEDIR}/external
 	${EIGEN_DIR}
 	${FREEGLUT_DIR}/include
@@ -45,6 +46,7 @@ ADD_EXECUTABLE(calibrateProj
 )
 
 TARGET_LINK_LIBRARIES(calibrateProj
+	optimized libCalib
 	optimized libGeom
 	optimized glfw3
 	optimized freeglut

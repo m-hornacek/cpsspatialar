@@ -12,23 +12,11 @@
 
 
 #include <iostream>
-#include <fstream>
-#include <vector>
 #include <sstream>
-
-#include "headers.h"
 
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
-#include <opencv2/calib3d.hpp>
 #include <opencv2/imgproc.hpp>
-
-using namespace cv;
-using namespace std;
-
-int imWidth, imHeight;
-
-int numPatterns;
 
 static const char* keys =
 {
@@ -53,15 +41,14 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    String inPattern = parser.get<String>(0);
-    String leftCamOutDir = parser.get<String>(1);
-    String rightCamOutDir = parser.get<String>(2);
+    std::string inPattern = parser.get<std::string>(0);
+    std::string leftCamOutDir = parser.get<std::string>(1);
+    std::string rightCamOutDir = parser.get<std::string>(2);
 
     std::vector<cv::String> inPaths;
     cv::glob(inPattern, inPaths, false);
 
-    size_t count = inPaths.size();
-    for (size_t i = 0; i < count; i++)
+    for (int i = 0; i < inPaths.size(); i++)
     {
         cv::Mat im = cv::imread(inPaths[i]);
 

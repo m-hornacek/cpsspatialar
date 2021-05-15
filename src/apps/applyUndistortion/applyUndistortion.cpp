@@ -3,10 +3,10 @@
  *   michael.hornacek@gmail.com
  *   IMW-CPS TU Vienna, Austria
  *
- *   applyHomography <homographyPath> <imPath> <outImPath>
+ *   applyUndistortion <camPath> <imPath> <outImPath>
  *
  *   Example invocations:
- *   applyHomography C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\out\homography_4.yml C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\acircles_pattern_960x600.png C:\Users\micha\Desktop\spatial-ar\in_out\applyHomography\4_warped.png
+ *   applyUndistortion C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_0.yml C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outLeft\0.png C:\Users\micha\Desktop\spatial-ar\in_out\applyUndistortion\undistorted_0.png
  */
 
 
@@ -21,14 +21,14 @@
 
 static const char* keys =
 {
-    "{@homographyPath | | ...}"
+    "{@camPath | | ...}"
     "{@imPath | | ...}"
     "{@outImPath | | ...}"
 };
 
 void help()
 {
-    std::cout << "./applyHomography <homographyPath> <imPath> <outImPath>\n"
+    std::cout << "./applyUndistortion <camPath> <imPath> <outImPath>\n"
         << std::endl;
 }
 
@@ -42,20 +42,21 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    std::string homographyPath = parser.get<std::string>(0);
+    std::string camPath = parser.get<std::string>(0);
     std::string imPath = parser.get<std::string>(1);
     std::string outImPath = parser.get<std::string>(2);
 
     cv::Mat im = cv::imread(imPath);
 
     cv::FileStorage fs;
-    fs.open(homographyPath, cv::FileStorage::READ);
+    fs.open(camPath, cv::FileStorage::READ);
 
-    cv::Mat H;
-    fs["H"] >> H;
+    cv::Mat K, distCoeffs;
+    fs["K"] >> K;
+    fs["distCoeffs"] >> distCoeffs;
 
     cv::Mat outIm;
-    cv::warpPerspective(im, outIm, H, im.size());
+    cv::undistort(im, outIm, K, distCoeffs);
 
     cv::imwrite(outImPath, outIm);
 }

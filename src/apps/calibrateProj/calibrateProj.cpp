@@ -19,6 +19,7 @@
 #include "Camera.h"
 #include "PointCloud.h"
 #include "Plane.h"
+#include "CalibPattern.h"
 
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
@@ -66,6 +67,7 @@ std::vector<Plane> planes;
 
 cv::Vec3d projCamIntersection;
 cv::Vec3d projPlaneIntersection;
+cv::Vec3d virtualCamPlaneIntersection;
 
 /* Previous x and y cursor coordinates (used to determine change in camera position) */
 double cursorPrevX, cursorPrevY;
@@ -233,6 +235,25 @@ void display()
 
         if (showDistances)
         {
+            //cv::Vec3d camC = cams[0].getC();
+
+            //glBegin(GL_LINES);
+            //glVertex3f(camC[0], camC[1], camC[2]);
+            //glVertex3f(virtualCamPlaneIntersection[0], virtualCamPlaneIntersection[1], virtualCamPlaneIntersection[2]);
+            //glEnd();
+
+            //double distVirtualCamPlaneIntersection = sqrt(
+            //    (camC - virtualCamPlaneIntersection).dot(camC - virtualCamPlaneIntersection));
+
+            //std::stringstream ss0;
+            //ss0 << distVirtualCamPlaneIntersection << " m";
+
+            //displayText(
+            //    virtualCamPlaneIntersection[0] + (camC - virtualCamPlaneIntersection)[0] * 0.5 + offset,
+            //    virtualCamPlaneIntersection[1] + (camC - virtualCamPlaneIntersection)[1] * 0.5 + offset,
+            //    virtualCamPlaneIntersection[2] + (camC - virtualCamPlaneIntersection)[2] * 0.5 - offset,
+            //    0, 0, 0, ss0.str().c_str());
+
             cv::Vec3d projC = cams[1].getC();
 
             glBegin(GL_LINES);
@@ -674,129 +695,6 @@ void init(double w, double h)
     glLineWidth(1.0);
 }
 
-void findChessboardImPts(cv::Mat& im, Size chessboardPatternSize,
-    vector<vector<Point2f>>& outChessboardImPts, Size& outImSize, cv::Mat& outImVis,
-    bool applyIntrinsics = false, cv::Mat& K = cv::Mat(), cv::Mat& distCoeffs = cv::Mat())
-{
-    cv::Mat imUndistort, imGrayUndistort;
-
-    if (applyIntrinsics)
-    {
-        cv::undistort(im, imUndistort, K, distCoeffs);
-    }
-    else
-        im.copyTo(imUndistort);
-
-    if (outImVis.size != imUndistort.size)
-        imUndistort.copyTo(outImVis);
-
-    cv::cvtColor(imUndistort, imGrayUndistort, COLOR_BGR2GRAY);
-    // cv::threshold(candidateIm, candidateImThresh, 100, 255, THRESH_BINARY);
-
-    outImSize = Size(im.cols, im.rows);
-
-    vector<Point2f> candidateChessboardImPts;
-    if (findChessboardCorners(imGrayUndistort, chessboardPatternSize, candidateChessboardImPts, CALIB_CB_ADAPTIVE_THRESH))
-    {
-        cv::cornerSubPix(imGrayUndistort, candidateChessboardImPts, cv::Size(5, 5), cv::Size(-1, -1),
-            TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 40, 0.001));
-
-        drawChessboardCorners(outImVis, chessboardPatternSize, candidateChessboardImPts, true);
-        outChessboardImPts.push_back(candidateChessboardImPts);
-    }
-}
-
-void findCirclesImPts(cv::Mat& im, Size circlesPatternSize,
-    vector<vector<Point2f>>& outCirclesImPts, Size& outImSize, cv::Mat& outImVis,
-    bool applyIntrinsics = true, cv::Mat& K = cv::Mat(), cv::Mat& distCoeffs = cv::Mat())
-{
-    cv::Mat imUndistort, imGrayUndistort, imGrayUndistortInvert;
-
-    if (applyIntrinsics)
-    {
-        cv::undistort(im, imUndistort, K, distCoeffs);
-    }
-    else
-        im.copyTo(imUndistort);
-
-    if (outImVis.size != imUndistort.size)
-        imUndistort.copyTo(outImVis);
-
-    cv::cvtColor(imUndistort, imGrayUndistort, COLOR_BGR2GRAY);
-    cv::bitwise_not(imGrayUndistort, imGrayUndistortInvert);
-    // cv::threshold(candidateIm, candidateImThresh, 100, 255, THRESH_BINARY);
-
-    outImSize = Size(im.cols, im.rows);
-
-    vector<Point2f> candidateCirclesImPts;
-    if (findCirclesGrid(imGrayUndistortInvert, circlesPatternSize, candidateCirclesImPts, CALIB_CB_ASYMMETRIC_GRID))
-    {
-        //cv::cornerSubPix(imGrayUndistort, candidateCirclesImPts, cv::Size(5, 5), cv::Size(-1, -1),
-        //    TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 40, 0.001));
-
-        drawChessboardCorners(outImVis, circlesPatternSize, candidateCirclesImPts, true);
-        outCirclesImPts.push_back(candidateCirclesImPts);
-    }
-}
-
-void findChessboardImPts(String inDir, int numIms, Size chessboardPatternSize,
-    vector<vector<Point2f>>& outChessboardImPts, Size& outImSize,
-    bool applyIntrinsics = false, cv::Mat& K = cv::Mat(), cv::Mat& distCoeffs = cv::Mat())
-{
-    for (int numIm = 1; numIm <= numIms; numIm++)
-    {
-        std::stringstream ss1;
-        ss1 << inDir << "\\" << numIm << ".png";
-        cout << ss1.str() << endl;
-
-        cv::Mat im = imread(ss1.str());
-
-        cv::Mat imVis;
-        findChessboardImPts(im, chessboardPatternSize,
-            outChessboardImPts, outImSize, imVis,
-            applyIntrinsics, K, distCoeffs);
-
-        std::stringstream ss2;
-        ss2 << "camera calibration image (50% resized)";
-
-        cv::resize(imVis, imVis, cv::Size(imVis.cols * 0.5, imVis.rows * 0.5));
-
-        cv::imshow(ss2.str(), imVis);
-        cv::waitKey(10);
-    }
-}
-
-void findChessboardAndCirclesImPts(String inDir, int numIms, Size chessboardPatternSize, Size circlesPatternSize,
-    vector<vector<Point2f>>& outChessboardImPts, vector<vector<Point2f>>& outCirclesImPts, Size& outImSize,
-    bool applyIntrinsics = false, cv::Mat& K = cv::Mat(), cv::Mat& distCoeffs = cv::Mat())
-{
-    for (int numIm = 0; numIm < numIms; numIm++)
-    {
-        std::stringstream ss1;
-        ss1 << inDir << "\\" << numIm << ".png";
-        cout << ss1.str() << endl;
-
-        cv::Mat im = imread(ss1.str());
-
-        cv::Mat imVis;
-        findChessboardImPts(im, chessboardPatternSize,
-            outChessboardImPts, outImSize, imVis,
-            applyIntrinsics, K, distCoeffs);
-
-        findCirclesImPts(im, circlesPatternSize,
-            outCirclesImPts, outImSize, imVis,
-            applyIntrinsics, K, distCoeffs);
-
-        std::stringstream ss2;
-        ss2 << "projector calibration image (50% resized)";
-
-        cv::resize(imVis, imVis, cv::Size(imVis.cols * 0.5, imVis.rows * 0.5));
-
-        cv::imshow(ss2.str(), imVis);
-        cv::waitKey(5);
-    }
-}
-
 void computeBirdsEyeViewHomography(Plane& plane, Camera& proj, cv::Mat& outH, cv::Mat& outR, cv::Mat& outT)
 {
     cv::Mat cvProjRigidGlobal = proj.getRt44();
@@ -1079,18 +977,9 @@ int main(int argc, char** argv)
     cv::Size chessboardPatternSize(chessboardDimsX, chessboardDimsY);
     cv::Size circlesPatternSize(circlesDimsX, circlesDimsY);
 
-
-    // compute chessboard object points
-    std::vector<cv::Point3f> chessboardObjectPts_;
-    for (int i = 0; i < chessboardPatternSize.height; i++)
-        for (int j = 0; j < chessboardPatternSize.width; j++)
-            chessboardObjectPts_.push_back(
-                cv::Point3f(float(j * chessboardSqSize), float(i * chessboardSqSize), 0));
-
-    // store copy of chessboard object points once per input image
     std::vector<std::vector<cv::Point3f>> chessboardObjectPts;
-    for (int numIm = 0; numIm < numIms; numIm++)
-        chessboardObjectPts.push_back(chessboardObjectPts_);
+    CalibPattern::computeChessboardObjPts(numIms, chessboardSqSize, chessboardPatternSize,
+        chessboardObjectPts);
 
     // compute circles projector points
     std::vector<cv::Point2f> circlesProjPts_;
@@ -1138,7 +1027,7 @@ int main(int argc, char** argv)
 
     // get circles and chessboard image points determine corresponding plane parameters
     std::vector<std::vector<cv::Point2f>> camChessboardImPts, camCirclesImPts;
-    findChessboardAndCirclesImPts(imDir, numIms,
+    CalibPattern::findChessboardAndCirclesImPts(imDir, numIms,
         chessboardPatternSize, circlesPatternSize,
         camChessboardImPts, camCirclesImPts, cv::Size(),
         true, camK, camDistCoeffs);
@@ -1265,17 +1154,17 @@ int main(int argc, char** argv)
         planes[numIm].getRigid(planeRigid);
 
         std::vector<cv::Point3f> transformedChessboardObjectPts;
-        for (int i = 0; i < chessboardObjectPts_.size(); i++)
+        for (int i = 0; i < chessboardObjectPts[0].size(); i++)
         {
-            cv::Vec3d pt(chessboardObjectPts_[i].x, chessboardObjectPts_[i].y, chessboardObjectPts_[i].z);
+            cv::Vec3d pt(chessboardObjectPts[0][i].x, chessboardObjectPts[0][i].y, chessboardObjectPts[0][i].z);
             cv::Vec3d outPt = Ancillary::Mat44dTimesVec3dHomog(planeRigid, pt);
 
             transformedChessboardObjectPts.push_back(cv::Point3f(outPt[0], outPt[1], outPt[2]));
             centroidChessboardObjectPts += outPt;
         }
-        centroidChessboardObjectPts[0] /= chessboardObjectPts_.size();
-        centroidChessboardObjectPts[1] /= chessboardObjectPts_.size();
-        centroidChessboardObjectPts[2] /= chessboardObjectPts_.size();
+        centroidChessboardObjectPts[0] /= chessboardObjectPts[0].size();
+        centroidChessboardObjectPts[1] /= chessboardObjectPts[0].size();
+        centroidChessboardObjectPts[2] /= chessboardObjectPts[0].size();
 
         pointCloud = new PointCloud(transformedChessboardObjectPts);
         
@@ -1306,7 +1195,8 @@ int main(int argc, char** argv)
         cv::waitKey(5);
 
         cv::Mat virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT;
-        computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], cams[1], verticalOffset, virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT);
+        computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], cams[1],
+            verticalOffset, virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT);
 
         cams.push_back(Camera(
             projK, alignedVirtualProjR, alignedVirtualProjT,
@@ -1355,15 +1245,23 @@ int main(int argc, char** argv)
         {
             for (int x = 0; x < projSize.width; x += 3)
             {
-                cv::Vec3d intersectionLocal = planeProjVirtualLocal.intersect(cams[3].backprojectLocal(cv::Point2f(x, y)));
-                cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[3].getRt44Inv(), intersectionLocal);
+                cv::Vec3d intersectionLocal = planeProjLocal.intersect(cams[1].backprojectLocal(cv::Point2f(x, y)));
+                cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[1].getRt44Inv(), intersectionLocal);
                 imVis2Pts.push_back(cv::Point3d(intersectionGlobal[0], intersectionGlobal[1], intersectionGlobal[2]));
 
-                cv::Vec3b color = visIm.at<cv::Vec3b>(cv::Point2f(x, y));
+                cv::Vec3b color = outIm.at<cv::Vec3b>(cv::Point2f(x, y));
                 imVis2Colors.push_back(cv::Point3d(color[2] / 255., color[1] / 255., color[0] / 255.));
             }
         }
         pointCloud2ImVis = new PointCloud(imVis2Pts, imVis2Colors);
+
+        Plane planCamVirtualLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
+        planCamVirtualLocal.rigidTransform(cams[4].getRt44());
+
+        cv::Vec3d virtualCamPlaneIntersectionLocal = planCamVirtualLocal.intersect(
+            cams[4].backprojectLocal(cv::Point2f(camSize.width * 0.5, camSize.height * 0.5)));
+
+        virtualCamPlaneIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[4].getRt44Inv(), virtualCamPlaneIntersectionLocal);
     }
 
     glutInit(&argc, argv);

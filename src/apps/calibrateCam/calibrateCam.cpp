@@ -16,18 +16,12 @@
 #include <sstream>
 
 #include "headers.h"
+#include "CalibPattern.h"
 
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/calib3d.hpp>
 #include <opencv2/imgproc.hpp>
-
-using namespace cv;
-using namespace std;
-
-int imWidth, imHeight;
-
-int numPatterns;
 
 static const char* keys =
 {
@@ -46,57 +40,6 @@ void help()
         << std::endl;
 }
 
-void findChessboardImPts(cv::Mat& im, cv::Size chessboardPatternSize,
-    std::vector<std::vector<cv::Point2f>>& outChessboardImPts, cv::Size& outImSize, cv::Mat& outImVis,
-    cv::Mat& K = cv::Mat(), cv::Mat& distCoeffs = cv::Mat())
-{
-    cv::Mat imGray;
-
-    if (outImVis.size != im.size)
-        im.copyTo(outImVis);
-
-    cv::cvtColor(im, imGray, cv::COLOR_BGR2GRAY);
-    // cv::threshold(candidateIm, candidateImThresh, 100, 255, THRESH_BINARY);
-
-    outImSize = cv::Size(im.cols, im.rows);
-
-    std::vector<cv::Point2f> candidateChessboardImPts;
-    if (findChessboardCorners(imGray, chessboardPatternSize, candidateChessboardImPts, cv::CALIB_CB_ADAPTIVE_THRESH))
-    {
-        cv::cornerSubPix(imGray, candidateChessboardImPts, cv::Size(5, 5), cv::Size(-1, -1),
-            cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 40, 0.001));
-
-        drawChessboardCorners(outImVis, chessboardPatternSize, candidateChessboardImPts, true);
-        outChessboardImPts.push_back(candidateChessboardImPts);
-    }
-}
-
-void findChessboardImPts(String windowTitle, String inDir, int numIms, cv::Size chessboardPatternSize,
-    std::vector<std::vector<cv::Point2f>>& outChessboardImPts, cv::Size& outImSize,
-    cv::Mat& K = cv::Mat(), cv::Mat& distCoeffs = cv::Mat())
-{
-    for (int numIm = 0; numIm < numIms; numIm++)
-    {
-        stringstream ss1;
-        ss1 << inDir << "\\" << numIm << ".png";
-
-        cv::Mat im = cv::imread(ss1.str());
-
-        cv::Mat imVis;
-        findChessboardImPts(im, chessboardPatternSize,
-            outChessboardImPts, outImSize, imVis,
-            K, distCoeffs);
-
-        std::stringstream ss;
-        ss << windowTitle << " (50% resized)";
-
-        cv::resize(imVis, imVis, cv::Size(imVis.cols * 0.5, imVis.rows * 0.5));
-
-        cv::imshow(ss.str(), imVis);
-        cv::waitKey(5);
-    }
-}
-
 int main(int argc, char** argv)
 {
     cv::CommandLineParser parser(argc, argv, keys);
@@ -110,38 +53,28 @@ int main(int argc, char** argv)
     float chessboardSqSize = parser.get<float>(0);
     int chessboardDimsX = parser.get<int>(1);
     int chessboardDimsY = parser.get<int>(2);
-    String outDir = parser.get<String>(3);
+    std::string outDir = parser.get<std::string>(3);
     int numIms = parser.get<int>(4);
-    String cam0ImDir = parser.get<String>(5);
+    std::string cam0ImDir = parser.get<std::string>(5);
 
     bool hasCam1 = false;
-    String cam1ImDir;
+    std::string cam1ImDir;
     if (argc == 8)
     {
         hasCam1 = true;
-        cam1ImDir = parser.get<String>(6);
+        cam1ImDir = parser.get<std::string>(6);
     }
 
     cv::Size chessboardPatternSize(chessboardDimsX, chessboardDimsY);
 
-    // compute chessboard object points
-    std::vector<cv::Point3f> chessboardObjectPts_;
-    for (int i = 0; i < chessboardPatternSize.height; i++)
-        for (int j = 0; j < chessboardPatternSize.width; j++)
-            chessboardObjectPts_.push_back(
-                cv::Point3f(float(j * chessboardSqSize), float(i * chessboardSqSize), 0));
-
-    // store copy of chessboard object points once per input image
     std::vector<std::vector<cv::Point3f>> chessboardObjectPts;
-    for (int numIm = 0; numIm < numIms; numIm++)
-        chessboardObjectPts.push_back(chessboardObjectPts_);
+    CalibPattern::computeChessboardObjPts(numIms, chessboardSqSize, chessboardPatternSize,
+        chessboardObjectPts);
 
     std::vector<std::vector<cv::Point2f>> cam0ChessboardImPts;
     cv::Size cam0ImSize;
-    findChessboardImPts("cam0", cam0ImDir, numIms, chessboardPatternSize,
+    CalibPattern::findChessboardImPts(cam0ImDir, numIms, chessboardPatternSize,
         cam0ChessboardImPts, cam0ImSize);
-
-    std::cout << "finished findChessboardImPts" << std::endl;
 
     cv::Mat cam0K = cv::Mat::eye(3, 3, CV_64F);
     cv::Mat cam0DistCoeffs = cv::Mat::zeros(8, 1, CV_64F);
@@ -152,6 +85,8 @@ int main(int argc, char** argv)
     std::cout << "Computing intrinsics of cam0" << std::endl;
     std::cout << "RMS (cam0): " << cv::calibrateCamera(chessboardObjectPts, cam0ChessboardImPts, cam0ImSize,
         cam0K, cam0DistCoeffs, cam0Rs, cam0Ts, cv::CALIB_FIX_ASPECT_RATIO) << std::endl << std::endl;
+
+    std::cout << cam0K << std::endl << std::endl;
 
     cv::Mat cam0R = cv::Mat::eye(cv::Size(3, 3), CV_64F);
     cv::Mat cam0T = cv::Mat::zeros(cv::Size(3, 1), CV_64F);
@@ -171,9 +106,9 @@ int main(int argc, char** argv)
 
     if (hasCam1)
     {
-        vector<vector<Point2f>> cam1ChessboardImPts;
+        std::vector<std::vector<cv::Point2f>> cam1ChessboardImPts;
         cv::Size cam1ImSize;
-        findChessboardImPts("cam1", cam1ImDir, numIms, chessboardPatternSize,
+        CalibPattern::findChessboardImPts(cam1ImDir, numIms, chessboardPatternSize,
             cam1ChessboardImPts, cam1ImSize);
 
         cv::Mat cam1K = cv::Mat::eye(3, 3, CV_64F);
@@ -184,7 +119,7 @@ int main(int argc, char** argv)
         // compute 1 camera intrinsics
         std::cout << "Computing intrinsics of cam1" << std::endl;
         std::cout << "RMS (cam1): " << calibrateCamera(chessboardObjectPts, cam1ChessboardImPts, cam1ImSize,
-            cam1K, cam1DistCoeffs, cam1Rs, cam1Ts, CALIB_FIX_ASPECT_RATIO) << std::endl << std::endl;
+            cam1K, cam1DistCoeffs, cam1Rs, cam1Ts, cv::CALIB_FIX_ASPECT_RATIO) << std::endl << std::endl;
 
         std::cout << cam1K << std::endl << std::endl;
 
