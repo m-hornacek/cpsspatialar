@@ -1189,10 +1189,10 @@ int main(int argc, char** argv)
             projSize.width, projSize.height, 0.015));
 
         cv::Mat outIm;
-        cv::warpPerspective(visIm, outIm, H, projSize);
+        //cv::warpPerspective(visIm, outIm, H, projSize);
 
-        cv::imshow("warped image (w.r.t. virtual projector homography)", outIm);
-        cv::waitKey(5);
+        //cv::imshow("warped image (w.r.t. virtual projector homography)", outIm);
+        //cv::waitKey(5);
 
         cv::Mat virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT;
         computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], cams[1],

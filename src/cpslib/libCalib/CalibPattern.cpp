@@ -70,7 +70,7 @@ void CalibPattern::findChessboardImPts(std::string inDir, int numIms, cv::Size c
         cv::resize(imVis, imVis, cv::Size(imVis.cols * 0.5, imVis.rows * 0.5));
 
         cv::imshow(ss2.str(), imVis);
-        cv::waitKey(2);
+        cv::waitKey(100);
     }
 }
 
@@ -134,6 +134,6 @@ void CalibPattern::findChessboardAndCirclesImPts(std::string inDir, int numIms, 
         cv::resize(imVis, imVis, cv::Size(imVis.cols * 0.5, imVis.rows * 0.5));
 
         cv::imshow(ss2.str(), imVis);
-        cv::waitKey(2);
+        cv::waitKey(100);
     }
 }
