@@ -36,7 +36,7 @@ static const char* keys =
 
 void help()
 {
-    std::cout << "./calibrateCam <boardSqSize> <boardDimsX> <boardDimsY> <outDir> <numIms> <cam0ImDir> [<cam1ImDir>]\n"
+    std::cout << "calibrateCam <boardSqSize> <boardDimsX> <boardDimsY> <outDir> <numIms> <cam0ImDir> [<cam1ImDir>]\n"
         << std::endl;
 }
 

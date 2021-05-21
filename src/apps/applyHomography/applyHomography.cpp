@@ -40,7 +40,7 @@ static const char* keys =
 
 void help()
 {
-    std::cout << "./applyHomography <homographyPath> <inPath> <outPath> <scalingFactor> [<angleDeg> <width> <height>]\n"
+    std::cout << "applyHomography <homographyPath> <inPath> <outPath> <scalingFactor> [<angleDeg> <width> <height>]\n"
         << std::endl;
 }
 

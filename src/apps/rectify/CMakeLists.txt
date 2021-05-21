@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.19.0)
 
-PROJECT(calibrateProj)
+PROJECT(rectify)
  
 SET(CPSSPATIALAR_BASEDIR ${CMAKE_CURRENT_SOURCE_DIR}/../../)
 SET(CPSLIB_DIR ${CPSSPATIALAR_BASEDIR}/cpslib)
@@ -19,7 +19,6 @@ LINK_DIRECTORIES(
 )
 
 INCLUDE_DIRECTORIES(
-	${CPSSPATIALAR_BASEDIR}/cpslib/libCalib
 	${CPSSPATIALAR_BASEDIR}/cpslib/libGeom
 	${CPSSPATIALAR_BASEDIR}/cpslib/libHomography
 	${CPSSPATIALAR_BASEDIR}/external
@@ -42,12 +41,11 @@ INCLUDE_DIRECTORIES(
 	${OPENCV_DIR}/3rdparty/include
 )
 
-ADD_EXECUTABLE(calibrateProj
-	calibrateProj.cpp
+ADD_EXECUTABLE(rectify
+	rectify.cpp
 )
 
-TARGET_LINK_LIBRARIES(calibrateProj
-	optimized libCalib
+TARGET_LINK_LIBRARIES(rectify
 	optimized libGeom
 	optimized libHomography
 	optimized glfw3

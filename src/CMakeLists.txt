@@ -12,10 +12,12 @@ SET(EXECUTABLE_OUTPUT_PATH "${CPSSPATIALAR_BASEDIR}/build/bin" CACHE PATH "Outpu
 # cpslib
 ADD_SUBDIRECTORY(cpslib/libCalib)
 ADD_SUBDIRECTORY(cpslib/libGeom)
+ADD_SUBDIRECTORY(cpslib/libHomography)
 
 # apps
 ADD_SUBDIRECTORY(apps/applyHomography)
-ADD_SUBDIRECTORY(apps/applyUndistortion)
+ADD_SUBDIRECTORY(apps/rectify)
+ADD_SUBDIRECTORY(apps/undistort)
 ADD_SUBDIRECTORY(apps/calibrateCam)
 ADD_SUBDIRECTORY(apps/calibrateProj)
 ADD_SUBDIRECTORY(apps/splitZed)

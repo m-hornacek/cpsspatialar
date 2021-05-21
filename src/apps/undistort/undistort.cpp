@@ -3,10 +3,10 @@
  *   michael.hornacek@gmail.com
  *   IMW-CPS TU Vienna, Austria
  *
- *   applyUndistortion <camPath> <imPath> <outImPath>
+ *   undistort <camPath> <imPath> <outImPath>
  *
  *   Example invocations:
- *   applyUndistortion C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_0.yml C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outLeft\0.png C:\Users\micha\Desktop\spatial-ar\in_out\applyUndistortion\undistorted_0.png
+ *   undistort C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_0.yml C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outLeft\0.png C:\Users\micha\Desktop\spatial-ar\in_out\undistort\undistorted_0.png
  */
 
 
@@ -28,7 +28,7 @@ static const char* keys =
 
 void help()
 {
-    std::cout << "./applyUndistortion <camPath> <imPath> <outImPath>\n"
+    std::cout << "undistort <camPath> <imPath> <outImPath>\n"
         << std::endl;
 }
 

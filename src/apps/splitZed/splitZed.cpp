@@ -27,7 +27,7 @@ static const char* keys =
 
 void help()
 {
-    std::cout << "./splitZed <inPattern> <leftCamOutDir> <rightCamOutDir>\n"
+    std::cout << "splitZed <inPattern> <leftCamOutDir> <rightCamOutDir>\n"
         << std::endl;
 }
 
