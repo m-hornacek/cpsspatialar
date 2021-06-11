@@ -86,23 +86,8 @@ int main(int argc, char** argv)
     std::cout << "RMS (cam0): " << cv::calibrateCamera(chessboardObjectPts, cam0ChessboardImPts, cam0ImSize,
         cam0K, cam0DistCoeffs, cam0Rs, cam0Ts, cv::CALIB_FIX_ASPECT_RATIO) << std::endl << std::endl;
 
-    std::cout << cam0K << std::endl << std::endl;
-
     cv::Mat cam0R = cv::Mat::eye(cv::Size(3, 3), CV_64F);
     cv::Mat cam0T = cv::Mat::zeros(cv::Size(3, 1), CV_64F);
-
-    stringstream ssCam0;
-    ssCam0 << outDir << "\\cam_0.yml";
-    cv::FileStorage fsCam0(ssCam0.str(), cv::FileStorage::WRITE);
-
-    fsCam0 << "K" << cam0K;
-    fsCam0 << "R" << cam0R;
-    fsCam0 << "t" << cam0T;
-    fsCam0 << "width" << cam0ImSize.width;
-    fsCam0 << "height" << cam0ImSize.height;
-    fsCam0 << "distCoeffs" << cam0DistCoeffs;
-
-    fsCam0.release();
 
     if (hasCam1)
     {
@@ -121,13 +106,11 @@ int main(int argc, char** argv)
         std::cout << "RMS (cam1): " << calibrateCamera(chessboardObjectPts, cam1ChessboardImPts, cam1ImSize,
             cam1K, cam1DistCoeffs, cam1Rs, cam1Ts, cv::CALIB_FIX_ASPECT_RATIO) << std::endl << std::endl;
 
-        std::cout << cam1K << std::endl << std::endl;
-
         cv::Mat cam1FundamentalMatrix, cam1EssentialMatrix;
         cv::Mat cam1R, cam1T;
 
         // compute pose (cam1R, cam1T) of cam1 w.r.t. cam0
-        std::cout << "Computing pose of cam1 relative to cam0" << std::endl;
+        std::cout << "Computing stereo calibration beween cam0 and cam1" << std::endl;
         std::cout << "RMS (stereo): " << cv::stereoCalibrate(chessboardObjectPts,
             cam0ChessboardImPts, cam1ChessboardImPts,
             cam0K, cam0DistCoeffs,
@@ -136,9 +119,6 @@ int main(int argc, char** argv)
             cam1R, cam1T,
             cam1FundamentalMatrix, cam1EssentialMatrix,
             cv::CALIB_USE_INTRINSIC_GUESS) << std::endl << std::endl;
-
-        std::cout << cam1R << std::endl;
-        std::cout << cam1T << std::endl;
 
         stringstream ssCam1;
         ssCam1 << outDir << "\\cam_1.yml";
@@ -153,4 +133,17 @@ int main(int argc, char** argv)
 
         fsCam1.release();
     }
+
+    stringstream ssCam0;
+    ssCam0 << outDir << "\\cam_0.yml";
+    cv::FileStorage fsCam0(ssCam0.str(), cv::FileStorage::WRITE);
+
+    fsCam0 << "K" << cam0K;
+    fsCam0 << "R" << cam0R;
+    fsCam0 << "t" << cam0T;
+    fsCam0 << "width" << cam0ImSize.width;
+    fsCam0 << "height" << cam0ImSize.height;
+    fsCam0 << "distCoeffs" << cam0DistCoeffs;
+
+    fsCam0.release();
 }
