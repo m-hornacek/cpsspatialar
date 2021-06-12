@@ -92,15 +92,14 @@ void CalibPattern::findCirclesImPts(cv::Mat& im, cv::Size circlesPatternSize,
 
     cv::cvtColor(imUndistort, imGrayUndistort, cv::COLOR_BGR2GRAY);
     cv::bitwise_not(imGrayUndistort, imGrayUndistortInvert);
-    // cv::threshold(candidateIm, candidateImThresh, 100, 255, THRESH_BINARY);
 
     outImSize = cv::Size(im.cols, im.rows);
 
     std::vector<cv::Point2f> candidateCirclesImPts;
     if (findCirclesGrid(imGrayUndistortInvert, circlesPatternSize, candidateCirclesImPts, cv::CALIB_CB_ASYMMETRIC_GRID))
     {
-        //cv::cornerSubPix(imGrayUndistort, candidateCirclesImPts, cv::Size(5, 5), cv::Size(-1, -1),
-        //    TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 40, 0.001));
+        cv::cornerSubPix(imGrayUndistort, candidateCirclesImPts, cv::Size(5, 5), cv::Size(-1, -1),
+            cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 40, 0.001));
 
         drawChessboardCorners(outImVis, circlesPatternSize, candidateCirclesImPts, true);
         outCirclesImPts.push_back(candidateCirclesImPts);
@@ -137,3 +136,4 @@ void CalibPattern::findChessboardAndCirclesImPts(std::string inDir, int numIms, 
         cv::waitKey(100);
     }
 }
+

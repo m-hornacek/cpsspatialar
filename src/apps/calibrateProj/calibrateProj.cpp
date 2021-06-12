@@ -3,10 +3,10 @@
  *   michael.hornacek@gmail.com
  *   IMW-CPS TU Vienna, Austria
  *
- *   calibrateProj <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <imDir> <cam0Path> <circlesImPath> <verticalNegOffset> [<visImIdx>] [<visIm>]
+ *   calibrateProj <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <cam0ImDir> <cam1ImDir> <cam0Path> <cam1Path> <circlesImPath> <verticalNegOffset> [<visImIdx>] [<visIm>]
  *
  *   Example invocation:
- *   calibrateProj 0.0565 4 6 4 11 C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\out 14 C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outLeft C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_0.yml C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\acircles_pattern_960x600.png 1.75 3 C:\Users\micha\Desktop\spatial-ar\in_out\applyHomography\holodeck.png
+ *   calibrateProj 0.0565 4 6 4 11 C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\out 14 C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outLeft C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outRight C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_0.yml C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_1.yml C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\acircles_pattern_960x600.png 1.75 3 C:\Users\micha\Desktop\spatial-ar\in_out\applyHomography\holodeck.png
  */
 
 
@@ -111,8 +111,10 @@ static const char* keys =
     "{@circlesDimsY | | ...}"
     "{@outDir | | ...}"
     "{@numIms | | ...}"
-    "{@imDir | | ...}"
+    "{@cam0ImDir | | ...}"
+    "{@cam1ImDir | | ...}"
     "{@cam0Path | | ...}"
+    "{@cam1Path | | ...}"
     "{@circlesImPath | | ...}"
     "{@verticalNegOffset | | ...}"
     "{@visImIdx | | ...}"
@@ -121,7 +123,7 @@ static const char* keys =
 
 void help()
 {
-    cout << "calibrate <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <imDir> <cam0Path> <circlesImPath> <verticalNegOffset> [<visImIdx>] [<visIm>]\n"
+    cout << "calibrate <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <cam0ImDir> <cam1ImDir> <cam0Path> <cam1Path> <circlesImPath> <verticalNegOffset> [<visImIdx>] [<visIm>]\n"
         << endl;
 }
 
@@ -201,15 +203,17 @@ void display()
 
             char* str;
             if (i == 0)
-                str = "camera";
+                str = "cam0";
             else if (i == 1)
-                str = "projector";
+                str = "cam1";
             else if (i == 2)
-                str = "virtual projector (downward)";
+                str = "projector";
             else if (i == 3)
-                str = "virtual projector (final)";
+                str = "projector virtual (downward)";
             else if (i == 4)
-                str = "virtual camera (downward)";
+                str = "projector virtual (final)";
+            else if (i == 5)
+                str = "cam0 virtual (downward)";
 
             cv::Vec3d C = cams[i].getC();
 
@@ -222,7 +226,7 @@ void display()
             }
 
             float additionalOffset = 0;
-            if (i == 4)
+            if (i == 5)
                 additionalOffset = 0.03;
 
             displayText(C[0] + offset, C[1] + offset, C[2] - offset + additionalOffset, 0, 0, 0, str);
@@ -255,7 +259,7 @@ void display()
             //    virtualCamPlaneIntersection[2] + (camC - virtualCamPlaneIntersection)[2] * 0.5 - offset,
             //    0, 0, 0, ss0.str().c_str());
 
-            cv::Vec3d projC = cams[1].getC();
+            cv::Vec3d projC = cams[2].getC();
 
             glBegin(GL_LINES);
             glVertex3f(projC[0], projC[1], projC[2]);
@@ -288,7 +292,7 @@ void display()
                 0, 0, 0, ss2.str().c_str());
 
 
-            cv::Vec3d virtualProjC = cams[3].getC();
+            cv::Vec3d virtualProjC = cams[4].getC();
 
             double distVirtualProjPlaneIntersection = sqrt(
                 (virtualProjC - projPlaneIntersection).dot(virtualProjC - projPlaneIntersection));
@@ -700,7 +704,7 @@ int main(int argc, char** argv)
 {
     cv::CommandLineParser parser(argc, argv, keys);
 
-    if (argc < 12)
+    if (argc < 14)
     {
         help();
         return -1;
@@ -713,20 +717,22 @@ int main(int argc, char** argv)
     int circlesDimsY = parser.get<int>(4);
     String outDir = parser.get<String>(5);
     int numIms = parser.get<int>(6);
-    String imDir = parser.get<String>(7);
-    String camPath = parser.get<String>(8);
-    String circlesImPath = parser.get<String>(9);
-    float verticalOffset = -parser.get<float>(10);
+    String cam0ImDir = parser.get<String>(7);
+    String cam1ImDir = parser.get<String>(8);
+    String cam0Path = parser.get<String>(9);
+    String cam1Path = parser.get<String>(10);
+    String circlesImPath = parser.get<String>(11);
+    float verticalOffset = -parser.get<float>(12);
 
     int visImIdx = 0;
-    if (argc >= 13)
-        visImIdx = parser.get<int>(11);
+    if (argc >= 15)
+        visImIdx = parser.get<int>(13);
 
     string visImPath;
     bool hasVisIm = false;
-    if (argc == 14)
+    if (argc == 16)
     {
-        visImPath = parser.get<String>(12);
+        visImPath = parser.get<String>(14);
         hasVisIm = true;
     }
 
@@ -760,39 +766,59 @@ int main(int argc, char** argv)
     for (int numIm = 0; numIm < numIms; numIm++)
         circlesProjPts.push_back(circlesProjPts_);
 
-    // read in intrinsics and extrinsics of cam
-    FileStorage fs;
-    fs.open(camPath, FileStorage::READ);
+    // read in intrinsics and extrinsics of cam0
+    FileStorage fsCam0;
+    fsCam0.open(cam0Path, FileStorage::READ);
 
-    cv::Mat camK, camR, camT, camDistCoeffs;
-    fs["K"] >> camK;
-    fs["R"] >> camR;
-    fs["t"] >> camT;
-    fs["distCoeffs"] >> camDistCoeffs;
+    cv::Mat cam0K, cam0R, cam0T, cam0DistCoeffs;
+    fsCam0["K"] >> cam0K;
+    fsCam0["R"] >> cam0R;
+    fsCam0["t"] >> cam0T;
+    fsCam0["distCoeffs"] >> cam0DistCoeffs;
 
     int imWidth, imHeight;
-    fs["width"] >> imWidth;
-    fs["height"] >> imHeight;
+    fsCam0["width"] >> imWidth;
+    fsCam0["height"] >> imHeight;
     cv::Size camSize(imWidth, imHeight);
 
     init(imWidth, imHeight);
 
     cams.push_back(Camera(
-        camK, camR, camT,
+        cam0K, cam0R, cam0T,
+        imWidth, imHeight, 0.015));
+
+    // read in intrinsics and extrinsics of cam1
+    FileStorage fsCam1;
+    fsCam1.open(cam1Path, FileStorage::READ);
+
+    cv::Mat cam1K, cam1R, cam1T, cam1DistCoeffs;
+    fsCam1["K"] >> cam1K;
+    fsCam1["R"] >> cam1R;
+    fsCam1["t"] >> cam1T;
+    fsCam1["distCoeffs"] >> cam1DistCoeffs;
+
+    cams.push_back(Camera(
+        cam1K, cam1R, cam1T,
         imWidth, imHeight, 0.015));
 
     // get circles and chessboard image points determine corresponding plane parameters
-    std::vector<std::vector<cv::Point2f>> camChessboardImPts, camCirclesImPts;
-    CalibPattern::findChessboardAndCirclesImPts(imDir, numIms,
+    std::vector<std::vector<cv::Point2f>> cam0ChessboardImPts, cam0CirclesImPts;
+    CalibPattern::findChessboardAndCirclesImPts(cam0ImDir, numIms,
         chessboardPatternSize, circlesPatternSize,
-        camChessboardImPts, camCirclesImPts, cv::Size(),
-        true, camK, camDistCoeffs);
+        cam0ChessboardImPts, cam0CirclesImPts, cv::Size(),
+        true, cam0K, cam0DistCoeffs);
+
+    std::vector<std::vector<cv::Point2f>> cam1ChessboardImPts, cam1CirclesImPts;
+    CalibPattern::findChessboardAndCirclesImPts(cam1ImDir, numIms,
+        chessboardPatternSize, circlesPatternSize,
+        cam1ChessboardImPts, cam1CirclesImPts, cv::Size(),
+        true, cam1K, cam1DistCoeffs);
 
     std::vector<cv::Mat> planeRs, planeTs;
 
     // use not to calibrate camera (we provide camera parameters and keep them fixed), but to obtain plane for each image in cam coordinate frame
-    cout << "RMS (camera resection/plane recovery): " << cv::calibrateCamera(chessboardObjectPts, camChessboardImPts, camSize,
-        camK, camDistCoeffs, planeRs, planeTs,
+    cout << "RMS (camera resection/plane recovery): " << cv::calibrateCamera(chessboardObjectPts, cam0ChessboardImPts, camSize,
+        cam0K, cam0DistCoeffs, planeRs, planeTs,
         cv::CALIB_USE_INTRINSIC_GUESS | cv::CALIB_FIX_PRINCIPAL_POINT | cv::CALIB_FIX_FOCAL_LENGTH |
         cv::CALIB_FIX_K1 | cv::CALIB_FIX_K2 | cv::CALIB_FIX_K3 | cv::CALIB_FIX_K4 | cv::CALIB_FIX_K5 | cv::CALIB_FIX_K6 |
         cv::CALIB_ZERO_TANGENT_DIST) << endl;
@@ -822,12 +848,33 @@ int main(int argc, char** argv)
 
         fsPlane << "Rt" << planeRigid;
 
-        vector<Point3f> circlesObjectPts_;
-        for (int numCircle = 0; numCircle < camCirclesImPts.at(numIm).size(); numCircle++)
+        std::vector<cv::Point3f> circlesObjectPts_;
+        if (false)
         {
-            cv::Vec3d intersection = imPlane.intersect(cams[0].backprojectLocal(camCirclesImPts.at(numIm).at(numCircle)));
-            circlesObjectPts_.push_back(cv::Point3d(intersection[0], intersection[1], intersection[2]));
+            cv::Mat intersectionsHomog;
+            cv::triangulatePoints(cams[0].getP(), cams[1].getP(), cam0CirclesImPts.at(numIm), cam1CirclesImPts.at(numIm), intersectionsHomog);
+
+            for (int i = 0; i < intersectionsHomog.cols; i++)
+            {
+                cv::Vec4d ptHomog(intersectionsHomog.col(i));
+
+                cv::Point3d pt(
+                    ptHomog[0] / ptHomog[3],
+                    ptHomog[1] / ptHomog[3],
+                    ptHomog[2] / ptHomog[3]);
+
+                circlesObjectPts_.push_back(pt);
+            }
         }
+        else
+        {
+            for (int numCircle = 0; numCircle < cam0CirclesImPts.at(numIm).size(); numCircle++)
+            {
+                cv::Vec3d intersection = imPlane.intersect(cams[0].backprojectLocal(cam0CirclesImPts.at(numIm).at(numCircle)));
+                circlesObjectPts_.push_back(cv::Point3d(intersection[0], intersection[1], intersection[2]));
+            }
+        }
+
         circlesObjectPts.push_back(circlesObjectPts_);
         planes.push_back(Plane(planeRigid));
 
@@ -932,20 +979,20 @@ int main(int argc, char** argv)
         
 
         Plane planeProjLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
-        planeProjLocal.rigidTransform(cams[1].getRt44());
+        planeProjLocal.rigidTransform(cams[2].getRt44());
 
         cv::Vec3d projPlaneIntersectionLocal = planeProjLocal.intersect(
-            cams[1].backprojectLocal(cv::Point2f(projSize.width * 0.5, projSize.height * 0.5)));
+            cams[2].backprojectLocal(cv::Point2f(projSize.width * 0.5, projSize.height * 0.5)));
 
-        projPlaneIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[1].getRt44Inv(), projPlaneIntersectionLocal);
+        projPlaneIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[2].getRt44Inv(), projPlaneIntersectionLocal);
 
         cv::Vec3d projCamIntersectionLocal = planes[numIm].intersect(
             cams[0].backprojectLocal(cv::Point2f(camSize.width * 0.5, camSize.height * 0.5)));
 
-        projCamIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[1].getRt44Inv(), projCamIntersectionLocal);
+        projCamIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[2].getRt44Inv(), projCamIntersectionLocal);
 
         cv::Mat H, virtualProjR, virtualProjT;
-        Homography::computeBirdsEyeViewHomography(planes[numIm], cams[1], H, virtualProjR, virtualProjT);
+        Homography::computeBirdsEyeViewHomography(planes[numIm], cams[2], H, virtualProjR, virtualProjT);
         cams.push_back(Camera(
             projK, virtualProjR, virtualProjT,
             projSize.width, projSize.height, 0.015));
@@ -957,7 +1004,7 @@ int main(int argc, char** argv)
         //cv::waitKey(5);
 
         cv::Mat virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT;
-        Homography::computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], cams[1],
+        Homography::computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], cams[2],
             verticalOffset, virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT);
 
         cams.push_back(Camera(
@@ -965,10 +1012,10 @@ int main(int argc, char** argv)
             projSize.width, projSize.height, 0.015));
 
         cams.push_back(Camera(
-            camK, virtualCamR, virtualCamT,
+            cam0K, virtualCamR, virtualCamT,
             camSize.width, camSize.height, 0.015));
 
-        Homography::computePlaneInducedHomography(planes[numIm], cams[1], cams[3], H);
+        Homography::computePlaneInducedHomography(planes[numIm], cams[2], cams[4], H);
 
         cv::warpPerspective(visIm, outIm, H, projSize);
 
@@ -980,8 +1027,8 @@ int main(int argc, char** argv)
         {
             for (int x = 0; x < projSize.width; x += 3)
             {
-                cv::Vec3d intersectionLocal = planeProjLocal.intersect(cams[1].backprojectLocal(cv::Point2f(x, y)));
-                cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[1].getRt44Inv(), intersectionLocal);
+                cv::Vec3d intersectionLocal = planeProjLocal.intersect(cams[2].backprojectLocal(cv::Point2f(x, y)));
+                cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[2].getRt44Inv(), intersectionLocal);
                 imVisPts.push_back(cv::Point3d(intersectionGlobal[0], intersectionGlobal[1], intersectionGlobal[2]));
 
                 cv::Vec3b color = visIm.at<cv::Vec3b>(cv::Point2f(x, y));
@@ -991,13 +1038,13 @@ int main(int argc, char** argv)
         pointCloudImVis = new PointCloud(imVisPts, imVisColors);
 
         Plane planeProjVirtualLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
-        planeProjVirtualLocal.rigidTransform(cams[3].getRt44());
+        planeProjVirtualLocal.rigidTransform(cams[4].getRt44());
 
         vector<Point3f> circlesObjectPtsVirtual_;
         for (int numCircle = 0; numCircle < circlesProjPts.at(numIm).size(); numCircle++)
         {
-            cv::Vec3d intersectionLocal = planeProjVirtualLocal.intersect(cams[3].backprojectLocal(circlesProjPts.at(numIm).at(numCircle)));
-            cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[3].getRt44Inv(), intersectionLocal);
+            cv::Vec3d intersectionLocal = planeProjVirtualLocal.intersect(cams[4].backprojectLocal(circlesProjPts.at(numIm).at(numCircle)));
+            cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[4].getRt44Inv(), intersectionLocal);
             circlesObjectPtsVirtual_.push_back(cv::Point3d(intersectionGlobal[0], intersectionGlobal[1], intersectionGlobal[2]));
         }
         pointCloud2Circles = new PointCloud(circlesObjectPtsVirtual_);
@@ -1007,8 +1054,8 @@ int main(int argc, char** argv)
         {
             for (int x = 0; x < projSize.width; x += 3)
             {
-                cv::Vec3d intersectionLocal = planeProjLocal.intersect(cams[1].backprojectLocal(cv::Point2f(x, y)));
-                cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[1].getRt44Inv(), intersectionLocal);
+                cv::Vec3d intersectionLocal = planeProjLocal.intersect(cams[2].backprojectLocal(cv::Point2f(x, y)));
+                cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[2].getRt44Inv(), intersectionLocal);
                 imVis2Pts.push_back(cv::Point3d(intersectionGlobal[0], intersectionGlobal[1], intersectionGlobal[2]));
 
                 cv::Vec3b color = outIm.at<cv::Vec3b>(cv::Point2f(x, y));
@@ -1018,12 +1065,12 @@ int main(int argc, char** argv)
         pointCloud2ImVis = new PointCloud(imVis2Pts, imVis2Colors);
 
         Plane planCamVirtualLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
-        planCamVirtualLocal.rigidTransform(cams[4].getRt44());
+        planCamVirtualLocal.rigidTransform(cams[5].getRt44());
 
         cv::Vec3d virtualCamPlaneIntersectionLocal = planCamVirtualLocal.intersect(
-            cams[4].backprojectLocal(cv::Point2f(camSize.width * 0.5, camSize.height * 0.5)));
+            cams[5].backprojectLocal(cv::Point2f(camSize.width * 0.5, camSize.height * 0.5)));
 
-        virtualCamPlaneIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[4].getRt44Inv(), virtualCamPlaneIntersectionLocal);
+        virtualCamPlaneIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[5].getRt44Inv(), virtualCamPlaneIntersectionLocal);
     }
 
     glutInit(&argc, argv);
