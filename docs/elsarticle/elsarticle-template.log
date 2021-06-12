@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=latex 2021.6.12)  12 JUN 2021 15:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=latex 2021.6.12)  12 JUN 2021 16:32
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -360,4 +360,4 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  40i,7n,36p,1575b,464s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on elsarticle-template.dvi (4 pages, 14012 bytes).
+Output written on elsarticle-template.dvi (4 pages, 14016 bytes).
