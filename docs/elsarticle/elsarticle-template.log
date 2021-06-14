@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=latex 2021.6.12)  13 JUN 2021 22:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=latex 2021.6.12)  14 JUN 2021 07:15
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -514,32 +514,22 @@ Package hyperref Warning: Composite letter `\textasciicaron+c'
 
 
 ] [2] [3] (elsarticle-template.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 122.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 124.
  [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 122.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 124.
  (elsarticle-template.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 122.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 122.
-
-
-Package rerunfilecheck Warning: File `elsarticle-template.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `elsarticle-template.out':
-(rerunfilecheck)             Before: 47699228A5B2C624B459B5325021F65F;439
-(rerunfilecheck)             After:  8CE3717B81196D2F5010E248CE845A22;426.
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 124.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 124.
+Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
+(rerunfilecheck)             Checksum: B11341CA25A9783B19D0004E539DD7D6;441.
  ) 
 Here is how much of TeX's memory you used:
- 9775 strings out of 480791
- 154737 string characters out of 2897327
- 437656 words of memory out of 3000000
- 25617 multiletter control sequences out of 15000+200000
- 537063 words of font info for 43 fonts, out of 3000000 for 9000
+ 9793 strings out of 480791
+ 154921 string characters out of 2897327
+ 438656 words of memory out of 3000000
+ 25629 multiletter control sequences out of 15000+200000
+ 540032 words of font info for 55 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,6n,49p,1503b,383s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,8n,49p,1515b,357s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on elsarticle-template.dvi (4 pages, 19880 bytes).
+Output written on elsarticle-template.dvi (4 pages, 20984 bytes).
