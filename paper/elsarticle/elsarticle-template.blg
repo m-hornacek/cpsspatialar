@@ -4,45 +4,47 @@ The top-level auxiliary file: elsarticle-template.aux
 Reallocating 'name_of_file' (item size: 1) to 15 items.
 The style file: elsarticle-num.bst
 Reallocating 'name_of_file' (item size: 1) to 10 items.
+I found no \citation commands---while reading file elsarticle-template.aux
 Database file #1: mybibfile.bib
-You've used 2 entries,
+You've used 0 entries,
             2937 wiz_defined-function locations,
-            687 strings with 5441 characters,
-and the built_in function-call counts, 664 in all, are:
-= -- 70
-> -- 11
+            668 strings with 5102 characters,
+and the built_in function-call counts, 44 in all, are:
+= -- 0
+> -- 0
 < -- 0
-+ -- 5
-- -- 3
-* -- 54
-:= -- 106
-add.period$ -- 4
-call.type$ -- 2
-change.case$ -- 2
++ -- 0
+- -- 0
+* -- 2
+:= -- 23
+add.period$ -- 0
+call.type$ -- 0
+change.case$ -- 0
 chr.to.int$ -- 0
-cite$ -- 2
-duplicate$ -- 15
-empty$ -- 68
-format.name$ -- 4
-if$ -- 158
+cite$ -- 0
+duplicate$ -- 0
+empty$ -- 1
+format.name$ -- 0
+if$ -- 1
 int.to.chr$ -- 0
-int.to.str$ -- 2
-missing$ -- 2
-newline$ -- 16
-num.names$ -- 2
-pop$ -- 7
+int.to.str$ -- 0
+missing$ -- 0
+newline$ -- 8
+num.names$ -- 0
+pop$ -- 0
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 38
+skip$ -- 1
 stack$ -- 0
-substring$ -- 50
-swap$ -- 6
+substring$ -- 0
+swap$ -- 0
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 6
-width$ -- 3
-write$ -- 27
+while$ -- 0
+width$ -- 0
+write$ -- 7
+(There was 1 error message)

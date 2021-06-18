@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=latex 2021.6.12)  14 JUN 2021 07:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=latex 2021.6.12)  18 JUN 2021 07:45
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -513,23 +513,42 @@ Package hyperref Warning: Composite letter `\textasciicaron+c'
 [1
 
 
-] [2] [3] (elsarticle-template.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 124.
- [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 124.
+] [2] [3]
+
+! Package inputenc Error: Unicode character π (U+03C0)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.95 ...e projector's (or camera's) image plane π
+                                                  proj, the ray from the pro...
+
+You may provide a definition with
+\DeclareUnicodeCharacter 
+
+[4] (elsarticle-template.bbl
+
+Package natbib Warning: Empty `thebibliography' environment on input line 8.
+
+)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 130.
+ [5]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 130.
  (elsarticle-template.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 124.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 124.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 130.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 130.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
-(rerunfilecheck)             Checksum: B11341CA25A9783B19D0004E539DD7D6;441.
+(rerunfilecheck)             Checksum: 70F02290163E94776AC92EFCE0CC66A3;432.
  ) 
 Here is how much of TeX's memory you used:
- 9793 strings out of 480791
- 154921 string characters out of 2897327
+ 9790 strings out of 480791
+ 154848 string characters out of 2897327
  438656 words of memory out of 3000000
- 25629 multiletter control sequences out of 15000+200000
+ 25626 multiletter control sequences out of 15000+200000
  540032 words of font info for 55 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,8n,49p,1515b,357s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,8n,49p,1515b,354s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on elsarticle-template.dvi (4 pages, 20984 bytes).
+Output written on elsarticle-template.dvi (5 pages, 25012 bytes).
