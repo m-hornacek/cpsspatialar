@@ -128,7 +128,7 @@ void CalibPattern::findChessboardAndCirclesImPts(std::string inDir, int numIms, 
             applyIntrinsics, K, distCoeffs);
 
         std::stringstream ss2;
-        ss2 << "projector calibration image (50% resized)";
+        ss2 << "projector calibration image " << ss1.str() << " (50% resized)";
 
         cv::resize(imVis, imVis, cv::Size(imVis.cols * 0.5, imVis.rows * 0.5));
 

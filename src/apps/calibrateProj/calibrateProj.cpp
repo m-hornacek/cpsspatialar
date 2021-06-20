@@ -187,17 +187,65 @@ void display()
             if (showVirtual)
                 pointCloud2Circles->display(pointSize, 0, 1, 0);
             else
+            {
                 pointCloudCircles->display(pointSize, 1, 0, 0);
+
+                std::vector<cv::Point3f> points = pointCloudCircles->getPoints();
+                std::vector<cv::Point3f> points2 = pointCloud->getPoints();
+
+                float f = cams[0].getf();
+                float CCDWidth_half_mm = 20.0 * 0.01 * 0.5;
+
+                for (int ptIdx = 0; ptIdx < points.size(); ptIdx++)
+                {
+                    glBegin(GL_POINTS);
+                        glPointSize(0.5 * pointSize);
+                        glColor3f(1.0, 0.0, 0.0);
+                        glVertex3f(CCDWidth_half_mm * points[ptIdx].x / points[ptIdx].z, CCDWidth_half_mm * points[ptIdx].y / points[ptIdx].z, CCDWidth_half_mm);
+                    glEnd();
+
+                    glBegin(GL_LINES);
+                        glColor3f(0.9, 0.9, 0.9);
+                        glVertex3f(0, 0, 0);
+                        glVertex3f(points[ptIdx].x, points[ptIdx].y, points[ptIdx].z);
+                    glEnd();
+
+                    glBegin(GL_POINTS);
+                        glPointSize(0.5 * pointSize);
+                        glColor3f(1.0, 0.0, 0.0);
+                        glVertex3f(CCDWidth_half_mm * points[ptIdx].x / points[ptIdx].z, CCDWidth_half_mm * points[ptIdx].y / points[ptIdx].z, CCDWidth_half_mm);
+                    glEnd();
+                }
+                   
+                for (int ptIdx = 0; ptIdx < points2.size(); ptIdx++)
+                {
+                    glBegin(GL_POINTS);
+                        glPointSize(0.5 * pointSize);
+                        glColor3f(0.0, 0.0, 1.0);
+                        glVertex3f(CCDWidth_half_mm * points2[ptIdx].x / points2[ptIdx].z, CCDWidth_half_mm * points2[ptIdx].y / points2[ptIdx].z, CCDWidth_half_mm);
+                    glEnd();
+                }
+            }
         }
 
-        planeVis->display(2.5, pointSize);
+        planeVis->display(1.5, pointSize);
 
         float offset = 0.02;
         for (int i = 0; i < cams.size(); i++)
         {
+            //if (i != 0)
+            //    continue;
+
             float r = 0.5;
             float g = 0.5;
             float b = 0.5;
+
+            if (i == 0 || i == 2)
+            { 
+                r = 0.0;
+                g = 0.0;
+                b = 0.0;
+            }
 
             cams[i].displayWorld(r, g, b);
 
@@ -785,7 +833,7 @@ int main(int argc, char** argv)
 
     cams.push_back(Camera(
         cam0K, cam0R, cam0T,
-        imWidth, imHeight, 0.015));
+        imWidth, imHeight, 0.01));
 
     // read in intrinsics and extrinsics of cam1
     FileStorage fsCam1;
@@ -799,7 +847,7 @@ int main(int argc, char** argv)
 
     cams.push_back(Camera(
         cam1K, cam1R, cam1T,
-        imWidth, imHeight, 0.015));
+        imWidth, imHeight, 0.01));
 
     // get circles and chessboard image points determine corresponding plane parameters
     std::vector<std::vector<cv::Point2f>> cam0ChessboardImPts, cam0CirclesImPts;
@@ -923,7 +971,7 @@ int main(int argc, char** argv)
 
         Camera proj(
             projK, rot, projTs.at(numIm),
-            projSize.width, projSize.height, 0.015);
+            projSize.width, projSize.height, 0.01);
 
         cv::Mat H;
 
@@ -932,7 +980,7 @@ int main(int argc, char** argv)
 
         Camera transformedProj(
             projK, alignedVirtualProjR, alignedVirtualProjT,
-            projSize.width, projSize.height, 0.015);
+            projSize.width, projSize.height, 0.01);
 
         Homography::computePlaneInducedHomography(planes[numIm], proj, transformedProj, H);
 
@@ -957,7 +1005,7 @@ int main(int argc, char** argv)
 
         cams.push_back(Camera(
             projK, camToProjR, camToProjT,
-            projSize.width, projSize.height, 0.015));
+            projSize.width, projSize.height, 0.01));
 
         cv::Mat planeRigid;
         planes[numIm].getRigid(planeRigid);
@@ -995,7 +1043,7 @@ int main(int argc, char** argv)
         Homography::computeBirdsEyeViewHomography(planes[numIm], cams[2], H, virtualProjR, virtualProjT);
         cams.push_back(Camera(
             projK, virtualProjR, virtualProjT,
-            projSize.width, projSize.height, 0.015));
+            projSize.width, projSize.height, 0.01));
 
         cv::Mat outIm;
         //cv::warpPerspective(visIm, outIm, H, projSize);
@@ -1009,11 +1057,11 @@ int main(int argc, char** argv)
 
         cams.push_back(Camera(
             projK, alignedVirtualProjR, alignedVirtualProjT,
-            projSize.width, projSize.height, 0.015));
+            projSize.width, projSize.height, 0.01));
 
         cams.push_back(Camera(
             cam0K, virtualCamR, virtualCamT,
-            camSize.width, camSize.height, 0.015));
+            camSize.width, camSize.height, 0.01));
 
         Homography::computePlaneInducedHomography(planes[numIm], cams[2], cams[4], H);
 
