@@ -53,7 +53,9 @@
 %\tnotetext[mytitlenote]{Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.}
 
 %% Group authors per affiliation:
-\author{Michael Horn\'{a}\v{c}ek}
+\author{Michael Horn\'{a}\v{c}ek}\corref{mycorrespondingauthor}
+\cortext[mycorrespondingauthor]{Corresponding author}
+\ead{michael.hornacek@tuwien.ac.at}
 \author{Hans K\"{u}ffner-McCauley}
 \author{Sebastian Schlund}
 \address{Human Centered Cyber Physical Production and Assembly Systems, Institute for Management Sciences, TU Vienna, Austria}
@@ -61,7 +63,7 @@
 \begin{abstract}
 Augmented reality (AR) promises to enable use cases in industrial settings that include the embedding of assembly instructions directly into the scene, potentially reducing or altogether obviating the need for workers to refer to instructions in paper form or on a screen. In turn, \textit{spatial} AR is a form of AR whereby the augmentation of the scene is carried out using a projector, with the advantage of rendering the augmentation visible to all onlookers simultaneously without calling for each to wear some form of head-mounted display. However, care must be taken to distort the images to be projected in a manner that they appear undistorted to the viewer, since the geometry of the scene as it relates to the geometry of the projector plays a role in how the pixels of the projector's image plane map to points in the scene. For planar scene geometry (such as a floor, wall, or table), this can be done in a cumbersome manual process called keystone correction, often using software bundled with the projector.
 
-We propose a system that produces the effect of keystone correction analytically, and that intuitively places the desired augmentations in a manner aligned with the axes of an image of the scene acquired by a camera. Moreover, our system is able to handle a projector equipped with a steerable mirror, enabling wide-area factory floor augmentation exceeding the projector's own immediate field of view.
+We propose a system that produces the effect of keystone correction analytically, and that intuitively places the desired augmentations in a manner aligned with the axes of an image of the scene acquired by a camera. Moreover, our system is able to handle a projector equipped with a steerable mirror, enabling wide-area factory floor augmentation exceeding the bounds of the projector's own immediate field of view.
 \end{abstract}
 
 \begin{keyword}
@@ -117,9 +119,9 @@ In practice, calibrating a camera relies on (i) establishing 2D-3D correspondenc
 
 \paragraph{Projector calibration} As in the case of camera calibration, projector calibration relies on 2D-3D correspondences, yet we obtain them in this case by projecting a pattern of circles. We rely on an algorithm to detect the circle pattern center points in the circles pattern image in the image plane of the projector, giving the 2D positions of our 2D-3D correspondences (cf.\ Figure~\ref{fig:2d}(a)). We project the circles pattern image to each of the target locations, and use the camera to acquire a projector calibration image for each. Given a projector calibration image, we again detect the centers of the \textit{projected} circles pattern (cf.\ Figure~\ref{fig:2d}(b)); given the scene plane (the recovery of which we shall turn to in the paragraph that follows) and such a 2D circle center $\mathbf{x}$, its 3D correspondence is obtained by intersecting the back-projection of $\mathbf{x}$ with the scene plane (cf.\ Figure~\ref{fig:3d}). Since the algorithm that yields 2D circle centers does so in a consistent ordering, we thus obtain the 2D-3D correspondences between the projector's image plane and the scene required for projector calibration, yielding the projector calibration matrix~$\mathtt{K}_\text{proj}$.
 
-We recover the scene plane via spatial resection by applying a PnP algorithm \cite{terzakis2020consistently} to the with respect to 2D-3D correspondences of a chessboard pattern. Note that this step is separate from camera calibration, yet could well be carried out using the same pattern used in the camera calibration step.\footnote{The critical point is that the pattern should ideally be coplanar with the local scene plane, meaning its height above the scene plane should not exceed a few millimeters.} While a single image of such a chessboard pattern placed on the floor could be sufficient if the floor is even, we place a chessboard pattern in close proximity to the projected circles pattern in each projector calibration image in order to recover the scene plane locally to each target location, in order to account for the possibility of an uneven floor.
+We recover the scene plane via spatial resection by applying a PnP algorithm \cite{terzakis2020consistently} to the with respect to 2D-3D correspondences of a chessboard pattern. Note that this step is separate from camera calibration, yet could well be carried out using the same calibration pattern used in the camera calibration step.\footnote{The critical point is that the pattern should ideally be coplanar with the local scene plane, meaning its height above the scene plane should not exceed a few millimeters.} While a single image of such a chessboard pattern placed on the floor could be sufficient if the floor is even, we place a chessboard pattern in close proximity to the projected circles pattern in each projector calibration image in order to recover the scene plane locally to each target location, in order to account for the possibility of an uneven floor.
 
-The pose (i.e., position and orientation) of the projector, for each projector calibration image, is provided alongside $\mathtt{K}_\text{proj}$ by the aforementioned optimization. Note that for a fixed projector with steerable mirror, given a projector calibration image, the recovered projector's pose is the pose the projector would have to have had to project to the given target location \textit{in the absence of the mirror}. 
+The pose (i.e., position and orientation) of the projector, for each projector calibration image, is provided alongside $\mathtt{K}_\text{proj}$ by the aforementioned optimization procedure. Note that for a fixed projector with steerable mirror, given a projector calibration image, the recovered projector's pose is the pose the projector would have to have had to project to the given target location \textit{in the absence of the mirror}. As this is sufficient for our needs in Section~\ref{sec:approach:homography}, it is in this sense that our system is able to handle a projector equipped with a steerable mirror, without need for modeling the steerable mirror explicitly.
 
 \subsection{Correcting for Projective Distortion}\label{sec:approach:homography}
 
@@ -141,7 +143,7 @@ todo - maybe Hans would like to help?
 
 \section{Conclusion}
 
-
+We presented a system that produces the effect of keystone correction analytically, and that intuitively places the desired augmentations in a manner aligned with the axes of an image of the scene acquired by a camera. Moreover, we showed our system to be able to handle a projector equipped with a steerable mirror, enabling wide-area factory floor augmentation exceeding the bounds of the projector's own immediate field of view. Our evaluation demonstrated ...
 
 
 
