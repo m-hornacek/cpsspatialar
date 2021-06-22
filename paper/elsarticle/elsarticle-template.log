@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  20 JUN 2021 22:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  22 JUN 2021 04:31
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -434,11 +434,7 @@ y
 Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
 \everycr=\toks29
 \minrowclearance=\skip66
-) (elsarticle-template.aux
-
-LaTeX Warning: Label `fig:example' multiply defined.
-
-)
+) (elsarticle-template.aux)
 \openout1 = `elsarticle-template.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
@@ -529,26 +525,53 @@ Package hyperref Warning: Composite letter `\textasciicaron+c'
 
 
 {C:/Users/micha/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] [2] [3]
-<images/circles.png, id=65, 722.7pt x 451.6875pt>
+<images/circles.png, id=77, 722.7pt x 451.6875pt>
 File: images/circles.png Graphic file (type png)
 <use images/circles.png>
 Package pdftex.def Info: images/circles.png  used on input line 97.
 (pdftex.def)             Requested size: 147.95596pt x 92.47145pt.
-<images/detections.png, id=67, 831.105pt x 467.49657pt>
+<images/detections.png, id=79, 831.105pt x 467.49657pt>
 File: images/detections.png Graphic file (type png)
 <use images/detections.png>
 Package pdftex.def Info: images/detections.png  used on input line 99.
 (pdftex.def)             Requested size: 164.39189pt x 92.47145pt.
-<images/2d3d.png, id=68, 831.105pt x 467.49657pt>
+<images/2d3d.png, id=80, 831.105pt x 467.49657pt>
 File: images/2d3d.png Graphic file (type png)
 <use images/2d3d.png>
 Package pdftex.def Info: images/2d3d.png  used on input line 106.
-(pdftex.def)             Requested size: 415.55148pt x 233.74771pt.
+(pdftex.def)             Requested size: 290.8911pt x 163.62624pt.
 
 [4 <./images/circles.png> <./images/detections.png>] [5 <./images/2d3d.png>]
-[6] [7] [8] (elsarticle-template.bbl
+[6] [7] (elsarticle-template.bbl [8]
 
-Package natbib Warning: Empty `thebibliography' environment on input line 8.
+! Package inputenc Error: Invalid UTF-8 byte "97.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.27   4.0—
+           implementation challenges and success factors, Robotics and
+The document does not appear to be in UTF-8 encoding.
+Try adding \UseRawInputEncoding as the first line of the file
+or specify an encoding such as \usepackage [latin1]{inputenc}
+in the document preamble.
+Alternatively, save the file in UTF-8 using your editor or another tool
+
+
+! Package inputenc Error: Invalid UTF-8 byte "97.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.49   adjustment—
+                  a modern synthesis, in: International Workshop on Vision
+The document does not appear to be in UTF-8 encoding.
+Try adding \UseRawInputEncoding as the first line of the file
+or specify an encoding such as \usepackage [latin1]{inputenc}
+in the document preamble.
+Alternatively, save the file in UTF-8 using your editor or another tool
 
 )
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 150.
@@ -559,19 +582,15 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 150.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 150.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 (rerunfilecheck)             Checksum: 931A8A5691BA4CFC05FD6E6D977BBAB6;443.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
  ) 
 Here is how much of TeX's memory you used:
- 10229 strings out of 480790
- 161026 string characters out of 2897301
- 440876 words of memory out of 3000000
- 26017 multiletter control sequences out of 15000+200000
+ 10276 strings out of 480790
+ 162116 string characters out of 2897301
+ 440966 words of memory out of 3000000
+ 26053 multiletter control sequences out of 15000+200000
  540821 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,10n,49p,1667b,420s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,10n,49p,1717b,442s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmbx10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmex10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/p
@@ -591,9 +610,9 @@ ublic/amsfonts/cm/cmsy8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts
 TeX/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Users/micha/AppData/Local/Prog
 rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/micha/AppData/L
 ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on elsarticle-template.pdf (9 pages, 1367422 bytes).
+Output written on elsarticle-template.pdf (9 pages, 1374990 bytes).
 PDF statistics:
- 181 PDF objects out of 1000 (max. 8388607)
- 32 named destinations out of 1000 (max. 500000)
+ 210 PDF objects out of 1000 (max. 8388607)
+ 43 named destinations out of 1000 (max. 500000)
  80 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,8 +1,61 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{10}
 \expandafter\ifx\csname url\endcsname\relax
   \def\url#1{\texttt{#1}}\fi
 \expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
 \expandafter\ifx\csname href\endcsname\relax
   \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{van2010survey}
+D.~Van~Krevelen, R.~Poelman, A survey of augmented reality technologies,
+  applications and limitations, International journal of virtual reality 9~(2)
+  (2010) 1--20.
+
+\bibitem{zhou2008trends}
+F.~Zhou, H.~B.-L. Duh, M.~Billinghurst, Trends in augmented reality tracking,
+  interaction and display: A review of ten years of ismar, in: 2008 7th
+  IEEE/ACM International Symposium on Mixed and Augmented Reality, IEEE, 2008,
+  pp. 193--202.
+
+\bibitem{schlund2018moglichkeiten}
+S.~Schlund, W.~Mayrhofer, P.~Rupprecht, M{\"o}glichkeiten der gestaltung
+  individualisierbarer montagearbeitspl{\"a}tze vor dem hintergrund aktueller
+  technologischer entwicklungen, Zeitschrift f{\"u}r Arbeitswissenschaft 72~(4)
+  (2018) 276--286.
+
+\bibitem{masood2019augmented}
+T.~Masood, J.~Egger, Augmented reality in support of industry
+  4.0—implementation challenges and success factors, Robotics and
+  Computer-Integrated Manufacturing 58 (2019) 181--195.
+
+\bibitem{gattullo2019towards}
+M.~Gattullo, G.~W. Scurati, M.~Fiorentino, A.~E. Uva, F.~Ferrise, M.~Bordegoni,
+  Towards augmented reality manuals for industry 4.0: A methodology, robotics
+  and computer-integrated manufacturing 56 (2019) 276--286.
+
+\bibitem{bimber2019spatial}
+O.~Bimber, R.~Raskar, Spatial Augmented Reality: Merging Real and Virtual
+  Worlds, AK Peters/CRC Press, 2019.
+
+\bibitem{Hartley2004}
+R.~I. Hartley, A.~Zisserman, Multiple View Geometry in Computer Vision, 2nd
+  Edition, Cambridge University Press, ISBN: 0521540518, 2004.
+
+\bibitem{duane1971close}
+D.~C. Brown, Close-range camera calibration, Photogrammetric Engineering 37~(8)
+  (1971) 855--866.
+
+\bibitem{triggs1999bundle}
+B.~Triggs, P.~F. McLauchlan, R.~I. Hartley, A.~W. Fitzgibbon, Bundle
+  adjustment—a modern synthesis, in: International Workshop on Vision
+  Algorithms, Springer, 1999, pp. 298--372.
+
+\bibitem{zhang2000flexible}
+Z.~Zhang, A flexible new technique for camera calibration, IEEE Transactions on
+  pattern analysis and machine intelligence 22~(11) (2000) 1330--1334.
+
+\bibitem{terzakis2020consistently}
+G.~Terzakis, M.~Lourakis, A consistently fast and globally optimal solution to
+  the perspective-n-point problem, in: European Conference on Computer Vision,
+  Springer, 2020, pp. 478--494.
 
 \end{thebibliography}
