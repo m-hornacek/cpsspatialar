@@ -17,14 +17,14 @@ F.~Zhou, H.~B.-L. Duh, M.~Billinghurst, Trends in augmented reality tracking,
   pp. 193--202.
 
 \bibitem{schlund2018moglichkeiten}
-S.~Schlund, W.~Mayrhofer, P.~Rupprecht, M{\"o}glichkeiten der gestaltung
-  individualisierbarer montagearbeitspl{\"a}tze vor dem hintergrund aktueller
-  technologischer entwicklungen, Zeitschrift f{\"u}r Arbeitswissenschaft 72~(4)
-  (2018) 276--286.
+S.~Schlund, W.~Mayrhofer, P.~Rupprecht, {M{\"o}glichkeiten} der {Gestaltung}
+  individualisierbarer {Montagearbeitspl{\"a}tze} vor dem {Hintergrund}
+  aktueller technologischer {Entwicklungen}, Zeitschrift f{\"u}r
+  Arbeitswissenschaft 72~(4) (2018) 276--286.
 
 \bibitem{masood2019augmented}
 T.~Masood, J.~Egger, Augmented reality in support of industry
-  4.0—implementation challenges and success factors, Robotics and
+  4.0---implementation challenges and success factors, Robotics and
   Computer-Integrated Manufacturing 58 (2019) 181--195.
 
 \bibitem{gattullo2019towards}
@@ -46,16 +46,20 @@ D.~C. Brown, Close-range camera calibration, Photogrammetric Engineering 37~(8)
 
 \bibitem{triggs1999bundle}
 B.~Triggs, P.~F. McLauchlan, R.~I. Hartley, A.~W. Fitzgibbon, Bundle
-  adjustment—a modern synthesis, in: International Workshop on Vision
+  adjustment---a modern synthesis, in: International Workshop on Vision
   Algorithms, Springer, 1999, pp. 298--372.
 
 \bibitem{zhang2000flexible}
 Z.~Zhang, A flexible new technique for camera calibration, IEEE Transactions on
   pattern analysis and machine intelligence 22~(11) (2000) 1330--1334.
 
+\bibitem{bradski2000opencv}
+G.~Bradski, The {OpenCV} library, Dr Dobb's J. Software Tools 25 (2000)
+  120--125.
+
 \bibitem{terzakis2020consistently}
 G.~Terzakis, M.~Lourakis, A consistently fast and globally optimal solution to
-  the perspective-n-point problem, in: European Conference on Computer Vision,
-  Springer, 2020, pp. 478--494.
+  the perspective-$n$-point problem, in: European Conference on Computer
+  Vision, Springer, 2020, pp. 478--494.
 
 \end{thebibliography}
