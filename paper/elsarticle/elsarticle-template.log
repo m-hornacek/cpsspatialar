@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  22 JUN 2021 07:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  24 JUN 2021 06:50
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -500,13 +500,13 @@ LaTeX Info: Redefining \nameref on input line 48.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 73.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 74.
 
 
 (C:\Users\micha\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 73.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 74.
 
 
 (C:\Users\micha\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
@@ -519,7 +519,7 @@ Overfull \hbox (2.22221pt too wide) has occurred while \output is active
 
 Package hyperref Warning: Composite letter `\textasciicaron+c'
 (hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textasciicaron' on input line 73.
+(hyperref)                removing `\textasciicaron' on input line 74.
 
 [1
 
@@ -528,38 +528,38 @@ Package hyperref Warning: Composite letter `\textasciicaron+c'
 <images/circles.png, id=81, 722.7pt x 451.6875pt>
 File: images/circles.png Graphic file (type png)
 <use images/circles.png>
-Package pdftex.def Info: images/circles.png  used on input line 99.
+Package pdftex.def Info: images/circles.png  used on input line 100.
 (pdftex.def)             Requested size: 147.95596pt x 92.47145pt.
 <images/detections.png, id=83, 831.105pt x 467.49657pt>
 File: images/detections.png Graphic file (type png)
 <use images/detections.png>
-Package pdftex.def Info: images/detections.png  used on input line 101.
+Package pdftex.def Info: images/detections.png  used on input line 102.
 (pdftex.def)             Requested size: 164.39189pt x 92.47145pt.
 <images/2d3d.png, id=84, 831.105pt x 467.49657pt>
 File: images/2d3d.png Graphic file (type png)
 <use images/2d3d.png>
-Package pdftex.def Info: images/2d3d.png  used on input line 108.
+Package pdftex.def Info: images/2d3d.png  used on input line 109.
 (pdftex.def)             Requested size: 290.8911pt x 163.62624pt.
 
-[4 <./images/circles.png> <./images/detections.png>] [5 <./images/2d3d.png>]
-[6] [7] [8] (elsarticle-template.bbl [9])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 152.
- [10]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 152.
+[4] [5 <./images/circles.png> <./images/detections.png>] [6 <./images/2d3d.png>
+] [7] [8] [9] (elsarticle-template.bbl [10])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 153.
+ [11]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 153.
  (elsarticle-template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 152.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 152.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 153.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 153.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 (rerunfilecheck)             Checksum: 931A8A5691BA4CFC05FD6E6D977BBAB6;443.
  ) 
 Here is how much of TeX's memory you used:
- 10285 strings out of 480790
- 162273 string characters out of 2897301
- 441062 words of memory out of 3000000
+ 10287 strings out of 480790
+ 162291 string characters out of 2897301
+ 444062 words of memory out of 3000000
  26059 multiletter control sequences out of 15000+200000
  540821 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,10n,49p,1732b,492s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,10n,49p,1732b,490s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmbx10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmex10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/p
@@ -582,9 +582,9 @@ cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/micha/A
 ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb><C:/Users
 /micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb>
-Output written on elsarticle-template.pdf (10 pages, 1391523 bytes).
+Output written on elsarticle-template.pdf (11 pages, 1394092 bytes).
 PDF statistics:
- 230 PDF objects out of 1000 (max. 8388607)
- 46 named destinations out of 1000 (max. 500000)
+ 236 PDF objects out of 1000 (max. 8388607)
+ 48 named destinations out of 1000 (max. 500000)
  80 words of extra memory for PDF output out of 10000 (max. 10000000)
 

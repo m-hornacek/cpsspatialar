@@ -126,7 +126,7 @@ The pose (i.e., position and orientation) of the projector, for each projector c
 
 \subsection{Correcting for Projective Distortion}\label{sec:approach:homography}
 
-If the projector is calibrated and the scene plane is known in the coordinate frame of the projector, a `virtual' projector (with the same calibration $\mathtt{K}$ and lens distortion coefficients) can be placed elsewhere relative to the scene plane. The projection of an image from the virtual projector to the scene plane can in turn be projected to the image plane of the original projector; 
+If the projector is calibrated and its pose relative to the scene plane is known, a `virtual' projector (with the same calibration $\mathtt{K}$ and lens distortion coefficients) can be placed elsewhere relative to the scene plane. If we for a moment imagine that the projector---at its recovered `original' pose---functions as a camera,\footnote{Recall that the calibration matrix~$\mathtt{K}$ enables computing the projection of a scene point to the image plane (the function of a camera), or computing the back-projection of a pixel in the image plane, giving a ray into the scene (along which a projector illuminates the scene with the given pixel).} then (i) projecting an image to the scene plane \textit{from the viewpoint of the virtual projector} and (ii) acquiring the resulting projected image from the viewpoint of the recovered {original projector} gives the desired distortion that is to be applied, if the image is to be projected from the viewpoint of the original projector. Projecting an image distorted in this manner to the scene plane \textit{from the viewpoint of the original projector} then has the same effect as projecting the undistorted image to the scene plane from the viewpoint of the virtual projector. Given the scene plane, the projector, and the virtual projector, this distortion can computed using a plane-induced homography.
 
 \paragraph{Virtual projector}
 
@@ -146,7 +146,7 @@ todo - maybe Hans would like to help?
 
 We presented a spatial AR system for planar scenes that produces the effect of keystone correction analytically, and that intuitively places the desired augmentations in a manner aligned with the axes of an image of the scene acquired by a camera. Moreover, we showed our system to be able to handle a projector equipped with a steerable mirror, enabling wide-area factory floor augmentation exceeding the bounds of the projector's own immediate field of view. Our evaluation demonstrated ...
 
-A natural extension of this work would be to handle planar and non-planar scenes alike. To handle non-planar scenes would call for a change in how scene geometry is recovered and how distortion of the image to be projected is carried out; projector calibration---presented here as a one-time step---could, however, remain unchanged.
+A natural extension of this work would be to address non-planar scenes. To handle non-planar scenes would call for a change in how scene geometry is recovered and how distortion of the image to be projected is carried out; projector calibration---presented here as a one-time step---could, however, remain unchanged.
 
 \bibliography{mybibfile}
 
