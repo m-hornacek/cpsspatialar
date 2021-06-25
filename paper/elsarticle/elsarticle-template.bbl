@@ -12,7 +12,7 @@ D.~Van~Krevelen, R.~Poelman, A survey of augmented reality technologies,
 
 \bibitem{zhou2008trends}
 F.~Zhou, H.~B.-L. Duh, M.~Billinghurst, Trends in augmented reality tracking,
-  interaction and display: A review of ten years of ismar, in: 2008 7th
+  interaction and display: A review of ten years of {ISMAR}, in: 2008 7th
   IEEE/ACM International Symposium on Mixed and Augmented Reality, IEEE, 2008,
   pp. 193--202.
 
@@ -54,8 +54,8 @@ Z.~Zhang, A flexible new technique for camera calibration, IEEE Transactions on
   pattern analysis and machine intelligence 22~(11) (2000) 1330--1334.
 
 \bibitem{bradski2000opencv}
-G.~Bradski, The {OpenCV} library, Dr Dobb's J. Software Tools 25 (2000)
-  120--125.
+G.~Bradski, The {OpenCV} library, Dr.\ Dobb's Journal of Software Tools 25
+  (2000) 120--125.
 
 \bibitem{terzakis2020consistently}
 G.~Terzakis, M.~Lourakis, A consistently fast and globally optimal solution to
