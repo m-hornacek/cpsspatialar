@@ -88,7 +88,7 @@ todo - maybe Majesa would like to help? Sebastian's inputs would be valuable for
 
 \section{Hardware Setup}
 
-The hardware setup employed in this work comprised a Panasonic PT-RZ660BE projector with a steerable mirror system manufactured by Dynamic Projection Institute. In addition, we used a Zed 2 stereo camera manufactured by Stereolabs, yet relied only on the left view. The setup was mounted on the ceiling of the Pilotfabrik\footnote{\url{https://www.pilotfabrik.at/}} of TU Vienna, a collaborative space for research on Industry 4.0 topics situated in Vienna, Austria. The floorspace used for our experiments measured dimensions of ca.\ X~m~$\times$~Y~m; the projector was mounted at approximately the center of this space, at a height of ca.\ XX m. 
+The hardware setup employed in this work comprised a Panasonic PT-RZ660BE projector with a steerable mirror system manufactured by Dynamic Projection Institute. In addition, we used a Zed 2 stereo camera manufactured by Stereolabs, yet relied only on the left view. The setup was mounted on the ceiling of the Pilotfabrik\footnote{\url{https://www.pilotfabrik.at/}} of TU Vienna, a collaborative space for research on Industry 4.0 topics situated in Vienna, Austria. The floorspace used for our experiments measured dimensions of ca.\ X~m~$\times$~Y~m; the projector was mounted at approximately the center of this space, at a height of ca.\ 3.5 m. 
 
 \section{Approach}
 
@@ -98,17 +98,17 @@ Correcting for projective distortions of the sort outlined in Section~\ref{sec:i
 
 \begin{figure}
     \centering
-		\subfloat[\centering Circles pattern image, in image plane of projector.]{{\includegraphics[height=3.25cm]{images/circles.png} }}
+    \subfloat[\centering Circles pattern image, in image plane of projector.]{{\includegraphics[height=3.25cm]{images/circles.png} }}
     \qquad
     \subfloat[\centering Projector calibration image (one for each target location), in image plane of camera.]{{\includegraphics[height=3.25cm]{images/detections.png}}}
-		\caption{Recovering 2D positions in support of projector calibration. (a) 2D positions of the 2D-3D correspondences to be used for calibrating the projector are obtained by detecting---in the image plane of the projector---the circle centers in the circles pattern image, projected by the projector to each of the target locations in the scene plane. (b) For each such target location, an image is acquired from the viewpoint of the camera and the circle centers of the projected circles pattern are detected, in the image plane of the camera. A chessboard pattern to be used for recovering the local scene plane is placed near the projected pattern, whose corners are likewise detected. Detected 2D projected circles pattern center points and chessboard corners overlain for illustration.} %At this stage, the chessboard is used to recover the local scene plane for each target location. Since the projected circles pattern lies in this plane, we are in a subsequent step able to rely on that plane to derive the 3D positions corresponding to the 2D projected circles pattern center points detected in the image.
+    \caption{Recovering 2D positions in support of projector calibration. (a) 2D positions of the 2D-3D correspondences to be used for calibrating the projector are obtained by detecting---in the image plane of the projector---the circle centers in the circles pattern image, projected by the projector to each of the target locations in the scene plane. (b) For each such target location, an image is acquired from the viewpoint of the camera and the circle centers of the projected circles pattern are detected, in the image plane of the camera. A chessboard pattern to be used for recovering the local scene plane is placed near the projected pattern, whose corners are likewise detected. Detected 2D projected circles pattern center points and chessboard corners overlain for illustration.} %At this stage, the chessboard is used to recover the local scene plane for each target location. Since the projected circles pattern lies in this plane, we are in a subsequent step able to rely on that plane to derive the 3D positions corresponding to the 2D projected circles pattern center points detected in the image.
     \label{fig:2d}
 \end{figure}
 
 
 \begin{figure}
-		\centerline{\includegraphics[scale=.35]{images/2d3d.png}}
-		\caption{Scene plane (gray) obtained via spatial resection with respect to 2D-3D correspondences obtained using a chessboard pattern (blue); 3D circles pattern points obtained by intersection with the scene plane of back-projections (likewise gray) of circles pattern center points detected in the image plane (red). Note that the points in the figure are the points recovered for the projector calibration image in Figure~\ref{fig:2d}(b), acquired by the camera (frustum in black, with up vector in red).}
+    \centerline{\includegraphics[scale=.35]{images/2d3d.png}}
+    \caption{Scene plane (gray) obtained via spatial resection with respect to 2D-3D correspondences obtained using a chessboard pattern (blue); 3D circles pattern points obtained by intersection with the scene plane of back-projections (likewise gray) of circles pattern center points detected in the image plane (red). Note that the points in the figure are the points recovered for the projector calibration image in Figure~\ref{fig:2d}(b), acquired by the camera (frustum in black, with up vector in red).}
     \label{fig:3d}
 \end{figure}
 
