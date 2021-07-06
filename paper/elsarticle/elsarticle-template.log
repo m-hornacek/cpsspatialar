@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  5 JUL 2021 07:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  6 JUL 2021 17:13
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -543,12 +543,12 @@ Package pdftex.def Info: images/2d3d.png  used on input line 110.
 
 [4] [5 <./images/circles.png> <./images/detections.png>] [6 <./images/2d3d.png>
 ] [7] [8] [9] [10] (elsarticle-template.bbl [11])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 156.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 155.
  [12]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 156.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 155.
  (elsarticle-template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 156.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 156.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 155.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 155.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 (rerunfilecheck)             Checksum: 931A8A5691BA4CFC05FD6E6D977BBAB6;443.
  ) 
@@ -582,7 +582,7 @@ cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/micha/A
 ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb><C:/Users
 /micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb>
-Output written on elsarticle-template.pdf (12 pages, 1398327 bytes).
+Output written on elsarticle-template.pdf (12 pages, 1398911 bytes).
 PDF statistics:
  245 PDF objects out of 1000 (max. 8388607)
  50 named destinations out of 1000 (max. 500000)
