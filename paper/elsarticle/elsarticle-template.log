@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  6 JUL 2021 19:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  7 JUL 2021 07:32
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -525,26 +525,26 @@ Package hyperref Warning: Composite letter `\textasciicaron+c'
 
 
 {C:/Users/micha/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] [2] [3]
-<images/circles.png, id=83, 722.7pt x 451.6875pt>
+<images/circles.png, id=71, 722.7pt x 451.6875pt>
 File: images/circles.png Graphic file (type png)
 <use images/circles.png>
-Package pdftex.def Info: images/circles.png  used on input line 101.
+Package pdftex.def Info: images/circles.png  used on input line 98.
 (pdftex.def)             Requested size: 147.95596pt x 92.47145pt.
-<images/detections.png, id=85, 831.105pt x 467.49657pt>
+<images/detections.png, id=73, 831.105pt x 467.49657pt>
 File: images/detections.png Graphic file (type png)
 <use images/detections.png>
-Package pdftex.def Info: images/detections.png  used on input line 103.
+Package pdftex.def Info: images/detections.png  used on input line 100.
 (pdftex.def)             Requested size: 164.39189pt x 92.47145pt.
-<images/2d3d.png, id=86, 831.105pt x 467.49657pt>
+<images/2d3d.png, id=74, 831.105pt x 467.49657pt>
 File: images/2d3d.png Graphic file (type png)
 <use images/2d3d.png>
-Package pdftex.def Info: images/2d3d.png  used on input line 110.
+Package pdftex.def Info: images/2d3d.png  used on input line 107.
 (pdftex.def)             Requested size: 290.8911pt x 163.62624pt.
 
-[4] [5 <./images/circles.png> <./images/detections.png>] [6 <./images/2d3d.png>
-] [7] [8] [9]
+[4 <./images/circles.png> <./images/detections.png>] [5 <./images/2d3d.png>]
+[6] [7] [8]
 ! Undefined control sequence.
-l.145 ...eline A'), in which we carry out a \texit
+l.142 ...eline A'), in which we carry out a \texit
                                                   {manual} keystone correcti...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -552,21 +552,26 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[10] (elsarticle-template.bbl [11] [12])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 155.
- [13]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 155.
- (elsarticle-template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 155.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 155.
+[9] [10] (elsarticle-template.bbl [11])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 160.
+ [12]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 160.
+ (elsarticle-template.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 160.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 160.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
-(rerunfilecheck)             Checksum: 931A8A5691BA4CFC05FD6E6D977BBAB6;443.
+(rerunfilecheck)             Checksum: 179878AA0217B5D9668E0D8EF2FFAC08;394.
  ) 
 Here is how much of TeX's memory you used:
- 10295 strings out of 480790
- 162449 string characters out of 2897301
- 444253 words of memory out of 3000000
- 26063 multiletter control sequences out of 15000+200000
+ 10294 strings out of 480790
+ 162445 string characters out of 2897301
+ 442215 words of memory out of 3000000
+ 26061 multiletter control sequences out of 15000+200000
  540821 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  48i,10n,49p,1809b,490s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -592,9 +597,9 @@ cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/micha/A
 ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb><C:/Users
 /micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb>
-Output written on elsarticle-template.pdf (13 pages, 1400996 bytes).
+Output written on elsarticle-template.pdf (12 pages, 1399759 bytes).
 PDF statistics:
- 253 PDF objects out of 1000 (max. 8388607)
- 52 named destinations out of 1000 (max. 500000)
- 80 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 246 PDF objects out of 1000 (max. 8388607)
+ 53 named destinations out of 1000 (max. 500000)
+ 72 words of extra memory for PDF output out of 10000 (max. 10000000)
 

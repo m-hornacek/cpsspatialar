@@ -36,11 +36,6 @@ M.~Gattullo, G.~W. Scurati, M.~Fiorentino, A.~E. Uva, F.~Ferrise, M.~Bordegoni,
 O.~Bimber, R.~Raskar, Spatial Augmented Reality: Merging Real and Virtual
   Worlds, AK Peters/CRC Press, 2019.
 
-\bibitem{rupprecht2020information}
-P.~Rupprecht, H.~Kueffner-McCauley, S.~Schlund, Information provision utilizing
-  a dynamic projection system in industrial site assembly, Procedia CIRP 93
-  (2020) 1182--1187.
-
 \bibitem{Hartley2004}
 R.~I. Hartley, A.~Zisserman, Multiple View Geometry in Computer Vision, 2nd
   Edition, Cambridge University Press, ISBN: 0521540518, 2004.
@@ -66,5 +61,10 @@ G.~Bradski, The {OpenCV} library, Dr.\ Dobb's Journal of Software Tools 25
 G.~Terzakis, M.~Lourakis, A consistently fast and globally optimal solution to
   the perspective-$n$-point problem, in: European Conference on Computer
   Vision, Springer, 2020, pp. 478--494.
+
+\bibitem{rupprecht2020information}
+P.~Rupprecht, H.~Kueffner-McCauley, S.~Schlund, Information provision utilizing
+  a dynamic projection system in industrial site assembly, Procedia CIRP 93
+  (2020) 1182--1187.
 
 \end{thebibliography}
