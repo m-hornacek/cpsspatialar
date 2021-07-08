@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  9 JUL 2021 00:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  9 JUL 2021 00:15
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -553,7 +553,7 @@ File: images/3.png Graphic file (type png)
 <use images/3.png>
 Package pdftex.def Info: images/3.png  used on input line 135.
 (pdftex.def)             Requested size: 160.0452pt x 128.0374pt.
- [8] [9 <./images/2.png> <./images/3.png>]
+ [8] [9 <./images/2.png> <./images/3.png>] [10]
 ! Undefined control sequence.
 l.154 ...eline A'), in which we carry out a \texit
                                                   {manual} keystone correcti...
@@ -563,7 +563,7 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[10] [11] (elsarticle-template.bbl [12] [13])
+[11] [12] (elsarticle-template.bbl [13])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 174.
  [14]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 174.
@@ -572,11 +572,15 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 174.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 174.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 (rerunfilecheck)             Checksum: 179878AA0217B5D9668E0D8EF2FFAC08;394.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
  10313 strings out of 480790
  162698 string characters out of 2897301
- 442852 words of memory out of 3000000
+ 443025 words of memory out of 3000000
  26072 multiletter control sequences out of 15000+200000
  540821 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -603,7 +607,7 @@ cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/micha/A
 ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb><C:/Users
 /micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb>
-Output written on elsarticle-template.pdf (14 pages, 1473953 bytes).
+Output written on elsarticle-template.pdf (14 pages, 1474054 bytes).
 PDF statistics:
  268 PDF objects out of 1000 (max. 8388607)
  59 named destinations out of 1000 (max. 500000)
