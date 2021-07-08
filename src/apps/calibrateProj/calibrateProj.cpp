@@ -204,11 +204,11 @@ void display()
                         glVertex3f(CCDWidth_half_mm * points[ptIdx].x / points[ptIdx].z, CCDWidth_half_mm * points[ptIdx].y / points[ptIdx].z, CCDWidth_half_mm);
                     glEnd();
 
-                    glBegin(GL_LINES);
-                        glColor3f(0.9, 0.9, 0.9);
-                        glVertex3f(0, 0, 0);
-                        glVertex3f(points[ptIdx].x, points[ptIdx].y, points[ptIdx].z);
-                    glEnd();
+                    //glBegin(GL_LINES);
+                    //    glColor3f(0.9, 0.9, 0.9);
+                    //    glVertex3f(0, 0, 0);
+                    //    glVertex3f(points[ptIdx].x, points[ptIdx].y, points[ptIdx].z);
+                    //glEnd();
 
                     glBegin(GL_POINTS);
                         glPointSize(0.5 * pointSize);
@@ -233,8 +233,8 @@ void display()
         float offset = 0.02;
         for (int i = 0; i < cams.size(); i++)
         {
-            //if (i != 0)
-            //    continue;
+            if (i == 1 || i == 4)
+                continue;
 
             float r = 0.5;
             float g = 0.5;
@@ -251,17 +251,17 @@ void display()
 
             char* str;
             if (i == 0)
-                str = "cam0";
+                str = "camera"; //"cam0";
             else if (i == 1)
                 str = "cam1";
             else if (i == 2)
                 str = "projector";
             else if (i == 3)
-                str = "projector virtual (downward)";
+                str = "initial virtual projector"; //"projector virtual (downward)";
             else if (i == 4)
                 str = "projector virtual (final)";
             else if (i == 5)
-                str = "cam0 virtual (downward)";
+                str = "virtual camera"; //"cam0 virtual (downward)";
 
             cv::Vec3d C = cams[i].getC();
 
@@ -277,14 +277,14 @@ void display()
             if (i == 5)
                 additionalOffset = 0.03;
 
-            displayText(C[0] + offset, C[1] + offset, C[2] - offset + additionalOffset, 0, 0, 0, str);
+            //displayText(C[0] + offset, C[1] + offset, C[2] - offset + additionalOffset, 0, 0, 0, str);
         }
 
-        displayText(
-            centroidChessboardObjectPts[0] + offset,
-            centroidChessboardObjectPts[1] + offset,
-            centroidChessboardObjectPts[2] - offset,
-            0, 0, 0, "ground plane");
+        //displayText(
+        //    centroidChessboardObjectPts[0] + offset,
+        //    centroidChessboardObjectPts[1] + offset,
+        //    centroidChessboardObjectPts[2] - offset,
+        //    0, 0, 0, "ground plane");
 
         if (showDistances)
         {
@@ -350,14 +350,14 @@ void display()
             glVertex3f(projPlaneIntersection[0], projPlaneIntersection[1], projPlaneIntersection[2]);
             glEnd();
 
-            std::stringstream ss3;
-            ss3 << distVirtualProjPlaneIntersection << " m";
+            //std::stringstream ss3;
+            //ss3 << distVirtualProjPlaneIntersection << " m";
 
-            displayText(
-                projPlaneIntersection[0] + (virtualProjC - projPlaneIntersection)[0] * 0.5 + offset,
-                projPlaneIntersection[1] + (virtualProjC - projPlaneIntersection)[1] * 0.5 + offset,
-                projPlaneIntersection[2] + (virtualProjC - projPlaneIntersection)[2] * 0.5 - offset,
-                0, 0, 0, ss3.str().c_str());
+            //displayText(
+            //    projPlaneIntersection[0] + (virtualProjC - projPlaneIntersection)[0] * 0.5 + offset,
+            //    projPlaneIntersection[1] + (virtualProjC - projPlaneIntersection)[1] * 0.5 + offset,
+            //    projPlaneIntersection[2] + (virtualProjC - projPlaneIntersection)[2] * 0.5 - offset,
+            //    0, 0, 0, ss3.str().c_str());
         }
 
         glFlush();
