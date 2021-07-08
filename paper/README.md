@@ -5,3 +5,4 @@
 * [Spatial augmented reality: a tool for operator guidance and training evaluated in five industrial case studies](https://dl.acm.org/doi/abs/10.1145/3389189.3397975?casa_token=iKibU1oPWocAAAAA%3AtHS0xkjcbgeLJtPdiacXq6b29ztNBxGi1fe6FHLka-gfS5L2pzGsK5Jv2gctyo_0Oz3ajJYrDerajw) (1 citation)
     * presentation video
     * concludes that productivity gains can be shown, but raises questions on overall value add of SAR given high initial investment, high need for customizability, etc.
+* https://ieeexplore.ieee.org/abstract/document/7926707 <-- recent? paper on projector calibration
