@@ -95,9 +95,9 @@ Correcting for projective distortions of the sort outlined in Section~\ref{sec:i
 
 \begin{figure}
     \centering
-    \subfloat[\centering Circles pattern image, in image plane of projector.]{{\includegraphics[height=3.25cm]{images/circles.png} }}
+    \subfloat[\centering Circles pattern image, in image plane of projector (detections overlain).]{{\includegraphics[height=3.25cm]{images/circles.png} }}
     \qquad
-    \subfloat[\centering Projector calibration image (one for each target location), in image plane of camera.]{{\includegraphics[height=3.25cm]{images/detections.png}}}
+    \subfloat[\centering Projector calibration image (one for each target location), in image plane of camera (detections overlain).]{{\includegraphics[height=3.25cm]{images/detections.png}}}
     \caption{Recovering 2D positions in support of projector calibration. (a) 2D positions of the 2D-3D correspondences to be used for calibrating the projector are obtained by detecting---in the image plane of the projector---the circle centers in the circles pattern image, projected by the projector to each of the target locations in the scene plane. (b) For each such target location, an image is acquired from the viewpoint of the camera and the circle centers of the projected circles pattern are detected, in the image plane of the camera. A chessboard pattern to be used for recovering the local scene plane is placed near the projected pattern, whose corners are likewise detected. Detected 2D projected circles pattern center points and chessboard corners overlain for illustration.} %At this stage, the chessboard is used to recover the local scene plane for each target location. Since the projected circles pattern lies in this plane, we are in a subsequent step able to rely on that plane to derive the 3D positions corresponding to the 2D projected circles pattern center points detected in the image.
     \label{fig:2d}
 \end{figure}
