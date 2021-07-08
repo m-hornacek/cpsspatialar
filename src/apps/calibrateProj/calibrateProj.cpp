@@ -46,6 +46,7 @@ GLdouble cameraDist, cameraYaw, cameraRoll;
 GLdouble * cameraPos;
 
 int camIdx;
+int viewIdx;
 vector<Camera> cams;
 int imWidth, imHeight;
 
@@ -68,6 +69,7 @@ std::vector<Plane> planes;
 
 cv::Vec3d projCamIntersection;
 cv::Vec3d projPlaneIntersection;
+cv::Vec3d camPlaneIntersection;
 cv::Vec3d virtualCamPlaneIntersection;
 
 /* Previous x and y cursor coordinates (used to determine change in camera position) */
@@ -194,7 +196,12 @@ void display()
                 std::vector<cv::Point3f> points2 = pointCloud->getPoints();
 
                 float f = cams[0].getf();
-                float CCDWidth_half_mm = 20.0 * 0.01 * 0.5;
+                float CCDWidth_half_mm = 20.0 * 0.02 * 0.5;
+
+                float fProj = cams[2].getf();
+                cv::Vec3d projC = cams[2].getC();
+                cv::Mat Rt44 = cams[2].getRt44();
+                cv::Mat Rt44Inv = cams[2].getRt44Inv();
 
                 for (int ptIdx = 0; ptIdx < points.size(); ptIdx++)
                 {
@@ -210,11 +217,23 @@ void display()
                     //    glVertex3f(points[ptIdx].x, points[ptIdx].y, points[ptIdx].z);
                     //glEnd();
 
+                    cv::Vec3d pt = Ancillary::Mat44dTimesVec3dHomog(Rt44, cv::Vec3d(points[ptIdx].x, points[ptIdx].y, points[ptIdx].z));
+
+                    cv::Vec3d projPt(CCDWidth_half_mm * pt[0] / pt[2], CCDWidth_half_mm * pt[1] / pt[2], CCDWidth_half_mm);
+                    cv::Vec3d projPtLocal = Ancillary::Mat44dTimesVec3dHomog(Rt44Inv, projPt);
+
+
                     glBegin(GL_POINTS);
                         glPointSize(0.5 * pointSize);
                         glColor3f(1.0, 0.0, 0.0);
-                        glVertex3f(CCDWidth_half_mm * points[ptIdx].x / points[ptIdx].z, CCDWidth_half_mm * points[ptIdx].y / points[ptIdx].z, CCDWidth_half_mm);
+                        glVertex3f(projPtLocal[0], projPtLocal[1], projPtLocal[2]);
                     glEnd();
+
+                    //glBegin(GL_LINES);
+                    //    glColor3f(0.9, 0.9, 0.9);
+                    //    glVertex3f(projC[0], projC[1], projC[2]);
+                    //    glVertex3f(points[ptIdx].x, points[ptIdx].y, points[ptIdx].z);
+                    //glEnd();
                 }
                    
                 for (int ptIdx = 0; ptIdx < points2.size(); ptIdx++)
@@ -228,12 +247,18 @@ void display()
             }
         }
 
-        planeVis->display(1.5, pointSize);
+        planeVis->display(2, pointSize);
 
         float offset = 0.02;
         for (int i = 0; i < cams.size(); i++)
         {
-            if (i == 1 || i == 4)
+            if (i == 1)
+                continue;
+
+            if (viewIdx == 0 && (i == 4 || i == 5))
+                continue;
+
+            if (viewIdx == 1 && (i == 4))
                 continue;
 
             float r = 0.5;
@@ -286,7 +311,7 @@ void display()
         //    centroidChessboardObjectPts[2] - offset,
         //    0, 0, 0, "ground plane");
 
-        if (showDistances)
+        if (true)
         {
             //cv::Vec3d camC = cams[0].getC();
 
@@ -309,55 +334,93 @@ void display()
 
             cv::Vec3d projC = cams[2].getC();
 
-            glBegin(GL_LINES);
-            glVertex3f(projC[0], projC[1], projC[2]);
-            glVertex3f(projPlaneIntersection[0], projPlaneIntersection[1], projPlaneIntersection[2]);
-            glEnd();
+            if (viewIdx == 0)
+            {
+                glBegin(GL_LINES);
+                    glColor3f(0.9, 0.9, 0.9);
+                    glVertex3f(projC[0], projC[1], projC[2]);
+                    glVertex3f(projPlaneIntersection[0], projPlaneIntersection[1], projPlaneIntersection[2]);
+                glEnd();
 
-            double distProjPlaneIntersection = sqrt(
-                (projC - projPlaneIntersection).dot(projC - projPlaneIntersection));
+                double distProjPlaneIntersection = sqrt(
+                    (projC - projPlaneIntersection).dot(projC - projPlaneIntersection));
 
-            std::stringstream ss1;
-            ss1 << distProjPlaneIntersection << " m";
+                std::stringstream ss1;
+                ss1 << distProjPlaneIntersection << " m";
 
-            displayText(
-                projPlaneIntersection[0] + (projC - projPlaneIntersection)[0] * 0.5 + offset,
-                projPlaneIntersection[1] + (projC - projPlaneIntersection)[1] * 0.5 + offset,
-                projPlaneIntersection[2] + (projC - projPlaneIntersection)[2] * 0.5 - offset,
-                0, 0, 0, ss1.str().c_str());
+                //displayText(
+                //    projPlaneIntersection[0] + (projC - projPlaneIntersection)[0] * 0.5 + offset,
+                //    projPlaneIntersection[1] + (projC - projPlaneIntersection)[1] * 0.5 + offset,
+                //    projPlaneIntersection[2] + (projC - projPlaneIntersection)[2] * 0.5 - offset,
+                //    0, 0, 0, ss1.str().c_str());
 
-            glBegin(GL_LINES);
-            glVertex3f(0, 0, 0);
-            glVertex3f(projC[0], projC[1], projC[2]);
-            glEnd();
+                //glBegin(GL_LINES);
+                //    glColor3f(0.9, 0.9, 0.9);
+                //    glVertex3f(0, 0, 0);
+                //    glVertex3f(projC[0], projC[1], projC[2]);
+                //glEnd();
 
-            double distCamLeftProj = sqrt(projC.dot(projC));
+                double distCamLeftProj = sqrt(projC.dot(projC));
 
-            std::stringstream ss2;
-            ss2 << distCamLeftProj << " m";
+                std::stringstream ss2;
+                ss2 << distCamLeftProj << " m";
 
-            displayText(projC[0] * 0.5 + offset, projC[1] * 0.5 + offset, projC[2] * 0.5 - offset,
-                0, 0, 0, ss2.str().c_str());
+                //displayText(projC[0] * 0.5 + offset, projC[1] * 0.5 + offset, projC[2] * 0.5 - offset,
+                //    0, 0, 0, ss2.str().c_str());
 
 
-            cv::Vec3d virtualProjC = cams[4].getC();
+                cv::Vec3d virtualProjC = cams[3].getC();
 
-            double distVirtualProjPlaneIntersection = sqrt(
-                (virtualProjC - projPlaneIntersection).dot(virtualProjC - projPlaneIntersection));
+                double distVirtualProjPlaneIntersection = sqrt(
+                    (virtualProjC - projPlaneIntersection).dot(virtualProjC - projPlaneIntersection));
 
-            glBegin(GL_LINES);
-            glVertex3f(virtualProjC[0], virtualProjC[1], virtualProjC[2]);
-            glVertex3f(projPlaneIntersection[0], projPlaneIntersection[1], projPlaneIntersection[2]);
-            glEnd();
+                glBegin(GL_LINES);
+                    glColor3f(0.9, 0.9, 0.9);
+                    glVertex3f(virtualProjC[0], virtualProjC[1], virtualProjC[2]);
+                    glVertex3f(projPlaneIntersection[0], projPlaneIntersection[1], projPlaneIntersection[2]);
+                glEnd();
 
-            //std::stringstream ss3;
-            //ss3 << distVirtualProjPlaneIntersection << " m";
+
+            
+                std::stringstream ss3;
+                ss3 << distVirtualProjPlaneIntersection << " m";
+            }
 
             //displayText(
             //    projPlaneIntersection[0] + (virtualProjC - projPlaneIntersection)[0] * 0.5 + offset,
             //    projPlaneIntersection[1] + (virtualProjC - projPlaneIntersection)[1] * 0.5 + offset,
             //    projPlaneIntersection[2] + (virtualProjC - projPlaneIntersection)[2] * 0.5 - offset,
             //    0, 0, 0, ss3.str().c_str());
+
+            if (viewIdx == 1)
+            {
+                cv::Vec3d camC = cams[0].getC();
+
+                glBegin(GL_LINES);
+                    glColor3f(0.9, 0.9, 0.9);
+                    glVertex3f(camC[0], camC[1], camC[2]);
+                    glVertex3f(camPlaneIntersection[0], camPlaneIntersection[1], camPlaneIntersection[2]);
+                glEnd();
+
+                cv::Vec3d virtualCamC = cams[5].getC();
+
+                glBegin(GL_LINES);
+                    glColor3f(0.9, 0.9, 0.9);
+                    glVertex3f(virtualCamC[0], virtualCamC[1], virtualCamC[2]);
+                    glVertex3f(virtualCamPlaneIntersection[0], virtualCamPlaneIntersection[1], virtualCamPlaneIntersection[2]);
+                glEnd();
+            }
+
+            if (viewIdx == 2)
+            {
+                cv::Vec3d finalVirtualProjC = cams[3].getC();
+
+                glBegin(GL_LINES);
+                    glColor3f(0.9, 0.9, 0.9);
+                    glVertex3f(finalVirtualProjC[0], finalVirtualProjC[1], finalVirtualProjC[2]);
+                    glVertex3f(projPlaneIntersection[0], projPlaneIntersection[1], projPlaneIntersection[2]);
+                glEnd();
+            }
         }
 
         glFlush();
@@ -470,7 +533,10 @@ void keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
     case GLFW_KEY_F4:
         if (action == GLFW_RELEASE || action == GLFW_REPEAT)
         {
-            showDistances = !showDistances;
+            //showDistances = !showDistances;
+            viewIdx++;
+            if (viewIdx > 3)
+                viewIdx = 0;
 
             newEvent = true;
             display();
@@ -645,6 +711,7 @@ void init(double w, double h)
     radius = 50;
 
     camIdx = 0;
+    viewIdx = 0;
     centroidChessboardObjectPts = cv::Vec3d(0, 0, 0);
 
     initCloudX = 0;
@@ -833,7 +900,7 @@ int main(int argc, char** argv)
 
     cams.push_back(Camera(
         cam0K, cam0R, cam0T,
-        imWidth, imHeight, 0.01));
+        imWidth, imHeight, 0.02));
 
     // read in intrinsics and extrinsics of cam1
     FileStorage fsCam1;
@@ -847,7 +914,7 @@ int main(int argc, char** argv)
 
     cams.push_back(Camera(
         cam1K, cam1R, cam1T,
-        imWidth, imHeight, 0.01));
+        imWidth, imHeight, 0.02));
 
     // get circles and chessboard image points determine corresponding plane parameters
     std::vector<std::vector<cv::Point2f>> cam0ChessboardImPts, cam0CirclesImPts;
@@ -971,7 +1038,7 @@ int main(int argc, char** argv)
 
         Camera proj(
             projK, rot, projTs.at(numIm),
-            projSize.width, projSize.height, 0.01);
+            projSize.width, projSize.height, 0.02);
 
         cv::Mat H;
 
@@ -980,7 +1047,7 @@ int main(int argc, char** argv)
 
         Camera transformedProj(
             projK, alignedVirtualProjR, alignedVirtualProjT,
-            projSize.width, projSize.height, 0.01);
+            projSize.width, projSize.height, 0.02);
 
         Homography::computePlaneInducedHomography(planes[numIm], proj, transformedProj, H);
 
@@ -1005,7 +1072,7 @@ int main(int argc, char** argv)
 
         cams.push_back(Camera(
             projK, camToProjR, camToProjT,
-            projSize.width, projSize.height, 0.01));
+            projSize.width, projSize.height, 0.02));
 
         cv::Mat planeRigid;
         planes[numIm].getRigid(planeRigid);
@@ -1039,11 +1106,14 @@ int main(int argc, char** argv)
 
         projCamIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[2].getRt44Inv(), projCamIntersectionLocal);
 
+
+
+
         cv::Mat H, virtualProjR, virtualProjT;
         Homography::computeBirdsEyeViewHomography(planes[numIm], cams[2], H, virtualProjR, virtualProjT);
         cams.push_back(Camera(
             projK, virtualProjR, virtualProjT,
-            projSize.width, projSize.height, 0.01));
+            projSize.width, projSize.height, 0.02));
 
         cv::Mat outIm;
         //cv::warpPerspective(visIm, outIm, H, projSize);
@@ -1057,11 +1127,11 @@ int main(int argc, char** argv)
 
         cams.push_back(Camera(
             projK, alignedVirtualProjR, alignedVirtualProjT,
-            projSize.width, projSize.height, 0.01));
+            projSize.width, projSize.height, 0.02));
 
         cams.push_back(Camera(
             cam0K, virtualCamR, virtualCamT,
-            camSize.width, camSize.height, 0.01));
+            camSize.width, camSize.height, 0.02));
 
         Homography::computePlaneInducedHomography(planes[numIm], cams[2], cams[4], H);
 
@@ -1119,6 +1189,16 @@ int main(int argc, char** argv)
             cams[5].backprojectLocal(cv::Point2f(camSize.width * 0.5, camSize.height * 0.5)));
 
         virtualCamPlaneIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[5].getRt44Inv(), virtualCamPlaneIntersectionLocal);
+
+
+
+        Plane planCamLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
+        planCamLocal.rigidTransform(cams[0].getRt44());
+
+        cv::Vec3d camPlaneIntersectionLocal = planCamLocal.intersect(
+            cams[0].backprojectLocal(cv::Point2f(camSize.width * 0.5, camSize.height * 0.5)));
+
+        camPlaneIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[0].getRt44Inv(), camPlaneIntersectionLocal);
     }
 
     glutInit(&argc, argv);
