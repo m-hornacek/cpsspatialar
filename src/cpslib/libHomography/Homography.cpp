@@ -109,7 +109,7 @@ void Homography::computeBirdsEyeViewVirtualCam(Plane& plane, Camera& cam, float 
     Eigen::Matrix3d invR = q.toRotationMatrix();
 
     // compute camera center C of virtual camera
-    Eigen::Vector3d C = centerPt + (distToPlane + verticalOffset) * n;
+    Eigen::Vector3d C = centerPt + (verticalOffset /*- distToPlane*/) * n;
 
     // compute (R, t) of virtual camera, relative to camera coordinate frame of input camera
     Eigen::Matrix3d R = invR.inverse();
