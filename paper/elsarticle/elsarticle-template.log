@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  9 JUL 2021 15:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  9 JUL 2021 16:08
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -553,7 +553,7 @@ File: images/3_above3.png Graphic file (type png)
 <use images/3_above3.png>
 Package pdftex.def Info: images/3_above3.png  used on input line 133.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
- [8 <./images/1.pdf> <./images/3_above3.png>] [9]
+ [8] [9 <./images/1.pdf> <./images/3_above3.png>]
 ! Undefined control sequence.
 l.152 ...eline A'), in which we carry out a \texit
                                                   {manual} keystone correcti...
@@ -572,11 +572,15 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 172.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 172.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 (rerunfilecheck)             Checksum: 179878AA0217B5D9668E0D8EF2FFAC08;394.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
  10313 strings out of 480790
  162764 string characters out of 2897301
- 441903 words of memory out of 3000000
+ 442903 words of memory out of 3000000
  26072 multiletter control sequences out of 15000+200000
  540821 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -603,7 +607,7 @@ cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/micha/A
 ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb><C:/Users
 /micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb>
-Output written on elsarticle-template.pdf (14 pages, 1700912 bytes).
+Output written on elsarticle-template.pdf (14 pages, 1700885 bytes).
 PDF statistics:
  315 PDF objects out of 1000 (max. 8388607)
  59 named destinations out of 1000 (max. 500000)
