@@ -3,10 +3,10 @@
  *   michael.hornacek@gmail.com
  *   IMW-CPS TU Vienna, Austria
  *
- *   calibrateProj <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <cam0ImDir> <cam1ImDir> <cam0Path> <cam1Path> <circlesImPath> <verticalNegOffset> [<visImIdx>] [<visIm>]
+ *   calibrateProj <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <cam0ImDir> <cam1ImDir> <cam0Path> <cam1Path> <circlesImPath> <targetWidth> [<visImIdx>] [<visIm>]
  *
  *   Example invocation:
- *   calibrateProj 0.0565 4 6 4 11 C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\out 14 C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outLeft C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outRight C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_0.yml C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_1.yml C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\acircles_pattern_960x600.png 1.75 3 C:\Users\micha\Desktop\spatial-ar\in_out\applyHomography\holodeck.png
+ *   calibrateProj 0.0565 4 6 4 11 C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\out 11 C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outLeft C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outRight C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_0.yml  C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_1.yml C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\acircles_pattern_960x600.png 1.0 3 C:\Users\micha\Desktop\spatial-ar\in_out\applyHomography\holodeck.png
  */
 
 
@@ -118,14 +118,14 @@ static const char* keys =
     "{@cam0Path | | ...}"
     "{@cam1Path | | ...}"
     "{@circlesImPath | | ...}"
-    "{@verticalNegOffset | | ...}"
+    "{@targetWidth | | ...}"
     "{@visImIdx | | ...}"
     "{@visIm | | ...}"
 };
 
 void help()
 {
-    cout << "calibrate <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <cam0ImDir> <cam1ImDir> <cam0Path> <cam1Path> <circlesImPath> <verticalNegOffset> [<visImIdx>] [<visIm>]\n"
+    cout << "calibrate <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <cam0ImDir> <cam1ImDir> <cam0Path> <cam1Path> <circlesImPath> <targetWidth> [<visImIdx>] [<visIm>]\n"
         << endl;
 }
 
@@ -837,7 +837,7 @@ int main(int argc, char** argv)
     String cam0Path = parser.get<String>(9);
     String cam1Path = parser.get<String>(10);
     String circlesImPath = parser.get<String>(11);
-    float verticalOffset = -parser.get<float>(12);
+    float targetWidth = parser.get<float>(12);
 
     int visImIdx = 0;
     if (argc >= 15)
@@ -1040,6 +1040,8 @@ int main(int argc, char** argv)
             projK, rot, projTs.at(numIm),
             projSize.width, projSize.height, 0.02);
 
+        float verticalOffset = proj.getf() * targetWidth / projSize.width;
+        cout << "verticalOffset 1: " << verticalOffset << endl;
         cv::Mat H;
 
         cv::Mat virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT;
@@ -1120,6 +1122,8 @@ int main(int argc, char** argv)
 
         //cv::imshow("warped image (w.r.t. virtual projector homography)", outIm);
         //cv::waitKey(5);
+
+        float verticalOffset = cams[cams.size() - 1].getf() * targetWidth / projSize.width;
 
         cv::Mat virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT;
         Homography::computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], cams[2],

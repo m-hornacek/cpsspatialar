@@ -4,12 +4,12 @@
  *   IMW-CPS TU Vienna, Austria
  *
  *   applyHomography <homographyPath> <inPath> <outPath> <scalingFactor> [<angleDeg> <width> <height>]
- * 
+ *
  *   Note that providing angleDeg (even if 0) will first scale the image so that rotating by an
  *   angle of 45 degrees with respect to the target dimensions of width, height will not cut out
  *   any of the input image contents, and then apply the input homography; not providing angleDeg,
  *   width, and height will simply apply the given homography
- * 
+ *
  *   Note additionally that if a video is provided, it must have extension .avi or .mp4 (case sensitive!)
  *
  *   Example invocations:
@@ -65,7 +65,9 @@ int main(int argc, char** argv)
     if (ext == ".avi" || ext == ".mp4")
         isVideo = true;
 
-    cv::VideoCapture cap(inPath);
+    cv::VideoCapture cap;
+    if (isVideo)
+        cap = cv::VideoCapture(inPath);
 
     bool hasVideoWriter = false;
     cv::VideoWriter videoWriter;
@@ -155,7 +157,7 @@ int main(int argc, char** argv)
 
             videoWriter.write(outIm);
         }
-        
+
         cv::imshow("warped", outIm);
         cv::waitKey(100);
 
