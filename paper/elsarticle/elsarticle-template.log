@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  9 JUL 2021 06:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  9 JUL 2021 07:05
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -535,11 +535,11 @@ File: images/detections.png Graphic file (type png)
 <use images/detections.png>
 Package pdftex.def Info: images/detections.png  used on input line 100.
 (pdftex.def)             Requested size: 164.39189pt x 92.47145pt.
-<images/2d3d.png, id=74, 454.69875pt x 383.93437pt>
+<images/2d3d.png, id=74, 454.69875pt x 380.17032pt>
 File: images/2d3d.png Graphic file (type png)
 <use images/2d3d.png>
 Package pdftex.def Info: images/2d3d.png  used on input line 107.
-(pdftex.def)             Requested size: 159.14694pt x 134.37903pt.
+(pdftex.def)             Requested size: 159.14694pt x 133.0616pt.
 
 [4 <./images/circles.png> <./images/detections.png>] [5 <./images/2d3d.png>]
 [6] [7]
@@ -572,10 +572,6 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 172.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 172.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 (rerunfilecheck)             Checksum: 179878AA0217B5D9668E0D8EF2FFAC08;394.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
  10313 strings out of 480790
@@ -607,7 +603,7 @@ cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/micha/A
 ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb><C:/Users
 /micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb>
-Output written on elsarticle-template.pdf (14 pages, 1461295 bytes).
+Output written on elsarticle-template.pdf (14 pages, 1461278 bytes).
 PDF statistics:
  269 PDF objects out of 1000 (max. 8388607)
  59 named destinations out of 1000 (max. 500000)
