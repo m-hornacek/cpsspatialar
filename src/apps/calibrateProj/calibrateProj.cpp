@@ -1145,9 +1145,9 @@ int main(int argc, char** argv)
         cv::waitKey(5);
 
         vector<Point3f> imVisPts, imVisColors;
-        for (int y = 0; y < projSize.height; y += 3)
+        for (int y = 0; y < projSize.height; y += 1)
         {
-            for (int x = 0; x < projSize.width; x += 3)
+            for (int x = 0; x < projSize.width; x += 1)
             {
                 cv::Vec3d intersectionLocal = planeProjLocal.intersect(cams[2].backprojectLocal(cv::Point2f(x, y)));
                 cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[2].getRt44Inv(), intersectionLocal);
@@ -1172,9 +1172,9 @@ int main(int argc, char** argv)
         pointCloud2Circles = new PointCloud(circlesObjectPtsVirtual_);
 
         vector<Point3f> imVis2Pts, imVis2Colors;
-        for (int y = 0; y < projSize.height; y += 3)
+        for (int y = 0; y < projSize.height; y += 1)
         {
-            for (int x = 0; x < projSize.width; x += 3)
+            for (int x = 0; x < projSize.width; x += 1)
             {
                 cv::Vec3d intersectionLocal = planeProjLocal.intersect(cams[2].backprojectLocal(cv::Point2f(x, y)));
                 cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[2].getRt44Inv(), intersectionLocal);
