@@ -261,8 +261,8 @@ void display()
             if (viewIdx == 1 && (i == 4))
                 continue;
 
-            if (viewIdx > 1 && (i == 0 || i == 1 || i == 3 || i == 5))
-                continue;
+            //if (viewIdx > 1 && (i == 0 || i == 1 || i == 3 || i == 5))
+            //    continue;
 
             float r = 0.5;
             float g = 0.5;
