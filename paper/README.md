@@ -14,4 +14,4 @@
 * [Method for large-range structured light system calibration](https://engineering.purdue.edu/ZhangLab/publications/papers/2016-ao-largecalib.pdf) **use projected circles pattern like mine**
 * [Calibration-free projector-camera system for spatial augmented reality on planar surfaces](http://hvrl.ics.keio.ac.jp/paper/pdf/international_Conference/2012/ICPR2012_nakamura.pdf)
 * [Direct Image Alignment of Projector-Camera Systems with Planar Surfaces](http://www.ok.sc.e.titech.ac.jp/res/PCS/publications/cvpr2010.pdf) **interesting?**
-* [A User-Friendly Method to Geometrically Calibrate Projector-Camera Systems](file:///C:/Users/micha/Downloads/A_user-friendly_method_to_geometrically_calibrate_.pdf)  **interesting?**
+* [A User-Friendly Method to Geometrically Calibrate Projector-Camera Systems](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.852.6373&rep=rep1&type=pdf)  **interesting?**
