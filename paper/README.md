@@ -6,3 +6,35 @@
     * presentation video
     * concludes that productivity gains can be shown, but raises questions on overall value add of SAR given high initial investment, high need for customizability, etc.
 * https://ieeexplore.ieee.org/abstract/document/7926707 <-- recent? paper on projector calibration
+* https://courses.cs.washington.edu/courses/cse510/16wi/readings/pinhanez2001.pdf
+* [Calibration of a camera–projector measurement system and error impact analysis](https://www.researchgate.net/publication/258295023_Calibration_of_a_camera-projector_measurement_system_and_error_impact_analysis)
+* [Accurate projector calibration based on a new point-to-point mapping relationship between the camera and projector images](https://www.osapublishing.org/view_article.cfm?gotourl=https%3A%2F%2Fwww%2Eosapublishing%2Eorg%2FDirectPDFAccess%2F3728ACF5%2DBD42%2D4A35%2D99B0C9D131F30FD8%5F307614%2Fao%2D54%2D3%2D347%2Epdf%3Fda%3D1%26id%3D307614%26shib%3D577869%26seq%3D0%26mobile%3Dno&org=Technische%20Universitat%20Wien%20Universitatsbibliothek)
+* [Projector-Camera Calibration Toolbox](https://computervisiononline.com/software/1105138488)
+* [Simple, accurate, and robust projector-camera calibration](https://d1wqtxts1xzle7.cloudfront.net/47163556/Simple_Accurate_and_Robust_Projector-Cam20160711-3553-1fhh21l.pdf?1468253807=&response-content-disposition=inline%3B+filename%3DSimple_Accurate_and_Robust_Projector_Cam.pdf&Expires=1626002615&Signature=P1Rdbj7T2H2V0dC~2zkF10RCRMwJjOs~qpN8Fkkq~C-9nMUMiFJyV7whOCin7rER2B2jdxb0FwA3dECOciXHLwQAmeZ0aF2kVaibZ1AEghkBt9WfuZhJneYRs-jIf25E8yHWBsfeuGsvdbXA7L0JQbe4kchFBsbuDH9o1sTN2-xW4tTfVWrGU4VrWRAtj92niMoYMplAvzQJS0j1bPfFKglvjFrq5cmANNK2wm069HUKg7DByHbwGDu7xLZ6-lzjqWtvmbhpPLDiy78tpszdbKqVi18V0QPManc520C1gsF2WkQr-pRHrCqUFZRQ4CHXml9bW9Jxa4jp5QxfGXU~0g__&Key-Pair-Id=APKAJLOHF5GGSLRBV4ZA)
+* [Method for large-range structured light system calibration](https://engineering.purdue.edu/ZhangLab/publications/papers/2016-ao-largecalib.pdf) **use projected circles pattern like mine**
+* [Calibration-free projector-camera system for spatial augmented reality on planar surfaces](http://hvrl.ics.keio.ac.jp/paper/pdf/international_Conference/2012/ICPR2012_nakamura.pdf)
+* [Direct Image Alignment of Projector-Camera Systems with Planar Surfaces](http://www.ok.sc.e.titech.ac.jp/res/PCS/publications/cvpr2010.pdf) **interesting?**
+* [A User-Friendly Method to Geometrically Calibrate Projector-Camera Systems](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.852.6373&rep=rep1&type=pdf)  **interesting?**; these guys cite the following as paper that first calibrate camera, then projector:
+
+
+M. Ashdown and Y. Sato. Steerable Projector Calibration. In
+Proceedings of the 2005 IEEE Computer Society Conference
+on Computer Vision and Pattern Recognition (CVPR ’05) -
+Workshops (Procams 2005), volume 3, page 98. IEEE Computer Society, 2005.
+
+A. Griesser and L. V. Gool. Automatic Interactive Calibration of Multi-Projector-Camera Systems. In Proceedings
+of the 2006 IEEE Computer Society Conference on Computer Vision and Pattern Recognition Workshop (CVPRW
+’06), Procams 2006, page 8. IEEE Computer Society, 2006.
+
+M. Kimura, M. Mochimaru, and T. Kanade. Projector Calibration using Arbitrary Planes and Calibrated Camera. In
+Proceedings of the 2007 IEEE Computer Society Conference
+on Computer Vision and Pattern Recognition (CVPR ’07) -
+Workshops (Procams 2007), page 2. IEEE Computer Society, 2007
+
+R. Raskar and P. Beardsley. A Self-Correcting Projector. In
+Proceedings of the 2001 IEEE Computer Society Conference
+on Computer Vision and Pattern Recognition (CVPR ’01),
+volume 2, pages 504–508. IEEE Computer Society, 2001.
+
+S. Zhang and P. S. Huang. Novel method for structured light
+system calibration. Optical Engineering, 45(8):083601, August 2006.
