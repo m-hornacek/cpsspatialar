@@ -6,3 +6,4 @@
     * presentation video
     * concludes that productivity gains can be shown, but raises questions on overall value add of SAR given high initial investment, high need for customizability, etc.
 * https://ieeexplore.ieee.org/abstract/document/7926707 <-- recent? paper on projector calibration
+* https://courses.cs.washington.edu/courses/cse510/16wi/readings/pinhanez2001.pdf
