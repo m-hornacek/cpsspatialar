@@ -7,3 +7,4 @@
     * concludes that productivity gains can be shown, but raises questions on overall value add of SAR given high initial investment, high need for customizability, etc.
 * https://ieeexplore.ieee.org/abstract/document/7926707 <-- recent? paper on projector calibration
 * https://courses.cs.washington.edu/courses/cse510/16wi/readings/pinhanez2001.pdf
+* [Calibration of a camera–projector measurement system and error impact analysis](https://www.researchgate.net/publication/258295023_Calibration_of_a_camera-projector_measurement_system_and_error_impact_analysis)
