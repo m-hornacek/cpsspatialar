@@ -8,3 +8,4 @@
 * https://ieeexplore.ieee.org/abstract/document/7926707 <-- recent? paper on projector calibration
 * https://courses.cs.washington.edu/courses/cse510/16wi/readings/pinhanez2001.pdf
 * [Calibration of a camera–projector measurement system and error impact analysis](https://www.researchgate.net/publication/258295023_Calibration_of_a_camera-projector_measurement_system_and_error_impact_analysis)
+* [Accurate projector calibration based on a new point-to-point mapping relationship between the camera and projector images](https://www.osapublishing.org/view_article.cfm?gotourl=https%3A%2F%2Fwww%2Eosapublishing%2Eorg%2FDirectPDFAccess%2F3728ACF5%2DBD42%2D4A35%2D99B0C9D131F30FD8%5F307614%2Fao%2D54%2D3%2D347%2Epdf%3Fda%3D1%26id%3D307614%26shib%3D577869%26seq%3D0%26mobile%3Dno&org=Technische%20Universitat%20Wien%20Universitatsbibliothek)
