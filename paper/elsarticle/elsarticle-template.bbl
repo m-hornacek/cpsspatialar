@@ -36,6 +36,16 @@ M.~Gattullo, G.~W. Scurati, M.~Fiorentino, A.~E. Uva, F.~Ferrise, M.~Bordegoni,
 O.~Bimber, R.~Raskar, Spatial Augmented Reality: Merging Real and Virtual
   Worlds, AK Peters/CRC Press, 2019.
 
+\bibitem{Hartley2004}
+R.~I. Hartley, A.~Zisserman, Multiple View Geometry in Computer Vision, 2nd
+  Edition, Cambridge University Press, ISBN: 0521540518, 2004.
+
+\bibitem{sukthankar2001smarter}
+R.~Sukthankar, R.~G. Stockton, M.~D. Mullin, Smarter presentations: Exploiting
+  homography in camera-projector systems, in: Proceedings Eighth IEEE
+  International Conference on Computer Vision (ICCV), Vol.~1, IEEE, 2001, pp.
+  247--253.
+
 \bibitem{pinhanez2001everywhere}
 C.~Pinhanez, The everywhere displays projector: A device to create ubiquitous
   graphical interfaces, in: International Conference on Ubiquitous Computing,
@@ -54,10 +64,6 @@ S.~Borkowski, J.~Letessier, J.~L. Crowley, Spatial control of interactive
 \bibitem{butz2006applying}
 A.~Butz, A.~Kruger, Applying the peephole metaphor in a mixed-reality room,
   IEEE Computer Graphics and applications 26~(1) (2006) 56--63.
-
-\bibitem{Hartley2004}
-R.~I. Hartley, A.~Zisserman, Multiple View Geometry in Computer Vision, 2nd
-  Edition, Cambridge University Press, ISBN: 0521540518, 2004.
 
 \bibitem{duane1971close}
 D.~C. Brown, Close-range camera calibration, Photogrammetric Engineering 37~(8)
