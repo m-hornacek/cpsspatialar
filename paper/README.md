@@ -38,3 +38,6 @@ volume 2, pages 504–508. IEEE Computer Society, 2001.
 
 S. Zhang and P. S. Huang. Novel method for structured light
 system calibration. Optical Engineering, 45(8):083601, August 2006.
+
+* [Automatic Projector Calibration Using Self-Identifying Patterns](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.651.3716&rep=rep1&type=pdf)
+* [Autocalibration of a Projector-Camera System](https://tohoku.repo.nii.ac.jp/?action=repository_action_common_download&item_id=66864&item_no=1&attribute_id=18&file_no=1) **very nice!!**
