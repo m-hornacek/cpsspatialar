@@ -56,3 +56,29 @@ large scale displays. PhD thesis, MIT, 1999.
 
 
 * [A Multi-Projector Calibration Method for Virtual Reality Simulators with Analytically Defined Screens](https://www.mdpi.com/2313-433X/3/2/19/htm)
+
+* https://www.ri.cmu.edu/pub_files/2009/10/VS.ICCV.2009.pdf:
+
+ In case of the circle pattern, we
+use the circle center as a control point and localize it in the
+input images by using the center of the ellipse fitted to the
+circle edge [6], we call this approach “Circle (ellipse fit)”.
+The detected center of the ellipse is not the projected center
+of the circle because of perspective distortion introduced by
+the non-frontal orientation of the calibration grid [8]
+
+...[8] is http://www.vision.caltech.edu/bouguetj/calib_doc/papers/heikkila97.pdf:
+
+Generally, we
+can state that the ellipse center and projected circle center
+are not the same for circular features with non-zero radius.
+Ellipse fitting or the center of gravity method produces
+estimates of the ellipse center. However, what we usually
+want to know is the projection of the circle center. As a
+consequence of the previous discussion, we notice that the
+location is biased and it should be corrected using Eqs (15)
+and (16). Especially, in camera calibration this is very
+important, because the circular dot patterns are usually
+viewed in skew angles
+
+!!!!!!! -> new idea: apply rectifying homography to projector calibration image, detect circle centers, unrectify (!!)
