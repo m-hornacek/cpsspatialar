@@ -46,6 +46,11 @@ R.~Sukthankar, R.~G. Stockton, M.~D. Mullin, Smarter presentations: Exploiting
   International Conference on Computer Vision (ICCV), Vol.~1, IEEE, 2001, pp.
   247--253.
 
+\bibitem{okatani2005autocalibration}
+T.~Okatani, K.~Deguchi, Autocalibration of a projector-camera system, IEEE
+  Transactions on Pattern Analysis and Machine Intelligence 27~(12) (2005)
+  1845--1855.
+
 \bibitem{pinhanez2001everywhere}
 C.~Pinhanez, The everywhere displays projector: A device to create ubiquitous
   graphical interfaces, in: International Conference on Ubiquitous Computing,
