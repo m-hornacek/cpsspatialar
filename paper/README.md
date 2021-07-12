@@ -53,3 +53,6 @@ large scale displays. PhD thesis, MIT, 1999.
 
 
 * [Autocalibration of a Projector-Camera System](https://tohoku.repo.nii.ac.jp/?action=repository_action_common_download&item_id=66864&item_no=1&attribute_id=18&file_no=1) **very nice!!**
+
+
+* [A Multi-Projector Calibration Method for Virtual Reality Simulators with Analytically Defined Screens](https://www.mdpi.com/2313-433X/3/2/19/htm)
