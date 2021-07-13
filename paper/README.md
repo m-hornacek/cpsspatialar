@@ -82,3 +82,8 @@ important, because the circular dot patterns are usually
 viewed in skew angles
 
 !!!!!!! -> new idea: apply rectifying homography to projector calibration image, detect circle centers, unrectify (!!)
+
+https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.97.8499&rep=rep1&type=pdf:
+
+Lines in the object space are mapped as lines on the image plane, but in general perspective projection is not a shape preserving transformation. Two- and three-dimensional shapes are deformed if they are not coplanar with the image plane. This is also true for circular landmarks,
+which are commonly used control points in calibration. However, a bias between the observations and the model is induced if the centers of their projections in the image are treated as projections of the circle centers.
