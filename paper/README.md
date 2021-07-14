@@ -39,5 +39,51 @@ volume 2, pages 504–508. IEEE Computer Society, 2001.
 S. Zhang and P. S. Huang. Novel method for structured light
 system calibration. Optical Engineering, 45(8):083601, August 2006.
 
-* [Automatic Projector Calibration Using Self-Identifying Patterns](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.651.3716&rep=rep1&type=pdf)
+* [Automatic Projector Calibration Using Self-Identifying Patterns](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.651.3716&rep=rep1&type=pdf):
+
+Using a camera or cameras and computer vision to automatically align projector or monitor arrays is an attractive method to avoid the complex and tedious task of attempting to set up a composite display [8]. Raskar et al [7]
+use cameras to achieve composite displays using structured
+light methods.
+
+[7] R. Raskar, M. Brown, R. Yang, W. Chen, G. Welch,
+H. Towles, W. Seales, and H. Fuchs. Multi-projector
+displays using camera-based registration. In Proceedings of IEEE Visualization, pages 161–168, 1999.
+[8] R. Surati. A scalable self-calibrating technology for
+large scale displays. PhD thesis, MIT, 1999.
+
+
 * [Autocalibration of a Projector-Camera System](https://tohoku.repo.nii.ac.jp/?action=repository_action_common_download&item_id=66864&item_no=1&attribute_id=18&file_no=1) **very nice!!**
+
+
+* [A Multi-Projector Calibration Method for Virtual Reality Simulators with Analytically Defined Screens](https://www.mdpi.com/2313-433X/3/2/19/htm)
+
+* https://www.ri.cmu.edu/pub_files/2009/10/VS.ICCV.2009.pdf:
+
+ In case of the circle pattern, we
+use the circle center as a control point and localize it in the
+input images by using the center of the ellipse fitted to the
+circle edge [6], we call this approach “Circle (ellipse fit)”.
+The detected center of the ellipse is not the projected center
+of the circle because of perspective distortion introduced by
+the non-frontal orientation of the calibration grid [8]
+
+...[8] is http://www.vision.caltech.edu/bouguetj/calib_doc/papers/heikkila97.pdf:
+
+Generally, we
+can state that the ellipse center and projected circle center
+are not the same for circular features with non-zero radius.
+Ellipse fitting or the center of gravity method produces
+estimates of the ellipse center. However, what we usually
+want to know is the projection of the circle center. As a
+consequence of the previous discussion, we notice that the
+location is biased and it should be corrected using Eqs (15)
+and (16). Especially, in camera calibration this is very
+important, because the circular dot patterns are usually
+viewed in skew angles
+
+!!!!!!! -> new idea: apply rectifying homography to projector calibration image, detect circle centers, unrectify (!!)
+
+https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.97.8499&rep=rep1&type=pdf:
+
+Lines in the object space are mapped as lines on the image plane, but in general perspective projection is not a shape preserving transformation. Two- and three-dimensional shapes are deformed if they are not coplanar with the image plane. This is also true for circular landmarks,
+which are commonly used control points in calibration. However, a bias between the observations and the model is induced if the centers of their projections in the image are treated as projections of the circle centers.
