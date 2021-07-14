@@ -46,10 +46,10 @@ R.~Sukthankar, R.~G. Stockton, M.~D. Mullin, Smarter presentations: Exploiting
   International Conference on Computer Vision (ICCV), Vol.~1, IEEE, 2001, pp.
   247--253.
 
-\bibitem{okatani2005autocalibration}
-T.~Okatani, K.~Deguchi, Autocalibration of a projector-camera system, IEEE
-  Transactions on Pattern Analysis and Machine Intelligence 27~(12) (2005)
-  1845--1855.
+\bibitem{raskar2001self}
+R.~Raskar, P.~Beardsley, A self-correcting projector, in: Proceedings of the
+  2001 IEEE Computer Society Conference on Computer Vision and Pattern
+  Recognition (CVPR), Vol.~2, IEEE, 2001, pp. II--II.
 
 \bibitem{pinhanez2001everywhere}
 C.~Pinhanez, The everywhere displays projector: A device to create ubiquitous
@@ -69,6 +69,11 @@ S.~Borkowski, J.~Letessier, J.~L. Crowley, Spatial control of interactive
 \bibitem{butz2006applying}
 A.~Butz, A.~Kruger, Applying the peephole metaphor in a mixed-reality room,
   IEEE Computer Graphics and applications 26~(1) (2006) 56--63.
+
+\bibitem{chiu2011novel}
+P.-H. Chiu, S.-Y. Lin, L.-W. Chan, N.-H. Yu, Y.-P. Hung, Novel projector
+  calibration approaches of multi-resolution display, in: 2011 IEEE
+  International Conference on Multimedia and Expo, IEEE, 2011, pp. 1--6.
 
 \bibitem{duane1971close}
 D.~C. Brown, Close-range camera calibration, Photogrammetric Engineering 37~(8)
