@@ -32,6 +32,15 @@ M.~Gattullo, G.~W. Scurati, M.~Fiorentino, A.~E. Uva, F.~Ferrise, M.~Bordegoni,
   Towards augmented reality manuals for industry 4.0: A methodology, Robotics
   and Computer-Integrated Manufacturing 56 (2019) 276--286.
 
+\bibitem{rupprecht2020information}
+P.~Rupprecht, H.~Kueffner-McCauley, S.~Schlund, Information provision utilizing
+  a dynamic projection system in industrial site assembly, Procedia CIRP 93
+  (2020) 1182--1187.
+
+\bibitem{Rupprecht2021}
+P.~Rupprecht, H.~Kueffner-McCauley, M.~Trimmel, S.~Schlund, Adaptive spatial
+  augmented reality for industrial site assembly, Procedia CIRP.
+
 \bibitem{bimber2019spatial}
 O.~Bimber, R.~Raskar, Spatial Augmented Reality: Merging Real and Virtual
   Worlds, AK Peters/CRC Press, 2019.
@@ -96,10 +105,5 @@ G.~Bradski, The {OpenCV} library, Dr.\ Dobb's Journal of Software Tools 25
 G.~Terzakis, M.~Lourakis, A consistently fast and globally optimal solution to
   the perspective-$n$-point problem, in: European Conference on Computer
   Vision, Springer, 2020, pp. 478--494.
-
-\bibitem{rupprecht2020information}
-P.~Rupprecht, H.~Kueffner-McCauley, S.~Schlund, Information provision utilizing
-  a dynamic projection system in industrial site assembly, Procedia CIRP 93
-  (2020) 1182--1187.
 
 \end{thebibliography}
