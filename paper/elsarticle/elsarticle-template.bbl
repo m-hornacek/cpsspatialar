@@ -101,9 +101,8 @@ Z.~Zhang, A flexible new technique for camera calibration, IEEE Transactions on
 G.~Bradski, The {OpenCV} library, Dr.\ Dobb's Journal of Software Tools 25
   (2000) 120--125.
 
-\bibitem{terzakis2020consistently}
-G.~Terzakis, M.~Lourakis, A consistently fast and globally optimal solution to
-  the perspective-$n$-point problem, in: European Conference on Computer
-  Vision, Springer, 2020, pp. 478--494.
+\bibitem{collins2014infinitesimal}
+T.~Collins, A.~Bartoli, Infinitesimal plane-based pose estimation,
+  International Journal of Computer Vision 109~(3) (2014) 252--286.
 
 \end{thebibliography}

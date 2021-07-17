@@ -472,8 +472,8 @@ void reshape(int width, int height)
     // todo: compare with http://cvrr.ucsd.edu/publications/2008/MurphyChutorian_Trivedi_CVGPU08.pdf
     double matTransp[] = { 2*f/w,     0,         0,                                          0,
                            0,         2*f/h,     0,                                          0,
-                          -2*cx/w+1,  2*cy/h-1, -(farPlane+nearPlane)/(farPlane-nearPlane), -1,
-                           0,         0,        -2*farPlane*nearPlane/(farPlane-nearPlane),  0};
+                          1-2*cx/w,  -1 + (2*cy + 2)/h, (farPlane+nearPlane)/(nearPlane - farPlane), -1,
+                           0,         0,        2*farPlane*nearPlane/(nearPlane-farPlane),  0};
 	
     glLoadMatrixd(matTransp);
 	
@@ -921,43 +921,47 @@ int main(int argc, char** argv)
 
     // get circles and chessboard image points determine corresponding plane parameters
     std::vector<std::vector<cv::Point2f>> cam0ChessboardImPts, cam0CirclesImPts;
+    cv::Mat cam0ImVis;
     CalibPattern::findChessboardAndCirclesImPts(cam0ImDir, numIms,
         chessboardPatternSize, circlesPatternSize,
         cam0ChessboardImPts, cam0CirclesImPts, cv::Size(),
-        true, cam0K, cam0DistCoeffs);
+        true, cam0K, cam0DistCoeffs, cam0ImVis, visImIdx);
 
     std::vector<std::vector<cv::Point2f>> cam1ChessboardImPts, cam1CirclesImPts;
+    cv::Mat cam1ImVis;
     CalibPattern::findChessboardAndCirclesImPts(cam1ImDir, numIms,
         chessboardPatternSize, circlesPatternSize,
         cam1ChessboardImPts, cam1CirclesImPts, cv::Size(),
-        true, cam1K, cam1DistCoeffs);
-
-    std::vector<cv::Mat> planeRs, planeTs;
-
-    // use not to calibrate camera (we provide camera parameters and keep them fixed), but to obtain plane for each image in cam coordinate frame
-    cout << "RMS (camera resection/plane recovery): " << cv::calibrateCamera(chessboardObjectPts, cam0ChessboardImPts, camSize,
-        cam0K, cam0DistCoeffs, planeRs, planeTs,
-        cv::CALIB_USE_INTRINSIC_GUESS | cv::CALIB_FIX_PRINCIPAL_POINT | cv::CALIB_FIX_FOCAL_LENGTH |
-        cv::CALIB_FIX_K1 | cv::CALIB_FIX_K2 | cv::CALIB_FIX_K3 | cv::CALIB_FIX_K4 | cv::CALIB_FIX_K5 | cv::CALIB_FIX_K6 |
-        cv::CALIB_ZERO_TANGENT_DIST) << endl;
+        true, cam1K, cam1DistCoeffs, cam1ImVis, visImIdx);
 
     // compute circles object points by intersecting circle pixel back-projections with ground plane
     std::vector<std::vector<cv::Point3f>> circlesObjectPts;
     for (int numIm = 0; numIm < numIms; numIm++)
     {
+        // compute ground plane w.r.t. checkerboard pattern
+
+        cv::Mat camNullDistCoeffs(cam0DistCoeffs.rows, cam0DistCoeffs.cols, CV_64F, cv::Scalar(0));
+
+        Mat rvec, tvec;
+        cv::solvePnP(chessboardObjectPts[numIm], cam0ChessboardImPts[numIm], cam0K, camNullDistCoeffs, rvec, tvec, false, SOLVEPNP_IPPE);
+
         cv::Mat planeRot;
-        cv::Rodrigues(planeRs.at(numIm), planeRot);
+        cv::Rodrigues(rvec, planeRot);
 
         cv::Mat planeRigid = cv::Mat::eye(cv::Size(4, 4), CV_64F);
         for (int y = 0; y < 3; y++)
             for (int x = 0; x < 3; x++)
                 planeRigid.at<double>(y, x) = planeRot.at<double>(y, x);
 
-        planeRigid.at<double>(0, 3) = planeTs.at(numIm).at<double>(0, 0);
-        planeRigid.at<double>(1, 3) = planeTs.at(numIm).at<double>(1, 0);
-        planeRigid.at<double>(2, 3) = planeTs.at(numIm).at<double>(2, 0);
+        cout << planeRot << endl;
+        cout << tvec << endl;
 
-        // compute ground plane w.r.t. checkerboard pattern
+        planeRigid.at<double>(0, 3) = tvec.at<double>(0, 0);
+        planeRigid.at<double>(1, 3) = tvec.at<double>(1, 0);
+        planeRigid.at<double>(2, 3) = tvec.at<double>(2, 0);
+
+        cout << planeRigid << endl << endl;
+
         Plane imPlane(planeRigid);
 
         stringstream ssPlane;
@@ -1088,8 +1092,11 @@ int main(int argc, char** argv)
             cv::Vec3d pt(chessboardObjectPts[0][i].x, chessboardObjectPts[0][i].y, chessboardObjectPts[0][i].z);
             cv::Vec3d outPt = Ancillary::Mat44dTimesVec3dHomog(planeRigid, pt);
 
-            transformedChessboardObjectPts.push_back(cv::Point3f(outPt[0], outPt[1], outPt[2]));
+            transformedChessboardObjectPts.push_back(cv::Point3f((float)outPt[0], (float)outPt[1], (float)outPt[2]));
             centroidChessboardObjectPts += outPt;
+
+            cv::Vec2f px = cams[0].projectLocal(Vec3f((float)outPt[0], (float)outPt[1], (float)outPt[2]));
+            cv::circle(cam0ImVis, cv::Point(int(px[0]), int(px[1])), 5, cv::Scalar(0, 0, 255), 1);
         }
         centroidChessboardObjectPts[0] /= chessboardObjectPts[0].size();
         centroidChessboardObjectPts[1] /= chessboardObjectPts[0].size();
@@ -1097,6 +1104,8 @@ int main(int argc, char** argv)
 
         pointCloud = new PointCloud(transformedChessboardObjectPts);
         
+        cv::resize(cam0ImVis, cam0ImVis, cv::Size(cam0ImVis.cols * 0.5, cam0ImVis.rows * 0.5));
+        cv::imshow("cam0ImVis", cam0ImVis);
 
         Plane planeProjLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
         planeProjLocal.rigidTransform(cams[2].getRt44());

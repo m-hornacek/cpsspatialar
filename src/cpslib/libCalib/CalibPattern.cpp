@@ -8,7 +8,7 @@ void CalibPattern::computeChessboardObjPts(int numIms, float chessboardSquareSiz
     for (int i = 0; i < chessboardPatternSize.height; i++)
         for (int j = 0; j < chessboardPatternSize.width; j++)
             chessboardObjectPts_.push_back(
-                cv::Point3f(float(j * chessboardSquareSize), float(i * chessboardSquareSize), 0));
+                cv::Point3f(j * chessboardSquareSize, i * chessboardSquareSize, 0.0));
 
     // store copy of chessboard object points once per input image
     for (int numIm = 0; numIm < numIms; numIm++)
@@ -57,10 +57,8 @@ void CalibPattern::findChessboardImPts(std::string inDir, int numIms, cv::Size c
         ss1 << inDir << "\\" << numIm << ".png";
         std::cout << ss1.str() << std::endl;
 
-        cv::Mat im = cv::imread(ss1.str());
-
         cv::Mat imVis;
-        findChessboardImPts(im, chessboardPatternSize,
+        findChessboardImPts(cv::imread(ss1.str()), chessboardPatternSize,
             outChessboardImPts, outImSize, imVis,
             applyIntrinsics, K, distCoeffs);
 
@@ -108,7 +106,7 @@ void CalibPattern::findCirclesImPts(cv::Mat& im, cv::Size circlesPatternSize,
 
 void CalibPattern::findChessboardAndCirclesImPts(std::string inDir, int numIms, cv::Size chessboardPatternSize, cv::Size circlesPatternSize,
     std::vector<std::vector<cv::Point2f>>& outChessboardImPts, std::vector<std::vector<cv::Point2f>>& outCirclesImPts, cv::Size& outImSize,
-    bool applyIntrinsics, cv::Mat& K, cv::Mat& distCoeffs)
+    bool applyIntrinsics, cv::Mat& K, cv::Mat& distCoeffs, cv::Mat& imVis, int visImIdx)
 {
     for (int numIm = 0; numIm < numIms; numIm++)
     {
@@ -116,23 +114,24 @@ void CalibPattern::findChessboardAndCirclesImPts(std::string inDir, int numIms, 
         ss1 << inDir << "\\" << numIm << ".png";
         std::cout << ss1.str() << std::endl;
 
-        cv::Mat im = cv::imread(ss1.str());
-
-        cv::Mat imVis;
-        findChessboardImPts(im, chessboardPatternSize,
-            outChessboardImPts, outImSize, imVis,
+        cv::Mat imVis_;
+        findChessboardImPts(cv::imread(ss1.str()), chessboardPatternSize,
+            outChessboardImPts, outImSize, imVis_,
             applyIntrinsics, K, distCoeffs);
 
-        findCirclesImPts(im, circlesPatternSize,
-            outCirclesImPts, outImSize, imVis,
+        findCirclesImPts(cv::imread(ss1.str()), circlesPatternSize,
+            outCirclesImPts, outImSize, imVis_,
             applyIntrinsics, K, distCoeffs);
+
+        if (numIm == visImIdx)
+            imVis_.copyTo(imVis);
 
         std::stringstream ss2;
-        ss2 << "projector calibration image " << ss1.str() << " (50% resized)";
+        ss2 << "projector calibration image (50% resized)";
 
-        cv::resize(imVis, imVis, cv::Size(imVis.cols * 0.5, imVis.rows * 0.5));
+        cv::resize(imVis_, imVis_, cv::Size(imVis_.cols * 0.5, imVis_.rows * 0.5));
 
-        cv::imshow(ss2.str(), imVis);
+        cv::imshow(ss2.str(), imVis_);
         cv::waitKey(100);
     }
 }

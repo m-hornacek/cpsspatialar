@@ -24,7 +24,7 @@ public:
         bool applyIntrinsics = true, cv::Mat& K = cv::Mat(), cv::Mat& distCoeffs = cv::Mat());
     static void findChessboardAndCirclesImPts(std::string inDir, int numIms, cv::Size chessboardPatternSize, cv::Size circlesPatternSize,
         std::vector<std::vector<cv::Point2f>>& outChessboardImPts, std::vector<std::vector<cv::Point2f>>& outCirclesImPts, cv::Size& outImSize,
-        bool applyIntrinsics = false, cv::Mat& K = cv::Mat(), cv::Mat& distCoeffs = cv::Mat());
+        bool applyIntrinsics = false, cv::Mat& K = cv::Mat(), cv::Mat& distCoeffs = cv::Mat(), cv::Mat& imVis = cv::Mat(), int visImIdx = 0);
 
 private:
 

@@ -14,7 +14,14 @@ Plane::Plane(cv::Mat & rigid)
 	distance_ = 0;
 
 	rigid_ = cv::Mat::eye(cv::Size(4, 4), CV_64F);
-	rigidTransform(rigid);
+	cv::Vec3d pt = -normal_ * distance_;
+
+	pt = Ancillary::Mat44dTimesVec3dHomog(rigid, pt);
+
+	normal_ = Ancillary::Mat33dTimesVec3d(rigid, normal_);
+	distance_ = -normal_.dot(pt);
+
+	rigid.copyTo(rigid_);
 }
 
 Plane::Plane(cv::Vec3d normal, float distance)
