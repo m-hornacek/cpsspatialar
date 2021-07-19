@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  18 JUL 2021 08:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  19 JUL 2021 07:44
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -437,22 +437,22 @@ Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
 ) (elsarticle-template.aux)
 \openout1 = `elsarticle-template.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 48.
-LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
 
 (C:\Users\micha\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
@@ -476,7 +476,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
 )
 \AtBeginShipoutBox=\box60
-Package hyperref Info: Link coloring OFF on input line 48.
+Package hyperref Info: Link coloring OFF on input line 49.
 
 (C:\Users\micha\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -490,9 +490,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count305
 )
-LaTeX Info: Redefining \ref on input line 48.
-LaTeX Info: Redefining \pageref on input line 48.
-LaTeX Info: Redefining \nameref on input line 48.
+LaTeX Info: Redefining \ref on input line 49.
+LaTeX Info: Redefining \pageref on input line 49.
+LaTeX Info: Redefining \nameref on input line 49.
  (elsarticle-template.out) (elsarticle-template.out)
 \@outlinefile=\write4
 \openout4 = `elsarticle-template.out'.
@@ -500,13 +500,13 @@ LaTeX Info: Redefining \nameref on input line 48.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 75.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 76.
 
 
 (C:\Users\micha\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 75.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 76.
 
 
 (C:\Users\micha\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
@@ -519,14 +519,14 @@ Overfull \hbox (2.22221pt too wide) has occurred while \output is active
 
 Package hyperref Warning: Composite letter `\textasciicaron+c'
 (hyperref)                not defined in PD1 encoding,
-(hyperref)                removing `\textasciicaron' on input line 75.
+(hyperref)                removing `\textasciicaron' on input line 76.
 
 [1
 
 
 {C:/Users/micha/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] [2] [3]
 ! Undefined control sequence.
-l.89 ...ne correction approach of Sukthankar \etal
+l.90 ...ne correction approach of Sukthankar \etal
                                                    \cite{sukthankar2001smart...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -538,90 +538,92 @@ and I'll forget about whatever was undefined.
 <images/circles.png, id=99, 722.7pt x 451.6875pt>
 File: images/circles.png Graphic file (type png)
 <use images/circles.png>
-Package pdftex.def Info: images/circles.png  used on input line 106.
+Package pdftex.def Info: images/circles.png  used on input line 107.
 (pdftex.def)             Requested size: 147.95596pt x 92.47145pt.
 <images/detections.png, id=101, 831.105pt x 467.49657pt>
 File: images/detections.png Graphic file (type png)
 <use images/detections.png>
-Package pdftex.def Info: images/detections.png  used on input line 108.
+Package pdftex.def Info: images/detections.png  used on input line 109.
 (pdftex.def)             Requested size: 164.39189pt x 92.47145pt.
- [5 <./images/circles.png> <./images/detections.png>] [6]
-<images/2d3d.png, id=140, 454.69875pt x 380.17032pt>
+ [5 <./images/circles.png> <./images/detections.png>] [6] [7]
+<images/2d3d.png, id=150, 454.69875pt x 380.17032pt>
 File: images/2d3d.png Graphic file (type png)
 <use images/2d3d.png>
-Package pdftex.def Info: images/2d3d.png  used on input line 122.
+Package pdftex.def Info: images/2d3d.png  used on input line 130.
 (pdftex.def)             Requested size: 159.14694pt x 133.0616pt.
- [7] [8 <./images/2d3d.png>]
-<images/1.pdf, id=161, 762.85pt x 562.1pt>
+ [8 <./images/2d3d.png>]
+<images/1.pdf, id=164, 762.85pt x 562.1pt>
 File: images/1.pdf Graphic file (type pdf)
 <use images/1.pdf>
-Package pdftex.def Info: images/1.pdf  used on input line 134.
+Package pdftex.def Info: images/1.pdf  used on input line 142.
 (pdftex.def)             Requested size: 162.17041pt x 119.50148pt.
-<images/3_above3.png, id=162, 572.1375pt x 421.575pt>
+<images/3_above3.png, id=165, 572.1375pt x 421.575pt>
 File: images/3_above3.png Graphic file (type png)
 <use images/3_above3.png>
-Package pdftex.def Info: images/3_above3.png  used on input line 136.
+Package pdftex.def Info: images/3_above3.png  used on input line 144.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
- [9 <./images/1.pdf> <./images/3_above3.png>] [10]
-<images/proj_projim.png, id=233, 572.1375pt x 421.575pt>
+ [9] [10 <./images/1.pdf> <./images/3_above3.png>]
+<images/proj_projim.png, id=236, 572.1375pt x 421.575pt>
 File: images/proj_projim.png Graphic file (type png)
 <use images/proj_projim.png>
-Package pdftex.def Info: images/proj_projim.png  used on input line 151.
+Package pdftex.def Info: images/proj_projim.png  used on input line 159.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
-<images/proj_projim_waped.png, id=234, 572.1375pt x 421.575pt>
+<images/proj_projim_waped.png, id=237, 572.1375pt x 421.575pt>
 File: images/proj_projim_waped.png Graphic file (type png)
 <use images/proj_projim_waped.png>
-Package pdftex.def Info: images/proj_projim_waped.png  used on input line 153.
+Package pdftex.def Info: images/proj_projim_waped.png  used on input line 161.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
- [11 <./images/proj_projim.png> <./images/proj_projim_waped.png>] [12] [13]
-Overfull \hbox (0.76443pt too wide) in paragraph at lines 185--186
+ [11] [12 <./images/proj_projim.png> <./images/proj_projim_waped.png>] [13] [14
+]
+Overfull \hbox (0.76443pt too wide) in paragraph at lines 193--194
 []\OT1/cmr/m/n/10 This work was sup-ported by the Aus-trian Re-search Pro-mo-ti
 on Agency (FFG)
  []
 
-(elsarticle-template.bbl [14] [15])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 189.
- [16]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 189.
+(elsarticle-template.bbl [15] [16])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 197.
+ [17]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 197.
  (elsarticle-template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 189.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 189.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 197.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 197.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 (rerunfilecheck)             Checksum: 8F68007EB22B4038C97A9D89F7E9D6D4;444.
  ) 
 Here is how much of TeX's memory you used:
- 10364 strings out of 480790
- 163944 string characters out of 2897301
- 443836 words of memory out of 3000000
- 26108 multiletter control sequences out of 15000+200000
+ 10367 strings out of 480790
+ 163967 string characters out of 2897301
+ 443873 words of memory out of 3000000
+ 26109 multiletter control sequences out of 15000+200000
  540821 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,10n,49p,1811b,490s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,10n,49p,1811b,502s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmbx10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmex10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/p
 ublic/amsfonts/cm/cmmi10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/font
-s/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/micha/AppData/Local/Programs/MiK
-TeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/micha/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/micha/AppData/Lo
-cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/micha/App
-Data/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/mi
-cha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/U
-sers/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.p
+s/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/micha/AppData/Local/Programs/MiK
+TeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/micha/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/micha/AppData/Lo
+cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/micha/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/m
+icha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/
+Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.p
 fb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
-/cmsy10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/am
-sfonts/cm/cmsy6.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/p
-ublic/amsfonts/cm/cmsy7.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts
-/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/micha/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/micha/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Users/micha/AppData/Lo
-cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/micha/A
-ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb><C:/Users
-/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10
-.pfb>
-Output written on elsarticle-template.pdf (16 pages, 1779304 bytes).
+/cmss8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
+fonts/cm/cmsy10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/p
+ublic/amsfonts/cm/cmsy6.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts
+/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/micha/AppData/Local/Programs/MiKT
+eX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/micha/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/micha/AppData/Lo
+cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Users/micha/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users
+/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt8.pfb><
+C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbol
+s/msbm10.pfb>
+Output written on elsarticle-template.pdf (17 pages, 1793378 bytes).
 PDF statistics:
- 357 PDF objects out of 1000 (max. 8388607)
- 72 named destinations out of 1000 (max. 500000)
+ 368 PDF objects out of 1000 (max. 8388607)
+ 74 named destinations out of 1000 (max. 500000)
  100 words of extra memory for PDF output out of 10000 (max. 10000000)
 
