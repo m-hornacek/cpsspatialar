@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  19 JUL 2021 08:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  19 JUL 2021 08:22
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -552,23 +552,23 @@ File: images/2d3d.png Graphic file (type png)
 Package pdftex.def Info: images/2d3d.png  used on input line 130.
 (pdftex.def)             Requested size: 159.14694pt x 133.0616pt.
  [8 <./images/2d3d.png>]
-<images/1.pdf, id=165, 762.85pt x 562.1pt>
+<images/1.pdf, id=164, 762.85pt x 562.1pt>
 File: images/1.pdf Graphic file (type pdf)
 <use images/1.pdf>
 Package pdftex.def Info: images/1.pdf  used on input line 142.
 (pdftex.def)             Requested size: 162.17041pt x 119.50148pt.
-<images/3_above3.png, id=166, 572.1375pt x 421.575pt>
+<images/3_above3.png, id=165, 572.1375pt x 421.575pt>
 File: images/3_above3.png Graphic file (type png)
 <use images/3_above3.png>
 Package pdftex.def Info: images/3_above3.png  used on input line 144.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
  [9] [10 <./images/1.pdf> <./images/3_above3.png>]
-<images/proj_projim.png, id=237, 572.1375pt x 421.575pt>
+<images/proj_projim.png, id=236, 572.1375pt x 421.575pt>
 File: images/proj_projim.png Graphic file (type png)
 <use images/proj_projim.png>
 Package pdftex.def Info: images/proj_projim.png  used on input line 159.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
-<images/proj_projim_waped.png, id=238, 572.1375pt x 421.575pt>
+<images/proj_projim_waped.png, id=237, 572.1375pt x 421.575pt>
 File: images/proj_projim_waped.png Graphic file (type png)
 <use images/proj_projim_waped.png>
 Package pdftex.def Info: images/proj_projim_waped.png  used on input line 161.
@@ -597,7 +597,7 @@ Here is how much of TeX's memory you used:
  26109 multiletter control sequences out of 15000+200000
  540821 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,10n,49p,1811b,494s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,10n,49p,1811b,490s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmbx10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmex10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/p
@@ -622,7 +622,7 @@ micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><
 C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmt
 t8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
 s/symbols/msbm10.pfb>
-Output written on elsarticle-template.pdf (17 pages, 1801210 bytes).
+Output written on elsarticle-template.pdf (17 pages, 1801245 bytes).
 PDF statistics:
  372 PDF objects out of 1000 (max. 8388607)
  74 named destinations out of 1000 (max. 500000)
