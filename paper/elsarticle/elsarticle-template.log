@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  19 JUL 2021 08:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  20 JUL 2021 07:27
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -546,12 +546,12 @@ File: images/detections.png Graphic file (type png)
 Package pdftex.def Info: images/detections.png  used on input line 109.
 (pdftex.def)             Requested size: 164.39189pt x 92.47145pt.
  [5 <./images/circles.png> <./images/detections.png>] [6] [7]
-<images/2d3d.png, id=151, 454.69875pt x 380.17032pt>
+<images/2d3d.png, id=150, 454.69875pt x 380.17032pt>
 File: images/2d3d.png Graphic file (type png)
 <use images/2d3d.png>
 Package pdftex.def Info: images/2d3d.png  used on input line 130.
 (pdftex.def)             Requested size: 159.14694pt x 133.0616pt.
- [8 <./images/2d3d.png>]
+ [8]
 <images/1.pdf, id=164, 762.85pt x 562.1pt>
 File: images/1.pdf Graphic file (type pdf)
 <use images/1.pdf>
@@ -562,13 +562,13 @@ File: images/3_above3.png Graphic file (type png)
 <use images/3_above3.png>
 Package pdftex.def Info: images/3_above3.png  used on input line 144.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
- [9] [10 <./images/1.pdf> <./images/3_above3.png>]
-<images/proj_projim.png, id=236, 572.1375pt x 421.575pt>
+ [9 <./images/2d3d.png>] [10 <./images/1.pdf> <./images/3_above3.png>]
+<images/proj_projim.png, id=235, 572.1375pt x 421.575pt>
 File: images/proj_projim.png Graphic file (type png)
 <use images/proj_projim.png>
 Package pdftex.def Info: images/proj_projim.png  used on input line 159.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
-<images/proj_projim_waped.png, id=237, 572.1375pt x 421.575pt>
+<images/proj_projim_waped.png, id=236, 572.1375pt x 421.575pt>
 File: images/proj_projim_waped.png Graphic file (type png)
 <use images/proj_projim_waped.png>
 Package pdftex.def Info: images/proj_projim_waped.png  used on input line 161.
@@ -593,7 +593,7 @@ Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 Here is how much of TeX's memory you used:
  10367 strings out of 480790
  163967 string characters out of 2897301
- 443873 words of memory out of 3000000
+ 444873 words of memory out of 3000000
  26109 multiletter control sequences out of 15000+200000
  540821 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -622,7 +622,7 @@ micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><
 C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmt
 t8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
 s/symbols/msbm10.pfb>
-Output written on elsarticle-template.pdf (17 pages, 1801245 bytes).
+Output written on elsarticle-template.pdf (17 pages, 1801683 bytes).
 PDF statistics:
  372 PDF objects out of 1000 (max. 8388607)
  74 named destinations out of 1000 (max. 500000)
