@@ -34,6 +34,10 @@ void CalibPattern::findChessboardImPts(cv::Mat& im, cv::Size chessboardPatternSi
     cv::cvtColor(imUndistort, imGrayUndistort, cv::COLOR_BGR2GRAY);
     // cv::threshold(candidateIm, candidateImThresh, 100, 255, THRESH_BINARY);
 
+    //cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
+    //clahe->setClipLimit(4);
+    //clahe->apply(imGrayUndistort, imGrayUndistort);
+
     outImSize = cv::Size(im.cols, im.rows);
 
     std::vector<cv::Point2f> candidateChessboardImPts;
@@ -78,6 +82,8 @@ void CalibPattern::findCirclesImPts(cv::Mat& im, cv::Size circlesPatternSize,
 {
     cv::Mat imUndistort, imGrayUndistort, imGrayUndistortInvert;
 
+    std::cout << 1 << std::endl;
+
     if (applyIntrinsics)
     {
         cv::undistort(im, imUndistort, K, distCoeffs);
@@ -85,13 +91,33 @@ void CalibPattern::findCirclesImPts(cv::Mat& im, cv::Size circlesPatternSize,
     else
         im.copyTo(imUndistort);
 
+    std::cout << 2 << std::endl;
+
     if (outImVis.size != imUndistort.size)
         imUndistort.copyTo(outImVis);
 
+    std::cout << 3 << std::endl;
+
     cv::cvtColor(imUndistort, imGrayUndistort, cv::COLOR_BGR2GRAY);
+
+    std::cout << 4 << std::endl;
+
+    //cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
+    //clahe->setClipLimit(4);
+    //clahe->apply(imGrayUndistort, imGrayUndistort);
+
     cv::bitwise_not(imGrayUndistort, imGrayUndistortInvert);
 
+    std::cout << 5 << std::endl;
+
     outImSize = cv::Size(im.cols, im.rows);
+
+    std::cout << 6 << std::endl;
+
+    cv::Mat imGrayUndistortInvertVis;
+    cv::resize(imGrayUndistortInvert, imGrayUndistortInvertVis, cv::Size(imGrayUndistortInvert.cols * 0.5, imGrayUndistortInvert.rows * 0.5));
+    cv::imshow("imGrayUndistortInvert", imGrayUndistortInvertVis);
+    cv::waitKey(10);
 
     std::vector<cv::Point2f> candidateCirclesImPts;
     if (findCirclesGrid(imGrayUndistortInvert, circlesPatternSize, candidateCirclesImPts, cv::CALIB_CB_ASYMMETRIC_GRID))
@@ -99,8 +125,12 @@ void CalibPattern::findCirclesImPts(cv::Mat& im, cv::Size circlesPatternSize,
         cv::cornerSubPix(imGrayUndistort, candidateCirclesImPts, cv::Size(5, 5), cv::Size(-1, -1),
             cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 40, 0.001));
 
+        std::cout << 7 << std::endl;
+
         drawChessboardCorners(outImVis, circlesPatternSize, candidateCirclesImPts, true);
         outCirclesImPts.push_back(candidateCirclesImPts);
+
+        std::cout << 8 << std::endl;
     }
 }
 
@@ -119,9 +149,13 @@ void CalibPattern::findChessboardAndCirclesImPts(std::string inDir, int numIms, 
             outChessboardImPts, outImSize, imVis_,
             applyIntrinsics, K, distCoeffs);
 
+        std::cout << "findChessboardImPts done" << std::endl;
+
         findCirclesImPts(cv::imread(ss1.str()), circlesPatternSize,
             outCirclesImPts, outImSize, imVis_,
             applyIntrinsics, K, distCoeffs);
+
+        std::cout << "findCirclesImPts done" << std::endl;
 
         if (numIm == visImIdx)
             imVis_.copyTo(imVis);
