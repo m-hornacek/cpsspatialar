@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  24 JUL 2021 07:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  24 JUL 2021 08:30
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -537,29 +537,29 @@ File: images/detections.png Graphic file (type png)
 Package pdftex.def Info: images/detections.png  used on input line 109.
 (pdftex.def)             Requested size: 164.39189pt x 92.47145pt.
  [5 <./images/circles.png> <./images/detections.png>] [6] [7]
-<images/2d3d.png, id=155, 454.69875pt x 380.17032pt>
+<images/2d3d.png, id=156, 454.69875pt x 380.17032pt>
 File: images/2d3d.png Graphic file (type png)
 <use images/2d3d.png>
 Package pdftex.def Info: images/2d3d.png  used on input line 138.
 (pdftex.def)             Requested size: 159.14694pt x 133.0616pt.
  [8] [9 <./images/2d3d.png>]
-<images/1.pdf, id=175, 762.85pt x 562.1pt>
+<images/1.pdf, id=176, 762.85pt x 562.1pt>
 File: images/1.pdf Graphic file (type pdf)
 <use images/1.pdf>
 Package pdftex.def Info: images/1.pdf  used on input line 149.
 (pdftex.def)             Requested size: 162.17041pt x 119.50148pt.
-<images/3_above3.png, id=176, 572.1375pt x 421.575pt>
+<images/3_above3.png, id=177, 572.1375pt x 421.575pt>
 File: images/3_above3.png Graphic file (type png)
 <use images/3_above3.png>
 Package pdftex.def Info: images/3_above3.png  used on input line 151.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
  [10 <./images/1.pdf> <./images/3_above3.png>] [11]
-<images/proj_projim.png, id=247, 572.1375pt x 421.575pt>
+<images/proj_projim.png, id=248, 572.1375pt x 421.575pt>
 File: images/proj_projim.png Graphic file (type png)
 <use images/proj_projim.png>
 Package pdftex.def Info: images/proj_projim.png  used on input line 166.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
-<images/proj_projim_waped.png, id=248, 572.1375pt x 421.575pt>
+<images/proj_projim_waped.png, id=249, 572.1375pt x 421.575pt>
 File: images/proj_projim_waped.png Graphic file (type png)
 <use images/proj_projim_waped.png>
 Package pdftex.def Info: images/proj_projim_waped.png  used on input line 168.
@@ -579,15 +579,11 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 204.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 204.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 (rerunfilecheck)             Checksum: 8F68007EB22B4038C97A9D89F7E9D6D4;444.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
  10373 strings out of 480790
  164071 string characters out of 2897301
- 443991 words of memory out of 3000000
+ 443980 words of memory out of 3000000
  26112 multiletter control sequences out of 15000+200000
  540821 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -600,25 +596,26 @@ s/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/micha/AppData/Local/Programs/MiK
 TeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/micha/AppData/Local/Prog
 rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/micha/AppData/Lo
 cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/micha/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/m
-icha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/
-Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.p
+pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/m
+icha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/
+Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.p
 fb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
-/cmss8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmsy10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/p
-ublic/amsfonts/cm/cmsy5.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts
-/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/micha/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/micha/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/micha/AppData/Loc
-al/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/micha/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Users/
-micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><
-C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmt
-t8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
-s/symbols/msbm10.pfb>
-Output written on elsarticle-template.pdf (18 pages, 1807071 bytes).
+/cmr8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsf
+onts/cm/cmss8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/pub
+lic/amsfonts/cm/cmsy10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/
+type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/micha/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Users/micha/AppData/Local/Progra
+ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/micha/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/micha/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/m
+icha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:
+/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt1
+0.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
+/cm/cmtt8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+amsfonts/symbols/msbm10.pfb>
+Output written on elsarticle-template.pdf (18 pages, 1816518 bytes).
 PDF statistics:
- 382 PDF objects out of 1000 (max. 8388607)
+ 386 PDF objects out of 1000 (max. 8388607)
  77 named destinations out of 1000 (max. 500000)
  100 words of extra memory for PDF output out of 10000 (max. 10000000)
 
