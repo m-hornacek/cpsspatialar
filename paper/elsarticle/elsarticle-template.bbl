@@ -88,6 +88,11 @@ P.-H. Chiu, S.-Y. Lin, L.-W. Chan, N.-H. Yu, Y.-P. Hung, Novel projector
 D.~C. Brown, Close-range camera calibration, Photogrammetric Engineering 37~(8)
   (1971) 855--866.
 
+\bibitem{weng1992camera}
+J.~Weng, P.~Cohen, M.~Herniou, et~al., Camera calibration with distortion
+  models and accuracy evaluation, IEEE Transactions on Pattern Analysis and
+  Machine Intelligence 14~(10) (1992) 965--980.
+
 \bibitem{triggs1999bundle}
 B.~Triggs, P.~F. McLauchlan, R.~I. Hartley, A.~W. Fitzgibbon, Bundle
   adjustment---a modern synthesis, in: International Workshop on Vision
