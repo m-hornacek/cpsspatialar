@@ -37,15 +37,15 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Recovering 2D positions in support of projector calibration. (a) 2D positions of the 2D-3D correspondences to be used for calibrating the projector are obtained by detecting---in the image plane of the projector---the circle centers in the asymmetrical circle pattern image, to be projected to each of the target locations in the scene plane. (b) For each such target location, an image is acquired from the viewpoint of the camera and the circle centers of the projected asymmetrical circle pattern are detected, in the image plane of the camera. A chessboard pattern to be used for recovering the local scene plane is placed near the projected pattern, whose corners are likewise detected. Detected 2D projected asymmetrical circle pattern circle center points and chessboard corners overlain for illustration.\relax }}{5}{figure.caption.1}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:2d}{{1}{5}{Recovering 2D positions in support of projector calibration. (a) 2D positions of the 2D-3D correspondences to be used for calibrating the projector are obtained by detecting---in the image plane of the projector---the circle centers in the asymmetrical circle pattern image, to be projected to each of the target locations in the scene plane. (b) For each such target location, an image is acquired from the viewpoint of the camera and the circle centers of the projected asymmetrical circle pattern are detected, in the image plane of the camera. A chessboard pattern to be used for recovering the local scene plane is placed near the projected pattern, whose corners are likewise detected. Detected 2D projected asymmetrical circle pattern circle center points and chessboard corners overlain for illustration.\relax }{figure.caption.1}{}}
-\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {\centering Asymetrical circle pattern image, in image plane of projector (detections overlain).}}}{5}{subfigure.1.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {\centering Asymmetrical circle pattern image, in image plane of projector (detections overlain).}}}{5}{subfigure.1.1}\protected@file@percent }
 \@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {\centering Projector calibration image (one for each target location), in image plane of camera (detections overlain).}}}{5}{subfigure.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Recovering Geometry}{5}{subsection.2.1}\protected@file@percent }
-\newlabel{sec:approach:geometry}{{2.1}{5}{Recovering Geometry}{subsection.2.1}{}}
 \citation{triggs1999bundle}
 \citation{Hartley2004,zhang2000flexible}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Recovering Geometry}{6}{subsection.2.1}\protected@file@percent }
+\newlabel{sec:approach:geometry}{{2.1}{6}{Recovering Geometry}{subsection.2.1}{}}
 \citation{duane1971close,weng1992camera}
-\newlabel{re}{{2}{6}{Recovering Geometry}{equation.2.2}{}}
 \citation{bradski2000opencv}
+\newlabel{re}{{2}{7}{Recovering Geometry}{equation.2.2}{}}
 \@writefile{toc}{\contentsline {paragraph}{Camera calibration}{7}{section*.2}\protected@file@percent }
 \citation{bradski2000opencv}
 \citation{collins2014infinitesimal}
@@ -59,23 +59,23 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Correcting for Projective Distortion}{10}{subsection.2.2}\protected@file@percent }
 \newlabel{sec:approach:homography}{{2.2}{10}{Correcting for Projective Distortion}{subsection.2.2}{}}
 \@writefile{toc}{\contentsline {paragraph}{Virtual projector}{11}{section*.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Projection to the scene plane from the recovered projector viewpoint (bottom left, black; virtual projector in center, gray) of the original image and of the warped image. (a) Projecting the original image to the scene plane. (b) After warping the original image according to our plane-induced homography for the given target location, the image is projected in a manner that appears free of projective distortions, aligned with the axes of the virtual camera (via the virtual projector), and to have the desired dimensions in the scene plane, expressed in metric units. Note that background in the projected image is shown set to black.\relax }}{12}{figure.caption.7}\protected@file@percent }
-\newlabel{fig:warp}{{4}{12}{Projection to the scene plane from the recovered projector viewpoint (bottom left, black; virtual projector in center, gray) of the original image and of the warped image. (a) Projecting the original image to the scene plane. (b) After warping the original image according to our plane-induced homography for the given target location, the image is projected in a manner that appears free of projective distortions, aligned with the axes of the virtual camera (via the virtual projector), and to have the desired dimensions in the scene plane, expressed in metric units. Note that background in the projected image is shown set to black.\relax }{figure.caption.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Projection to the scene plane from the recovered projector viewpoint (bottom left, black; virtual projector in center, gray) of the original image and of the warped image. (a) Projecting the original image to the scene plane. (b) After warping the original image according to our plane-induced homography for the given target location, the image is projected in a manner that appears free of projective distortions, aligned with the axes of the virtual camera (via the virtual projector), and to have the desired dimensions in the scene plane, expressed in metric units. Note that unprojected background is shown set to black.\relax }}{12}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:warp}{{4}{12}{Projection to the scene plane from the recovered projector viewpoint (bottom left, black; virtual projector in center, gray) of the original image and of the warped image. (a) Projecting the original image to the scene plane. (b) After warping the original image according to our plane-induced homography for the given target location, the image is projected in a manner that appears free of projective distortions, aligned with the axes of the virtual camera (via the virtual projector), and to have the desired dimensions in the scene plane, expressed in metric units. Note that unprojected background is shown set to black.\relax }{figure.caption.7}{}}
 \@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {\centering Projecting original image.}}}{12}{subfigure.4.1}\protected@file@percent }
 \@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {\centering Projecting our warped image.}}}{12}{subfigure.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Plane-induced homography}{12}{section*.8}\protected@file@percent }
 \citation{Hartley2004}
 \citation{rupprecht2020information,Rupprecht2021}
+\@writefile{toc}{\contentsline {paragraph}{Plane-induced homography}{13}{section*.8}\protected@file@percent }
 \newlabel{homgen}{{3}{13}{Plane-induced homography}{equation.2.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Evaluation}{13}{section.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Manual approach}{14}{section*.9}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Our approach}{14}{section*.10}\protected@file@percent }
 \bibdata{mybibfile}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Conclusion}{15}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Acknowledgments}{15}{section.5}\protected@file@percent }
 \bibcite{van2010survey}{{1}{}{{}}{{}}}
 \bibcite{zhou2008trends}{{2}{}{{}}{{}}}
 \bibcite{schlund2018moglichkeiten}{{3}{}{{}}{{}}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Conclusion}{15}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Acknowledgments}{15}{section.5}\protected@file@percent }
 \bibcite{masood2019augmented}{{4}{}{{}}{{}}}
 \bibcite{gattullo2019towards}{{5}{}{{}}{{}}}
 \bibcite{rupprecht2020information}{{6}{}{{}}{{}}}
