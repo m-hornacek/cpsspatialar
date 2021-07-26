@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  26 JUL 2021 07:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  26 JUL 2021 07:36
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -583,7 +583,7 @@ Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 Here is how much of TeX's memory you used:
  10374 strings out of 480790
  164082 string characters out of 2897301
- 443969 words of memory out of 3000000
+ 444969 words of memory out of 3000000
  26112 multiletter control sequences out of 15000+200000
  540821 words of font info for 58 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -613,7 +613,7 @@ icha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:
 0.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
 /cm/cmtt8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/
 amsfonts/symbols/msbm10.pfb>
-Output written on elsarticle-template.pdf (18 pages, 1817464 bytes).
+Output written on elsarticle-template.pdf (18 pages, 1817467 bytes).
 PDF statistics:
  388 PDF objects out of 1000 (max. 8388607)
  78 named destinations out of 1000 (max. 500000)
