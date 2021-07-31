@@ -45,6 +45,22 @@ P.~Rupprecht, H.~Kueffner-McCauley, M.~Trimmel, S.~Schlund, Adaptive spatial
 O.~Bimber, R.~Raskar, Spatial Augmented Reality: Merging Real and Virtual
   Worlds, AK Peters/CRC Press, 2019.
 
+\bibitem{pinhanez2001everywhere}
+C.~Pinhanez, The everywhere displays projector: A device to create ubiquitous
+  graphical interfaces, in: International Conference on Ubiquitous Computing,
+  Springer, 2001, pp. 315--331.
+
+\bibitem{kjeldsen2002interacting}
+R.~Kjeldsen, C.~Pinhanez, G.~Pingali, J.~Hartman, T.~Levas, M.~Podlaseck,
+  Interacting with steerable projected displays, in: Proceedings of Fifth IEEE
+  International Conference on Automatic Face Gesture Recognition, IEEE, 2002,
+  pp. 402--407.
+
+\bibitem{pinhanez2003applications}
+C.~Pinhanez, R.~Kjeldsen, A.~Levas, G.~Pingali, M.~Podlaseck, N.~Sukaviriya,
+  Applications of steerable projector-camera systems, in: Proceedings of the
+  IEEE International Workshop on Projector-Camera Systems at ICCV 2003, 2003.
+
 \bibitem{Hartley2004}
 R.~I. Hartley, A.~Zisserman, Multiple View Geometry in Computer Vision, 2nd
   Edition, Cambridge University Press, ISBN: 0521540518, 2004.
@@ -59,25 +75,6 @@ R.~Sukthankar, R.~G. Stockton, M.~D. Mullin, Smarter presentations: Exploiting
 R.~Raskar, P.~Beardsley, A self-correcting projector, in: Proceedings of the
   2001 IEEE Computer Society Conference on Computer Vision and Pattern
   Recognition (CVPR), Vol.~2, IEEE, 2001, pp. II--II.
-
-\bibitem{pinhanez2001everywhere}
-C.~Pinhanez, The everywhere displays projector: A device to create ubiquitous
-  graphical interfaces, in: International Conference on Ubiquitous Computing,
-  Springer, 2001, pp. 315--331.
-
-\bibitem{ehnes2004projected}
-J.~Ehnes, K.~Hirota, M.~Hirose, Projected augmentation-augmented reality using
-  rotatable video projectors, in: Third IEEE and ACM International Symposium on
-  Mixed and Augmented Reality, IEEE, 2004, pp. 26--35.
-
-\bibitem{borkowski2004spatial}
-S.~Borkowski, J.~Letessier, J.~L. Crowley, Spatial control of interactive
-  surfaces in an augmented environment, in: IFIP International Conference on
-  Engineering for Human-Computer Interaction, Springer, 2004, pp. 228--244.
-
-\bibitem{butz2006applying}
-A.~Butz, A.~Kruger, Applying the peephole metaphor in a mixed-reality room,
-  IEEE Computer Graphics and Applications 26~(1) (2006) 56--63.
 
 \bibitem{chiu2011novel}
 P.-H. Chiu, S.-Y. Lin, L.-W. Chan, N.-H. Yu, Y.-P. Hung, Novel projector
