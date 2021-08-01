@@ -83,11 +83,6 @@ R.~Raskar, P.~Beardsley, A self-correcting projector, in: Proceedings of the
   2001 IEEE Computer Society Conference on Computer Vision and Pattern
   Recognition (CVPR), Vol.~2, IEEE, 2001, pp. II--II.
 
-\bibitem{chiu2011novel}
-P.-H. Chiu, S.-Y. Lin, L.-W. Chan, N.-H. Yu, Y.-P. Hung, Novel projector
-  calibration approaches of multi-resolution display, in: 2011 IEEE
-  International Conference on Multimedia and Expo, IEEE, 2011, pp. 1--6.
-
 \bibitem{duane1971close}
 D.~C. Brown, Close-range camera calibration, Photogrammetric Engineering 37~(8)
   (1971) 855--866.
@@ -105,6 +100,20 @@ B.~Triggs, P.~F. McLauchlan, R.~I. Hartley, A.~W. Fitzgibbon, Bundle
 \bibitem{zhang2000flexible}
 Z.~Zhang, A flexible new technique for camera calibration, IEEE Transactions on
   Pattern Analysis and Machine Intelligence 22~(11) (2000) 1330--1334.
+
+\bibitem{moreno2012simple}
+D.~Moreno, G.~Taubin, Simple, accurate, and robust projector-camera
+  calibration, in: 2012 Second International Conference on 3D Imaging,
+  Modeling, Processing, Visualization \& Transmission, IEEE, 2012, pp.
+  464--471.
+
+\bibitem{zhang2009projector}
+X.~Zhang, L.~Zhu, Projector calibration from the camera image point of view,
+  Optical Engineering 48~(11) (2009) 117208.
+
+\bibitem{zhang2006novel}
+S.~Zhang, P.~S. Huang, Novel method for structured light system calibration,
+  Optical Engineering 45~(8) (2006) 083601.
 
 \bibitem{bradski2000opencv}
 G.~Bradski, The {OpenCV} library, Dr.\ Dobb's Journal of Software Tools 25
