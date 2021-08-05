@@ -155,9 +155,9 @@ Calibration of a projector can be carried out in precisely the same manner as ca
 
 \begin{figure}
     \centering
-    \subfloat[\centering Asymmetrical circle pattern image, in image plane of projector (detections overlain).]{{\includegraphics[height=3.25cm]{images/circles.png} }}
+    \subfloat[\centering Asymmetrical circle pattern image, in image plane of projector (detections overlaid).]{{\includegraphics[height=3.25cm]{images/circles.png} }}
     \qquad
-    \subfloat[\centering Projector calibration image (one for each target location), in image plane of camera (detections overlain).]{{\includegraphics[height=3.25cm]{images/detections.png}}}
+    \subfloat[\centering Projector calibration image (one for each target location), in image plane of camera (detections overlaid).]{{\includegraphics[height=3.25cm]{images/detections.png}}}
     \caption{Recovering 2D positions in support of projector calibration. (a) 2D positions of the 2D-3D correspondences to be used for calibrating the projector are obtained by detecting---in the image plane of the projector---the circle centers in the asymmetrical circle pattern image, to be projected to each of the target locations in the scene plane. (b) For each such target location, an image is acquired from the viewpoint of the camera and the circle centers of the projected asymmetrical circle pattern are detected, in the image plane of the camera. A chessboard pattern to be used for recovering the local scene plane is placed near the projected pattern, whose corners are likewise detected. Detected 2D projected asymmetrical circle pattern circle center points and chessboard corners overlain for illustration.}
     \label{fig:2d}
 \end{figure}
