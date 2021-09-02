@@ -6,45 +6,45 @@ The style file: elsarticle-num.bst
 Reallocating 'name_of_file' (item size: 1) to 10 items.
 Database file #1: mybibfile.bib
 Warning--empty pages in pinhanez2003applications
-You've used 24 entries,
+You've used 26 entries,
             2937 wiz_defined-function locations,
-            819 strings with 9793 characters,
-and the built_in function-call counts, 8035 in all, are:
-= -- 766
-> -- 235
+            831 strings with 10373 characters,
+and the built_in function-call counts, 8629 in all, are:
+= -- 819
+> -- 267
 < -- 10
-+ -- 94
-- -- 70
-* -- 528
-:= -- 1042
-add.period$ -- 24
-call.type$ -- 24
-change.case$ -- 24
++ -- 106
+- -- 80
+* -- 574
+:= -- 1132
+add.period$ -- 26
+call.type$ -- 26
+change.case$ -- 26
 chr.to.int$ -- 3
-cite$ -- 25
-duplicate$ -- 274
-empty$ -- 929
-format.name$ -- 90
-if$ -- 2105
+cite$ -- 27
+duplicate$ -- 290
+empty$ -- 986
+format.name$ -- 102
+if$ -- 2251
 int.to.chr$ -- 0
-int.to.str$ -- 24
-missing$ -- 26
-newline$ -- 80
-num.names$ -- 24
-pop$ -- 178
+int.to.str$ -- 26
+missing$ -- 28
+newline$ -- 86
+num.names$ -- 26
+pop$ -- 188
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 538
+skip$ -- 572
 stack$ -- 0
-substring$ -- 532
-swap$ -- 77
+substring$ -- 563
+swap$ -- 79
 text.length$ -- 9
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 1
-while$ -- 70
-width$ -- 26
-write$ -- 206
+while$ -- 75
+width$ -- 28
+write$ -- 222
 (There was 1 warning)

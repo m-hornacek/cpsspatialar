@@ -22,6 +22,13 @@ S.~Schlund, W.~Mayrhofer, P.~Rupprecht, {M{\"o}glichkeiten} der {Gestaltung}
   aktueller technologischer {Entwicklungen}, Zeitschrift f{\"u}r
   Arbeitswissenschaft 72~(4) (2018) 276--286.
 
+\bibitem{uva2018evaluating}
+A.~E. Uva, M.~Gattullo, V.~M. Manghisi, D.~Spagnulo, G.~L. Cascella,
+  M.~Fiorentino, Evaluating the effectiveness of spatial augmented reality in
+  smart manufacturing: a solution for manual working stations, The
+  International Journal of Advanced Manufacturing Technology 94~(1) (2018)
+  509--521.
+
 \bibitem{masood2019augmented}
 T.~Masood, J.~Egger, Augmented reality in support of industry
   4.0---implementation challenges and success factors, Robotics and
@@ -32,12 +39,16 @@ M.~Gattullo, G.~W. Scurati, M.~Fiorentino, A.~E. Uva, F.~Ferrise, M.~Bordegoni,
   Towards augmented reality manuals for industry 4.0: A methodology, Robotics
   and Computer-Integrated Manufacturing 56 (2019) 276--286.
 
-\bibitem{uva2018evaluating}
-A.~E. Uva, M.~Gattullo, V.~M. Manghisi, D.~Spagnulo, G.~L. Cascella,
-  M.~Fiorentino, Evaluating the effectiveness of spatial augmented reality in
-  smart manufacturing: a solution for manual working stations, The
-  International Journal of Advanced Manufacturing Technology 94~(1) (2018)
-  509--521.
+\bibitem{aschenbrenner2019comparing}
+D.~Aschenbrenner, F.~Leutert, A.~{\c{C}}en{\c{c}}en, J.~Verlinden,
+  K.~Schilling, M.~Latoschik, S.~Lukosch, Comparing human factors for augmented
+  reality supported single-user and collaborative repair operations of
+  industrial robots, Frontiers in Robotics and AI 6 (2019) 37.
+
+\bibitem{mayrhofer2019one}
+W.~Mayrhofer, P.~Rupprecht, S.~Schlund, One-fits-all vs. tailor-made:
+  user-centered workstations for field assembly with an application in aircraft
+  parts manufacturing, Procedia Manufacturing 39 (2019) 149--157.
 
 \bibitem{rupprecht2020information}
 P.~Rupprecht, H.~Kueffner-McCauley, S.~Schlund, Information provision utilizing
