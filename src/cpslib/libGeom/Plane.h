@@ -9,6 +9,7 @@ public:
 
 	Plane(cv::Mat & rigid);
 	Plane(cv::Vec3d normal, float distance);
+	Plane(std::vector<cv::Point3f> points);
 
 	void rigidTransform(cv::Mat & rigid44d);
 

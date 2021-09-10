@@ -61,11 +61,15 @@ cv::Vec3d centroidChessboardObjectPts;
 PointCloud * pointCloud;
 PointCloud * pointCloudCircles;
 PointCloud* pointCloud2Circles;
+PointCloud* triangulatedPointCloudCircles;
 PointCloud* pointCloudImVis;
 PointCloud* pointCloud2ImVis;
+
 Plane * planeVis;
+Plane* fittedPlaneVis;
 
 std::vector<Plane> planes;
+std::vector<Plane> fittedPlanes;
 
 cv::Vec3d projCamIntersection;
 cv::Vec3d projPlaneIntersection;
@@ -191,6 +195,7 @@ void display()
             else
             {
                 pointCloudCircles->display(pointSize, 1, 0, 0);
+                triangulatedPointCloudCircles->display(pointSize, 0, 1, 0);
 
                 std::vector<cv::Point3f> points = pointCloudCircles->getPoints();
                 std::vector<cv::Point3f> points2 = pointCloud->getPoints();
@@ -248,6 +253,7 @@ void display()
         }
 
         planeVis->display(2, pointSize);
+        fittedPlaneVis->display(2, pointSize);
 
         float offset = 0.02;
         for (int i = 0; i < cams.size(); i++)
@@ -293,7 +299,7 @@ void display()
 
             cv::Vec3d C = cams[i].getC();
 
-            if (camIdx == i)
+            //if (camIdx == i)
             {
                 std::stringstream ss;
                 ss << "Rendering according to " << string(str);
@@ -935,7 +941,7 @@ int main(int argc, char** argv)
         true, cam1K, cam1DistCoeffs, cam1ImVis, visImIdx);
 
     // compute circles object points by intersecting circle pixel back-projections with ground plane
-    std::vector<std::vector<cv::Point3f>> circlesObjectPts;
+    std::vector<std::vector<cv::Point3f>> circlesObjectPts, triangulatedCirclesObjectPts;
     for (int numIm = 0; numIm < numIms; numIm++)
     {
         // compute ground plane w.r.t. checkerboard pattern
@@ -970,9 +976,9 @@ int main(int argc, char** argv)
 
         fsPlane << "Rt" << planeRigid;
 
-        std::vector<cv::Point3f> circlesObjectPts_;
-        if (false)
-        {
+        std::vector<cv::Point3f> circlesObjectPts_, triangulatedCirclesObjectPts_;
+        //if (false)
+        //{
             cv::Mat intersectionsHomog;
             cv::triangulatePoints(cams[0].getP(), cams[1].getP(), cam0CirclesImPts.at(numIm), cam1CirclesImPts.at(numIm), intersectionsHomog);
 
@@ -985,26 +991,34 @@ int main(int argc, char** argv)
                     ptHomog[1] / ptHomog[3],
                     ptHomog[2] / ptHomog[3]);
 
-                circlesObjectPts_.push_back(pt);
+                triangulatedCirclesObjectPts_.push_back(pt);
             }
-        }
-        else
-        {
+        //}
+        //else
+        //{
             for (int numCircle = 0; numCircle < cam0CirclesImPts.at(numIm).size(); numCircle++)
             {
                 cv::Vec3d intersection = imPlane.intersect(cams[0].backprojectLocal(cam0CirclesImPts.at(numIm).at(numCircle)));
                 circlesObjectPts_.push_back(cv::Point3d(intersection[0], intersection[1], intersection[2]));
             }
-        }
+        //}
 
         circlesObjectPts.push_back(circlesObjectPts_);
+        triangulatedCirclesObjectPts.push_back(triangulatedCirclesObjectPts_);
         planes.push_back(Plane(planeRigid));
+        std::cout << "one" << std::endl;
+        fittedPlanes.push_back(Plane(triangulatedCirclesObjectPts_));
+
+        std::cout << numIm << ", " << visImIdx << std::endl;
 
         // for visualization
         if (numIm == visImIdx)
         {
             pointCloudCircles = new PointCloud(circlesObjectPts_);
+            triangulatedPointCloudCircles = new PointCloud(triangulatedCirclesObjectPts_);
             planeVis = new Plane(planeRigid);
+            std::cout << "two" << std::endl;
+            fittedPlaneVis = new Plane(triangulatedCirclesObjectPts_);
         }
     }
 

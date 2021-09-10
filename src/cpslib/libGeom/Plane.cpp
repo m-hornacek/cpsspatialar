@@ -31,12 +31,71 @@ Plane::Plane(cv::Vec3d normal, float distance)
 
 	cv::Mat rot = Ancillary::getMinArclengthRotationMat33d(cv::Vec3d(0, 0, -1), normal_);
 
+	Eigen::Matrix3d rotEigen;
+	for (int y = 0; y < 3; y++)
+		for (int x = 0; x < 3; x++)
+			rotEigen(y, x) = rot.at<double>(y, x);
+
+	cv::Vec3d pt = -normal_ * distance_;
+
+	Eigen::Vector3d ptEigen(pt[0], pt[1], pt[2]);
+	Eigen::Vector3d tEigen = -rotEigen * ptEigen;
+
 	rigid_ = cv::Mat::eye(cv::Size(4, 4), CV_64F);
 	for (int y = 0; y < 3; y++)
 		for (int x = 0; x < 3; x++)
 			rigid_.at<double>(y, x) = rot.at<double>(y, x);
 
-	// todo: got R, but what about t?
+	for (int i = 0; i < 3; i++)
+		rigid_.at<double>(i, 3) = ptEigen[i];
+}
+
+// from https://stackoverflow.com/questions/40589802/eigen-best-fit-of-a-plane-to-n-points
+Plane::Plane(std::vector<cv::Point3f> points)
+{
+	// copy coordinates to  matrix in Eigen format
+	size_t numPts = points.size();
+	Eigen::MatrixXd pointsEigen(3, numPts);
+	for (size_t i = 0; i < numPts; ++i)
+		pointsEigen.col(i) = Eigen::Vector3d(points[i].x, points[i].y, points[i].z);
+
+	// calculate centroid
+	Eigen::Vector3d centroidEigen(pointsEigen.row(0).mean(), pointsEigen.row(1).mean(), pointsEigen.row(2).mean());
+
+	// subtract centroid
+	pointsEigen.row(0).array() -= centroidEigen(0);
+	pointsEigen.row(1).array() -= centroidEigen(1);
+	pointsEigen.row(2).array() -= centroidEigen(2);
+
+	// we only need the left-singular matrix here
+	//  http://math.stackexchange.com/questions/99299/best-fitting-plane-given-a-set-of-points
+
+	auto svd = pointsEigen.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV);
+	Eigen::Vector3d normalEigen = svd.matrixU().rightCols<1>();
+	
+	normal_ = -cv::Vec3d(normalEigen[0], normalEigen[1], normalEigen[2]);
+	normal_ /= sqrt(normal_.dot(normal_));
+	distance_ = -normal_.dot(cv::Vec3d(centroidEigen[0], centroidEigen[1], centroidEigen[2]));
+
+	cv::Mat rot = Ancillary::getMinArclengthRotationMat33d(cv::Vec3d(0, 0, -1), normal_);
+
+	Eigen::Matrix3d rotEigen;
+	for (int y = 0; y < 3; y++)
+		for (int x = 0; x < 3; x++)
+			rotEigen(y, x) = rot.at<double>(y, x);
+
+	cv::Vec3d pt = -normal_ * distance_;
+
+	Eigen::Vector3d ptEigen(pt[0], pt[1], pt[2]);
+	Eigen::Vector3d tEigen = -rotEigen * ptEigen;
+
+	rigid_ = cv::Mat::eye(cv::Size(4, 4), CV_64F);
+	for (int y = 0; y < 3; y++)
+		for (int x = 0; x < 3; x++)
+			rigid_.at<double>(y, x) = rot.at<double>(y, x);
+
+	for (int i = 0; i < 3; i++)
+	    rigid_.at<double>(i, 3) = ptEigen[i];
 }
 
 void Plane::rigidTransform(cv::Mat & rigid44d)
