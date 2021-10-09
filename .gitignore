@@ -1,6 +1,7 @@
 # Custom (cpsspatialar)
 build/
 external/
+*.ipch
 
 # Prerequisites
 *.d

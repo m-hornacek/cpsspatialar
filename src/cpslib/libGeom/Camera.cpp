@@ -49,7 +49,6 @@ Camera::Camera(const Camera& cam)
 	cam.M33d_.copyTo(M33d_);
 	cam.MInv33d_.copyTo(MInv33d_);
 	cam.Rt34d_.copyTo(Rt34d_);
-	cam.P34d_.copyTo(P34d_);
 	cam.Rt44d_.copyTo(Rt44d_);
 	cam.RtInv44d_.copyTo(RtInv44d_);
 

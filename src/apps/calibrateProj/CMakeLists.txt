@@ -1,6 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.19.0)
 
 PROJECT(calibrateProj)
+
+find_package(PCL 1.2 REQUIRED)
  
 SET(CPSSPATIALAR_BASEDIR ${CMAKE_CURRENT_SOURCE_DIR}/../../)
 SET(CPSLIB_DIR ${CPSSPATIALAR_BASEDIR}/cpslib)
@@ -16,7 +18,10 @@ LINK_DIRECTORIES(
 	${GLEW_DIR}/lib/Release
 	${GLFW_DIR}/build/src/Release
 	${OPENCV_DIR}/build/lib/Release
+	${PCL_LIBRARY_DIRS}
 )
+
+ADD_DEFINITIONS(${PCL_DEFINITIONS})
 
 INCLUDE_DIRECTORIES(
 	${CPSSPATIALAR_BASEDIR}/cpslib/libCalib
@@ -40,6 +45,7 @@ INCLUDE_DIRECTORIES(
 	${OPENCV_DIR}/src/include
 	${OPENCV_DIR}/src/include/opencv
 	${OPENCV_DIR}/3rdparty/include
+	${PCL_INCLUDE_DIRS}
 )
 
 ADD_EXECUTABLE(calibrateProj
@@ -62,4 +68,5 @@ TARGET_LINK_LIBRARIES(calibrateProj
 	optimized opencv_imgcodecs451
 	optimized opencv_imgproc451
 	optimized opencv_videoio451
+	${PCL_LIBRARIES}
 )

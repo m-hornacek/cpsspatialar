@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  2 SEP 2021 20:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  8 OCT 2021 17:24
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -531,9 +531,9 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 78.
 (C:\Users\micha\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (9.94124pt too wide) has occurred while \output is active
+Overfull \hbox (0.72455pt too wide) has occurred while \output is active
 \OT1/cmr/m/it/8 Preprint submitted to CIRP Journal of Manufacturing Science and
- Technology September 2, 2021
+ Technology October 8, 2021
  []
 
 
@@ -562,91 +562,101 @@ File: images/detections.png Graphic file (type png)
 Package pdftex.def Info: images/detections.png  used on input line 129.
 (pdftex.def)             Requested size: 164.39189pt x 92.47145pt.
  [9 <./images/circles.png> <./images/detections.png>]
-<images/2d3d.png, id=178, 454.69875pt x 380.17032pt>
+[10]
+<images/2d3d.png, id=185, 454.69875pt x 380.17032pt>
 File: images/2d3d.png Graphic file (type png)
 <use images/2d3d.png>
-Package pdftex.def Info: images/2d3d.png  used on input line 139.
-(pdftex.def)             Requested size: 159.14694pt x 133.0616pt.
-
-[10] [11 <./images/2d3d.png>]
-<images/1_big.pdf, id=199, 762.85pt x 562.1pt>
+Package pdftex.def Info: images/2d3d.png  used on input line 144.
+(pdftex.def)             Requested size: 170.51161pt x 142.5635pt.
+ [11 <./images/2d3d.png>]
+<images/3_cam.png, id=199, 572.1375pt x 421.575pt>
+File: images/3_cam.png Graphic file (type png)
+<use images/3_cam.png>
+Package pdftex.def Info: images/3_cam.png  used on input line 155.
+(pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
+<images/3_above3_cam.png, id=200, 572.1375pt x 421.575pt>
+File: images/3_above3_cam.png Graphic file (type png)
+<use images/3_above3_cam.png>
+Package pdftex.def Info: images/3_above3_cam.png  used on input line 157.
+(pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
+<images/1_big.pdf, id=201, 762.85pt x 562.1pt>
 File: images/1_big.pdf Graphic file (type pdf)
 <use images/1_big.pdf>
-Package pdftex.def Info: images/1_big.pdf  used on input line 150.
+Package pdftex.def Info: images/1_big.pdf  used on input line 165.
 (pdftex.def)             Requested size: 162.17041pt x 119.50148pt.
-<images/3_above3.png, id=200, 572.1375pt x 421.575pt>
-File: images/3_above3.png Graphic file (type png)
-<use images/3_above3.png>
-Package pdftex.def Info: images/3_above3.png  used on input line 152.
+<images/3_above3_proj.png, id=202, 572.1375pt x 421.575pt>
+File: images/3_above3_proj.png Graphic file (type png)
+<use images/3_above3_proj.png>
+Package pdftex.def Info: images/3_above3_proj.png  used on input line 167.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
- [12 <./images/1_big.pdf> <./images/3_above3.png>]
-<images/proj_projim.png, id=261, 572.1375pt x 421.575pt>
+ [12 <./images/3_cam.png> <./images/3_above3_cam.png>] [13 <./images/1_big.pdf>
+ <./images/3_above3_proj.png>]
+<images/proj_projim.png, id=274, 572.1375pt x 421.575pt>
 File: images/proj_projim.png Graphic file (type png)
 <use images/proj_projim.png>
-Package pdftex.def Info: images/proj_projim.png  used on input line 163.
+Package pdftex.def Info: images/proj_projim.png  used on input line 178.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
-<images/proj_projim_waped.png, id=262, 572.1375pt x 421.575pt>
+<images/proj_projim_waped.png, id=275, 572.1375pt x 421.575pt>
 File: images/proj_projim_waped.png Graphic file (type png)
 <use images/proj_projim_waped.png>
-Package pdftex.def Info: images/proj_projim_waped.png  used on input line 165.
+Package pdftex.def Info: images/proj_projim_waped.png  used on input line 180.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
-[13 <./images/proj_projim.png> <./images/proj_projim_waped.png>] [14]
-<images/system2.png, id=288, 963.6pt x 542.025pt>
+ [14 <./images/proj_projim.png> <./images/proj_projim_waped.png>] [15]
+<images/system2.png, id=299, 963.6pt x 542.025pt>
 File: images/system2.png Graphic file (type png)
 <use images/system2.png>
-Package pdftex.def Info: images/system2.png  used on input line 183.
+Package pdftex.def Info: images/system2.png  used on input line 198.
 (pdftex.def)             Requested size: 166.91223pt x 93.89418pt.
-<images/hans_undist_inset.png, id=289, 722.7pt x 406.51875pt>
+<images/hans_undist_inset.png, id=300, 722.7pt x 406.51875pt>
 File: images/hans_undist_inset.png Graphic file (type png)
 <use images/hans_undist_inset.png>
-Package pdftex.def Info: images/hans_undist_inset.png  used on input line 185.
+Package pdftex.def Info: images/hans_undist_inset.png  used on input line 200.
 (pdftex.def)             Requested size: 166.92326pt x 93.89418pt.
- [15]
-[16 <./images/system2.png> <./images/hans_undist_inset.png>]
-Overfull \hbox (2.2512pt too wide) in paragraph at lines 212--212
+ [16 <./images/system2.png> <./images/hans_undist_inset.png>]
+Overfull \hbox (2.2512pt too wide) in paragraph at lines 227--227
 []|\OT1/cmr/m/n/9 Bottom| 
  []
 
 
-Overfull \hbox (1.78506pt too wide) in alignment at lines 212--212
+Overfull \hbox (1.78506pt too wide) in alignment at lines 227--227
 [][][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in alignment at lines 227--227
+Underfull \hbox (badness 10000) in alignment at lines 242--242
 [][][] 
  []
 
-[17] [18]
-Overfull \hbox (0.76443pt too wide) in paragraph at lines 242--243
+[17] [18] [19]
+Overfull \hbox (0.76443pt too wide) in paragraph at lines 257--258
 []\OT1/cmr/m/n/10 This work was sup-ported by the Aus-trian Re-search Pro-mo-ti
 on Agency (FFG)
  []
 
-(elsarticle-template.bbl [19] [20]
+(elsarticle-template.bbl [20] [21]
 Underfull \hbox (badness 3000) in paragraph at lines 83--86
 []\OT1/cmr/m/n/10 C. Pin-hanez, R. Kjeld-sen, A. Levas, G. Pin-gali, M. Pod-las
 eck,
  []
 
-[21])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 246.
- [22]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 246.
+[22])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 261.
+ [23]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 261.
  (elsarticle-template.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 246.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 246.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 261.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 261.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 (rerunfilecheck)             Checksum: 8F68007EB22B4038C97A9D89F7E9D6D4;444.
  ) 
 Here is how much of TeX's memory you used:
- 10491 strings out of 480790
- 166048 string characters out of 2897301
- 449055 words of memory out of 3000000
- 26203 multiletter control sequences out of 15000+200000
+ 10508 strings out of 480790
+ 166402 string characters out of 2897301
+ 452598 words of memory out of 3000000
+ 26214 multiletter control sequences out of 15000+200000
  542841 words of font info for 66 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,11n,49p,1900b,500s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,11n,49p,1902b,520s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmbx10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmex10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/p
@@ -673,9 +683,9 @@ pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmtt10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
 msfonts/cm/cmtt8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/
 public/amsfonts/symbols/msbm10.pfb>
-Output written on elsarticle-template.pdf (22 pages, 3453746 bytes).
+Output written on elsarticle-template.pdf (23 pages, 3489429 bytes).
 PDF statistics:
- 446 PDF objects out of 1000 (max. 8388607)
- 92 named destinations out of 1000 (max. 500000)
- 110 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 457 PDF objects out of 1000 (max. 8388607)
+ 96 named destinations out of 1000 (max. 500000)
+ 120 words of extra memory for PDF output out of 10000 (max. 10000000)
 

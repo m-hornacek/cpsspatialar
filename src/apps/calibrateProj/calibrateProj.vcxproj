@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2C2F8AC2-3900-3F13-A64F-9D38E4B09959}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>calibrateProj</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+    <VcpkgEnabled>false</VcpkgEnabled>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="do_not_import_user.props" Condition="exists('do_not_import_user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\micha\Desktop\cpsspatialar\build\bin\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">calibrateProj.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">calibrateProj</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\micha\Desktop\cpsspatialar\build\bin\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">calibrateProj.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">calibrateProj</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\micha\Desktop\cpsspatialar\build\bin\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">calibrateProj.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">calibrateProj</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\micha\Desktop\cpsspatialar\build\bin\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">calibrateProj.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">calibrateProj</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libCalib;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libGeom;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libHomography;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\eigen;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\freeglut\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glew\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glfw\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\build;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\calib3d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\core\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\flann\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\features2d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\highgui\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgcodecs\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgproc\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\videoio\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include\opencv;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\3rdparty\include;C:\Users\micha\vcpkg\installed\x64-windows\include;C:\Users\micha\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;__SSSE3__;__SSE2__;__SSE__;BOOST_ALL_NO_LIB;DISABLE_PNG;DISABLE_QHULL;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;__SSSE3__;__SSE2__;__SSE__;BOOST_ALL_NO_LIB;DISABLE_PNG;DISABLE_QHULL;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libCalib;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libGeom;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libHomography;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\eigen;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\freeglut\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glew\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glfw\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\build;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\calib3d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\core\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\flann\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\features2d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\highgui\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgcodecs\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgproc\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\videoio\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include\opencv;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\3rdparty\include;C:\Users\micha\vcpkg\installed\x64-windows\include;C:\Users\micha\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libCalib;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libGeom;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libHomography;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\eigen;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\freeglut\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glew\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glfw\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\build;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\calib3d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\core\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\flann\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\features2d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\highgui\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgcodecs\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgproc\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\videoio\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include\opencv;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\3rdparty\include;C:\Users\micha\vcpkg\installed\x64-windows\include;C:\Users\micha\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message></Message>
+      <Command>setlocal
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/micha/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/micha/Desktop/cpsspatialar/build/bin/Debug/calibrateProj.exe -installedDir C:/Users/micha/vcpkg/installed/x64-windows/debug/bin -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_segmentationd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_surfaced.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_keypointsd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_trackingd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_recognitiond.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_stereod.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\boost_system-vc140-mt-gd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\boost_filesystem-vc140-mt-gd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\boost_date_time-vc140-mt-gd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\boost_iostreams-vc140-mt-gd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\boost_regex-vc140-mt-gd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_mld.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_registrationd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_featuresd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_filtersd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_sample_consensusd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_searchd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_kdtreed.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_iod.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_octreed.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\pcl_commond.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\flann_cppd.lib;C:\Users\micha\vcpkg\installed\x64-windows\debug\lib\lz4d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../build/cpslib;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../build/cpslib/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/freeglut/lib/x64;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/freeglut/lib/x64/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glew/lib/Release;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glew/lib/Release/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glfw/build/src/Release;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glfw/build/src/Release/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/opencv/build/lib/Release;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/opencv/build/lib/Release/$(Configuration);C:/Users/micha/vcpkg/installed/x64-windows/lib;C:/Users/micha/vcpkg/installed/x64-windows/lib/$(Configuration);C:/Users/micha/vcpkg/installed/x64-windows/debug/lib;C:/Users/micha/vcpkg/installed/x64-windows/debug/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/micha/Desktop/cpsspatialar/build/bin/Debug/calibrateProj.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/micha/Desktop/cpsspatialar/build/bin/Debug/calibrateProj.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libCalib;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libGeom;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libHomography;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\eigen;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\freeglut\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glew\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glfw\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\build;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\calib3d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\core\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\flann\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\features2d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\highgui\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgcodecs\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgproc\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\videoio\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include\opencv;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\3rdparty\include;C:\Users\micha\vcpkg\installed\x64-windows\include;C:\Users\micha\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__SSSE3__;__SSE2__;__SSE__;BOOST_ALL_NO_LIB;DISABLE_PNG;DISABLE_QHULL;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__SSSE3__;__SSE2__;__SSE__;BOOST_ALL_NO_LIB;DISABLE_PNG;DISABLE_QHULL;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libCalib;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libGeom;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libHomography;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\eigen;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\freeglut\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glew\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glfw\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\build;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\calib3d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\core\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\flann\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\features2d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\highgui\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgcodecs\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgproc\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\videoio\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include\opencv;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\3rdparty\include;C:\Users\micha\vcpkg\installed\x64-windows\include;C:\Users\micha\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libCalib;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libGeom;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libHomography;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\eigen;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\freeglut\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glew\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glfw\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\build;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\calib3d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\core\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\flann\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\features2d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\highgui\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgcodecs\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgproc\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\videoio\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include\opencv;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\3rdparty\include;C:\Users\micha\vcpkg\installed\x64-windows\include;C:\Users\micha\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message></Message>
+      <Command>setlocal
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/micha/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/micha/Desktop/cpsspatialar/build/bin/Release/calibrateProj.exe -installedDir C:/Users/micha/vcpkg/installed/x64-windows/bin -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>..\..\build\lib\Release\libCalib.lib;..\..\build\lib\Release\libGeom.lib;..\..\build\lib\Release\libHomography.lib;glfw3.lib;freeglut.lib;glew32.lib;opencv_calib3d451.lib;opencv_core451.lib;opencv_flann451.lib;opencv_features2d451.lib;opencv_highgui451.lib;opencv_imgproc451.lib;opencv_imgcodecs451.lib;opencv_imgproc451.lib;opencv_videoio451.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_segmentation.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_surface.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_keypoints.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_tracking.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_recognition.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_stereo.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_system-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_filesystem-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_date_time-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_iostreams-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_regex-vc140-mt.lib;opencv_imgcodecs451.lib;opencv_videoio451.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_system-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_filesystem-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_date_time-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_iostreams-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_regex-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_ml.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_registration.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_features.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_filters.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_sample_consensus.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_search.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_kdtree.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_io.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_octree.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_common.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\flann_cpp.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\lz4.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../build/cpslib;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../build/cpslib/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/freeglut/lib/x64;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/freeglut/lib/x64/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glew/lib/Release;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glew/lib/Release/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glfw/build/src/Release;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glfw/build/src/Release/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/opencv/build/lib/Release;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/opencv/build/lib/Release/$(Configuration);C:/Users/micha/vcpkg/installed/x64-windows/lib;C:/Users/micha/vcpkg/installed/x64-windows/lib/$(Configuration);C:/Users/micha/vcpkg/installed/x64-windows/debug/lib;C:/Users/micha/vcpkg/installed/x64-windows/debug/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/micha/Desktop/cpsspatialar/build/bin/Release/calibrateProj.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/micha/Desktop/cpsspatialar/build/bin/Release/calibrateProj.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libCalib;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libGeom;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libHomography;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\eigen;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\freeglut\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glew\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glfw\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\build;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\calib3d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\core\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\flann\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\features2d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\highgui\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgcodecs\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgproc\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\videoio\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include\opencv;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\3rdparty\include;C:\Users\micha\vcpkg\installed\x64-windows\include;C:\Users\micha\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__SSSE3__;__SSE2__;__SSE__;BOOST_ALL_NO_LIB;DISABLE_PNG;DISABLE_QHULL;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__SSSE3__;__SSE2__;__SSE__;BOOST_ALL_NO_LIB;DISABLE_PNG;DISABLE_QHULL;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libCalib;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libGeom;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libHomography;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\eigen;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\freeglut\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glew\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glfw\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\build;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\calib3d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\core\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\flann\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\features2d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\highgui\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgcodecs\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgproc\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\videoio\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include\opencv;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\3rdparty\include;C:\Users\micha\vcpkg\installed\x64-windows\include;C:\Users\micha\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libCalib;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libGeom;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libHomography;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\eigen;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\freeglut\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glew\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glfw\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\build;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\calib3d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\core\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\flann\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\features2d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\highgui\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgcodecs\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgproc\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\videoio\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include\opencv;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\3rdparty\include;C:\Users\micha\vcpkg\installed\x64-windows\include;C:\Users\micha\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message></Message>
+      <Command>setlocal
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/micha/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/micha/Desktop/cpsspatialar/build/bin/MinSizeRel/calibrateProj.exe -installedDir C:/Users/micha/vcpkg/installed/x64-windows/bin -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>..\..\build\lib\MinSizeRel\libCalib.lib;..\..\build\lib\MinSizeRel\libGeom.lib;..\..\build\lib\MinSizeRel\libHomography.lib;glfw3.lib;freeglut.lib;glew32.lib;opencv_calib3d451.lib;opencv_core451.lib;opencv_flann451.lib;opencv_features2d451.lib;opencv_highgui451.lib;opencv_imgproc451.lib;opencv_imgcodecs451.lib;opencv_imgproc451.lib;opencv_videoio451.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_segmentation.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_surface.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_keypoints.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_tracking.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_recognition.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_stereo.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_system-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_filesystem-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_date_time-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_iostreams-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_regex-vc140-mt.lib;opencv_imgcodecs451.lib;opencv_videoio451.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_system-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_filesystem-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_date_time-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_iostreams-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_regex-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_ml.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_registration.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_features.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_filters.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_sample_consensus.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_search.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_kdtree.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_io.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_octree.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_common.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\flann_cpp.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\lz4.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../build/cpslib;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../build/cpslib/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/freeglut/lib/x64;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/freeglut/lib/x64/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glew/lib/Release;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glew/lib/Release/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glfw/build/src/Release;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glfw/build/src/Release/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/opencv/build/lib/Release;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/opencv/build/lib/Release/$(Configuration);C:/Users/micha/vcpkg/installed/x64-windows/lib;C:/Users/micha/vcpkg/installed/x64-windows/lib/$(Configuration);C:/Users/micha/vcpkg/installed/x64-windows/debug/lib;C:/Users/micha/vcpkg/installed/x64-windows/debug/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/micha/Desktop/cpsspatialar/build/bin/MinSizeRel/calibrateProj.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/micha/Desktop/cpsspatialar/build/bin/MinSizeRel/calibrateProj.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libCalib;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libGeom;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libHomography;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\eigen;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\freeglut\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glew\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glfw\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\build;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\calib3d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\core\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\flann\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\features2d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\highgui\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgcodecs\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgproc\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\videoio\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include\opencv;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\3rdparty\include;C:\Users\micha\vcpkg\installed\x64-windows\include;C:\Users\micha\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__SSSE3__;__SSE2__;__SSE__;BOOST_ALL_NO_LIB;DISABLE_PNG;DISABLE_QHULL;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;__SSSE3__;__SSE2__;__SSE__;BOOST_ALL_NO_LIB;DISABLE_PNG;DISABLE_QHULL;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libCalib;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libGeom;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libHomography;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\eigen;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\freeglut\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glew\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glfw\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\build;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\calib3d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\core\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\flann\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\features2d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\highgui\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgcodecs\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgproc\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\videoio\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include\opencv;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\3rdparty\include;C:\Users\micha\vcpkg\installed\x64-windows\include;C:\Users\micha\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libCalib;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libGeom;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\cpslib\libHomography;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\eigen;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\freeglut\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glew\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\glfw\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\build;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\calib3d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\core\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\flann\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\features2d\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\highgui\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgcodecs\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\imgproc\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\modules\videoio\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\src\include\opencv;C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\..\..\external\opencv\3rdparty\include;C:\Users\micha\vcpkg\installed\x64-windows\include;C:\Users\micha\vcpkg\installed\x64-windows\include\eigen3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <PostBuildEvent>
+      <Message></Message>
+      <Command>setlocal
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/micha/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/micha/Desktop/cpsspatialar/build/bin/RelWithDebInfo/calibrateProj.exe -installedDir C:/Users/micha/vcpkg/installed/x64-windows/bin -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+    </PostBuildEvent>
+    <Link>
+      <AdditionalDependencies>..\..\build\lib\RelWithDebInfo\libCalib.lib;..\..\build\lib\RelWithDebInfo\libGeom.lib;..\..\build\lib\RelWithDebInfo\libHomography.lib;glfw3.lib;freeglut.lib;glew32.lib;opencv_calib3d451.lib;opencv_core451.lib;opencv_flann451.lib;opencv_features2d451.lib;opencv_highgui451.lib;opencv_imgproc451.lib;opencv_imgcodecs451.lib;opencv_imgproc451.lib;opencv_videoio451.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_segmentation.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_surface.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_keypoints.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_tracking.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_recognition.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_stereo.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_system-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_filesystem-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_date_time-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_iostreams-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_regex-vc140-mt.lib;opencv_imgcodecs451.lib;opencv_videoio451.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_system-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_filesystem-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_date_time-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_iostreams-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\boost_regex-vc140-mt.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_ml.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_registration.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_features.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_filters.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_sample_consensus.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_search.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_kdtree.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_io.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_octree.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\pcl_common.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\flann_cpp.lib;C:\Users\micha\vcpkg\installed\x64-windows\lib\lz4.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../build/cpslib;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../build/cpslib/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/freeglut/lib/x64;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/freeglut/lib/x64/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glew/lib/Release;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glew/lib/Release/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glfw/build/src/Release;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/glfw/build/src/Release/$(Configuration);C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/opencv/build/lib/Release;C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/../../external/opencv/build/lib/Release/$(Configuration);C:/Users/micha/vcpkg/installed/x64-windows/lib;C:/Users/micha/vcpkg/installed/x64-windows/lib/$(Configuration);C:/Users/micha/vcpkg/installed/x64-windows/debug/lib;C:/Users/micha/vcpkg/installed/x64-windows/debug/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/micha/Desktop/cpsspatialar/build/bin/RelWithDebInfo/calibrateProj.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/micha/Desktop/cpsspatialar/build/bin/RelWithDebInfo/calibrateProj.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\CMakeLists.txt">
+      <StdOutEncoding>UTF-8</StdOutEncoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/micha/Desktop/cpsspatialar/src -BC:/Users/micha/Desktop/cpsspatialar/src --check-stamp-file C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.19\Modules\CMakeFindDependencyMacro.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindBoost.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPkgConfig.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\boost\vcpkg-cmake-wrapper.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-config-version.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-config.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-targets-debug.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-targets-release.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-targets.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\lz4\lz4-config-debug.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\lz4\lz4-config-release.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\lz4\lz4-config.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\Modules\FindEigen.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\Modules\FindFLANN.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\PCLConfig.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\PCLConfigVersion.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullConfig.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullConfigVersion.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullTargets-debug.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullTargets-release.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullTargets.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/micha/Desktop/cpsspatialar/src -BC:/Users/micha/Desktop/cpsspatialar/src --check-stamp-file C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.19\Modules\CMakeFindDependencyMacro.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindBoost.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPkgConfig.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\boost\vcpkg-cmake-wrapper.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-config-version.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-config.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-targets-debug.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-targets-release.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-targets.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\lz4\lz4-config-debug.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\lz4\lz4-config-release.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\lz4\lz4-config.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\Modules\FindEigen.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\Modules\FindFLANN.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\PCLConfig.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\PCLConfigVersion.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullConfig.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullConfigVersion.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullTargets-debug.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullTargets-release.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullTargets.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/micha/Desktop/cpsspatialar/src -BC:/Users/micha/Desktop/cpsspatialar/src --check-stamp-file C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.19\Modules\CMakeFindDependencyMacro.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindBoost.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPkgConfig.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\boost\vcpkg-cmake-wrapper.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-config-version.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-config.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-targets-debug.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-targets-release.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-targets.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\lz4\lz4-config-debug.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\lz4\lz4-config-release.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\lz4\lz4-config.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\Modules\FindEigen.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\Modules\FindFLANN.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\PCLConfig.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\PCLConfigVersion.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullConfig.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullConfigVersion.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullTargets-debug.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullTargets-release.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullTargets.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/micha/Desktop/cpsspatialar/src -BC:/Users/micha/Desktop/cpsspatialar/src --check-stamp-file C:/Users/micha/Desktop/cpsspatialar/src/apps/calibrateProj/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.19\Modules\CMakeFindDependencyMacro.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindBoost.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.19\Modules\FindPkgConfig.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\boost\vcpkg-cmake-wrapper.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-config-version.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-config.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-targets-debug.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-targets-release.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\flann\flann-targets.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\lz4\lz4-config-debug.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\lz4\lz4-config-release.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\lz4\lz4-config.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\Modules\FindEigen.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\Modules\FindFLANN.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\PCLConfig.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\pcl\PCLConfigVersion.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullConfig.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullConfigVersion.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullTargets-debug.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullTargets-release.cmake;C:\Users\micha\vcpkg\installed\x64-windows\share\qhull\QhullTargets.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\micha\Desktop\cpsspatialar\src\apps\calibrateProj\calibrateProj.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\micha\Desktop\cpsspatialar\src\ZERO_CHECK.vcxproj">
+      <Project>{B2718BEF-4F29-321D-B077-92F85319698F}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\micha\Desktop\cpsspatialar\src\cpslib\libCalib\libCalib.vcxproj">
+      <Project>{1632601C-1B7B-312E-90A1-6A03D6141985}</Project>
+      <Name>libCalib</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\micha\Desktop\cpsspatialar\src\cpslib\libGeom\libGeom.vcxproj">
+      <Project>{A311592C-8658-31C7-B623-5B696A377CB4}</Project>
+      <Name>libGeom</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\micha\Desktop\cpsspatialar\src\cpslib\libHomography\libHomography.vcxproj">
+      <Project>{7E38C6B1-DCB8-38D8-8D05-94996F1736EA}</Project>
+      <Name>libHomography</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

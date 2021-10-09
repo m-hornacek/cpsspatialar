@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\micha\Desktop\cpsspatialar\src\apps\rectify\rectify.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\micha\Desktop\cpsspatialar\src\apps\rectify\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{B9C1AB42-D7E9-32D8-8E1C-41F653AF3D22}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

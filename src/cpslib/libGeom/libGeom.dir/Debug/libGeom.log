@@ -1,0 +1,6 @@
+﻿  Building Custom Rule C:/Users/micha/Desktop/cpsspatialar/src/cpslib/libGeom/CMakeLists.txt
+  Camera.cpp
+  Plane.cpp
+  PointCloud.cpp
+  Generating Code...
+  libGeom.vcxproj -> C:\Users\micha\Desktop\cpsspatialar\src\build\lib\Debug\libGeomd.lib

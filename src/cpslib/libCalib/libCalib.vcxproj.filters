@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\micha\Desktop\cpsspatialar\src\cpslib\libCalib\CalibPattern.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\micha\Desktop\cpsspatialar\src\cpslib\libCalib\CalibPattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\micha\Desktop\cpsspatialar\src\cpslib\libCalib\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{EBE9241F-DE7D-3555-85F5-B24BE29A937D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{B9C1AB42-D7E9-32D8-8E1C-41F653AF3D22}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

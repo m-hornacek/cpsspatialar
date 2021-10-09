@@ -9,6 +9,7 @@
  *   calibrateProj 0.0565 4 6 4 11 C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\out 11 C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outLeft C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outRight C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_0.yml  C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_1.yml C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\acircles_pattern_960x600.png 1.0 3 C:\Users\micha\Desktop\spatial-ar\in_out\applyHomography\holodeck.png
  */
 
+// CMake projects should use: "-DCMAKE_TOOLCHAIN_FILE=C:/Users/micha/vcpkg/scripts/buildsystems/vcpkg.cmake"
 
 #include <iostream>
 #include <fstream>
@@ -59,9 +60,9 @@ vector<vector<Mat>> capturedPattern;
 cv::Vec3d centroidChessboardObjectPts;
 
 PointCloud * pointCloud;
-PointCloud * pointCloudCircles;
+std::vector<PointCloud*> pointCloudCirclesVec;
 PointCloud* pointCloud2Circles;
-PointCloud* triangulatedPointCloudCircles;
+std::vector<PointCloud*> triangulatedPointCloudCirclesVec;
 PointCloud* pointCloudImVis;
 PointCloud* pointCloud2ImVis;
 
@@ -194,10 +195,15 @@ void display()
                 pointCloud2Circles->display(pointSize, 0, 1, 0);
             else
             {
-                pointCloudCircles->display(pointSize, 1, 0, 0);
-                triangulatedPointCloudCircles->display(pointSize, 0, 1, 0);
+                
 
-                std::vector<cv::Point3f> points = pointCloudCircles->getPoints();
+                for (int i = 0; i < triangulatedPointCloudCirclesVec.size(); i++)
+                {
+                    pointCloudCirclesVec[i]->display(pointSize, 1, 0, 0);
+                    triangulatedPointCloudCirclesVec[i]->display(pointSize, 0, 1, 0);
+                }
+
+                std::vector<cv::Point3f> points = pointCloudCirclesVec[viewIdx]->getPoints();
                 std::vector<cv::Point3f> points2 = pointCloud->getPoints();
 
                 float f = cams[0].getf();
@@ -258,9 +264,6 @@ void display()
         float offset = 0.02;
         for (int i = 0; i < cams.size(); i++)
         {
-            if (i == 1)
-                continue;
-
             if (viewIdx == 0 && (i == 4 || i == 5))
                 continue;
 
@@ -926,19 +929,53 @@ int main(int argc, char** argv)
         imWidth, imHeight, 0.02));
 
     // get circles and chessboard image points determine corresponding plane parameters
-    std::vector<std::vector<cv::Point2f>> cam0ChessboardImPts, cam0CirclesImPts;
+    std::vector<std::vector<cv::Point2f>> cam0ChessboardImPts, cam0CirclesImPts, cam0CirclesImPtsNormalized;
     cv::Mat cam0ImVis;
     CalibPattern::findChessboardAndCirclesImPts(cam0ImDir, numIms,
         chessboardPatternSize, circlesPatternSize,
         cam0ChessboardImPts, cam0CirclesImPts, cv::Size(),
         true, cam0K, cam0DistCoeffs, cam0ImVis, visImIdx);
 
-    std::vector<std::vector<cv::Point2f>> cam1ChessboardImPts, cam1CirclesImPts;
+    double cam0f = cams[0].getf();
+    cv::Vec2d cam0PrincipalPt = cams[0].getPrincipalPt();
+    for (int i = 0; i < cam0CirclesImPts.size(); i++)
+    {
+        cam0CirclesImPtsNormalized.push_back(std::vector<cv::Point2f>());
+        for (int j = 0; j < cam0CirclesImPts[i].size(); j++)
+        {
+            cv::Point2f px = cam0CirclesImPts[i][j];
+
+            float normalizedX = (px.x - cam0PrincipalPt[0]) / cam0f;
+            float normalizedY = (px.y - cam0PrincipalPt[1]) / cam0f;
+
+            cam0CirclesImPtsNormalized[i].push_back(cv::Point2f(
+                normalizedX, normalizedY));
+        }
+    }
+
+    std::vector<std::vector<cv::Point2f>> cam1ChessboardImPts, cam1CirclesImPts, cam1CirclesImPtsNormalized;
     cv::Mat cam1ImVis;
     CalibPattern::findChessboardAndCirclesImPts(cam1ImDir, numIms,
         chessboardPatternSize, circlesPatternSize,
         cam1ChessboardImPts, cam1CirclesImPts, cv::Size(),
         true, cam1K, cam1DistCoeffs, cam1ImVis, visImIdx);
+
+    double cam1f = cams[1].getf();
+    cv::Vec2d cam1PrincipalPt = cams[1].getPrincipalPt();
+    for (int i = 0; i < cam1CirclesImPts.size(); i++)
+    {
+        cam1CirclesImPtsNormalized.push_back(std::vector<cv::Point2f>());
+        for (int j = 0; j < cam1CirclesImPts[i].size(); j++)
+        {
+            cv::Point2f px = cam1CirclesImPts[i][j];
+
+            float normalizedX = (px.x - cam1PrincipalPt[0]) / cam1f;
+            float normalizedY = (px.y - cam1PrincipalPt[1]) / cam1f;
+
+            cam1CirclesImPtsNormalized[i].push_back(cv::Point2f(
+                normalizedX, normalizedY));
+        }
+    }
 
     // compute circles object points by intersecting circle pixel back-projections with ground plane
     std::vector<std::vector<cv::Point3f>> circlesObjectPts, triangulatedCirclesObjectPts;
@@ -959,14 +996,9 @@ int main(int argc, char** argv)
             for (int x = 0; x < 3; x++)
                 planeRigid.at<double>(y, x) = planeRot.at<double>(y, x);
 
-        cout << planeRot << endl;
-        cout << tvec << endl;
-
         planeRigid.at<double>(0, 3) = tvec.at<double>(0, 0);
         planeRigid.at<double>(1, 3) = tvec.at<double>(1, 0);
         planeRigid.at<double>(2, 3) = tvec.at<double>(2, 0);
-
-        cout << planeRigid << endl << endl;
 
         Plane imPlane(planeRigid);
 
@@ -977,47 +1009,55 @@ int main(int argc, char** argv)
         fsPlane << "Rt" << planeRigid;
 
         std::vector<cv::Point3f> circlesObjectPts_, triangulatedCirclesObjectPts_;
-        //if (false)
-        //{
-            cv::Mat intersectionsHomog;
-            cv::triangulatePoints(cams[0].getP(), cams[1].getP(), cam0CirclesImPts.at(numIm), cam1CirclesImPts.at(numIm), intersectionsHomog);
+        cv::Mat intersectionsHomog;
+       
+        cv::triangulatePoints(cams[0].getRt34(), cams[1].getRt34(), cam0CirclesImPtsNormalized.at(numIm), cam1CirclesImPtsNormalized.at(numIm), intersectionsHomog);
+        
+        for (int i = 0; i < intersectionsHomog.cols; i++)
+        {
+            cv::Vec4d ptHomog(intersectionsHomog.col(i));
 
-            for (int i = 0; i < intersectionsHomog.cols; i++)
-            {
-                cv::Vec4d ptHomog(intersectionsHomog.col(i));
+            cv::Point3d pt(
+                ptHomog[0] / ptHomog[3],
+                ptHomog[1] / ptHomog[3],
+                ptHomog[2] / ptHomog[3]);
 
-                cv::Point3d pt(
-                    ptHomog[0] / ptHomog[3],
-                    ptHomog[1] / ptHomog[3],
-                    ptHomog[2] / ptHomog[3]);
+            triangulatedCirclesObjectPts_.push_back(pt);
+        }
 
-                triangulatedCirclesObjectPts_.push_back(pt);
-            }
-        //}
-        //else
-        //{
+        Plane fittedPlane(triangulatedCirclesObjectPts_, true);
+        
+        if (true)
+        {
             for (int numCircle = 0; numCircle < cam0CirclesImPts.at(numIm).size(); numCircle++)
             {
                 cv::Vec3d intersection = imPlane.intersect(cams[0].backprojectLocal(cam0CirclesImPts.at(numIm).at(numCircle)));
                 circlesObjectPts_.push_back(cv::Point3d(intersection[0], intersection[1], intersection[2]));
             }
-        //}
+        }
+        else
+        {
+            for (int numCircle = 0; numCircle < cam0CirclesImPts.at(numIm).size(); numCircle++)
+            {
+                cv::Vec3d intersection = fittedPlane.intersect(cams[0].backprojectLocal(cam0CirclesImPts.at(numIm).at(numCircle)));
+                circlesObjectPts_.push_back(cv::Point3d(intersection[0], intersection[1], intersection[2]));
+            }
+        }
 
         circlesObjectPts.push_back(circlesObjectPts_);
         triangulatedCirclesObjectPts.push_back(triangulatedCirclesObjectPts_);
         planes.push_back(Plane(planeRigid));
-        std::cout << "one" << std::endl;
-        fittedPlanes.push_back(Plane(triangulatedCirclesObjectPts_));
 
-        std::cout << numIm << ", " << visImIdx << std::endl;
+        fittedPlanes.push_back(Plane(fittedPlane));
+
+        pointCloudCirclesVec.push_back(new PointCloud(circlesObjectPts_));
+        triangulatedPointCloudCirclesVec.push_back(new PointCloud(triangulatedCirclesObjectPts_));
 
         // for visualization
         if (numIm == visImIdx)
         {
-            pointCloudCircles = new PointCloud(circlesObjectPts_);
-            triangulatedPointCloudCircles = new PointCloud(triangulatedCirclesObjectPts_);
             planeVis = new Plane(planeRigid);
-            std::cout << "two" << std::endl;
+
             fittedPlaneVis = new Plane(triangulatedCirclesObjectPts_);
         }
     }
@@ -1077,6 +1117,7 @@ int main(int argc, char** argv)
         // write out homography
         stringstream ssH;
         ssH << outDir << "\\homography_" << numIm << ".yml";
+        std::cout << ssH.str() << std::endl;
         cv::FileStorage fsH(ssH.str(), cv::FileStorage::WRITE);
 
         fsH << "H" << H;

@@ -83,9 +83,7 @@ void CalibPattern::findCirclesImPts(cv::Mat& im, cv::Size circlesPatternSize,
     cv::Mat imUndistort, imGrayUndistort, imGrayUndistortInvert;
 
     if (applyIntrinsics)
-    {
         cv::undistort(im, imUndistort, K, distCoeffs);
-    }
     else
         im.copyTo(imUndistort);
 

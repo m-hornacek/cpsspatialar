@@ -1,5 +1,12 @@
 #include "Plane.h"
 
+#include <pcl/ModelCoefficients.h>
+#include <pcl/io/pcd_io.h>
+#include <pcl/point_types.h>
+#include <pcl/sample_consensus/method_types.h>
+#include <pcl/sample_consensus/model_types.h>
+#include <pcl/segmentation/sac_segmentation.h>
+
 Plane::Plane(const Plane & plane)
 {
 	normal_ = cv::Vec3d(plane.normal_);
@@ -50,32 +57,67 @@ Plane::Plane(cv::Vec3d normal, float distance)
 		rigid_.at<double>(i, 3) = ptEigen[i];
 }
 
-// from https://stackoverflow.com/questions/40589802/eigen-best-fit-of-a-plane-to-n-points
-Plane::Plane(std::vector<cv::Point3f> points)
+Plane::Plane(std::vector<cv::Point3f> points, bool ransac)
 {
-	// copy coordinates to  matrix in Eigen format
-	size_t numPts = points.size();
-	Eigen::MatrixXd pointsEigen(3, numPts);
-	for (size_t i = 0; i < numPts; ++i)
-		pointsEigen.col(i) = Eigen::Vector3d(points[i].x, points[i].y, points[i].z);
+	if (ransac) // todo
+	{
+		std::cout << "carrying out RANSAC plane fit" << std::endl;
 
-	// calculate centroid
-	Eigen::Vector3d centroidEigen(pointsEigen.row(0).mean(), pointsEigen.row(1).mean(), pointsEigen.row(2).mean());
+		pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
 
-	// subtract centroid
-	pointsEigen.row(0).array() -= centroidEigen(0);
-	pointsEigen.row(1).array() -= centroidEigen(1);
-	pointsEigen.row(2).array() -= centroidEigen(2);
+		cloud->width = points.size();
+		cloud->height = 1;
+		cloud->points.resize(cloud->width * cloud->height);
 
-	// we only need the left-singular matrix here
-	//  http://math.stackexchange.com/questions/99299/best-fitting-plane-given-a-set-of-points
+		for (int i = 0; i < points.size(); i++)
+		{
+			cloud->at(i).x = points[i].x;
+			cloud->at(i).y = points[i].y;
+			cloud->at(i).z = points[i].z;
+		}
 
-	auto svd = pointsEigen.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV);
-	Eigen::Vector3d normalEigen = svd.matrixU().rightCols<1>();
-	
-	normal_ = -cv::Vec3d(normalEigen[0], normalEigen[1], normalEigen[2]);
-	normal_ /= sqrt(normal_.dot(normal_));
-	distance_ = -normal_.dot(cv::Vec3d(centroidEigen[0], centroidEigen[1], centroidEigen[2]));
+		pcl::ModelCoefficients::Ptr coefficients(new pcl::ModelCoefficients);
+		pcl::PointIndices::Ptr inliers(new pcl::PointIndices);
+
+		pcl::SACSegmentation<pcl::PointXYZ> seg;
+		seg.setModelType(pcl::SACMODEL_PLANE);
+		seg.setMethodType(pcl::SAC_RANSAC);
+		seg.setDistanceThreshold(1.0);
+
+		seg.setInputCloud(cloud);
+		seg.segment(*inliers, *coefficients);
+
+		normal_ = cv::Vec3d(coefficients->values[0], coefficients->values[1], coefficients->values[2]);
+		distance_ = coefficients->values[3];
+	}
+	else
+	{
+		// from https://stackoverflow.com/questions/40589802/eigen-best-fit-of-a-plane-to-n-points
+
+		// copy coordinates to  matrix in Eigen format
+		size_t numPts = points.size();
+		Eigen::MatrixXd pointsEigen(3, numPts);
+		for (size_t i = 0; i < numPts; ++i)
+			pointsEigen.col(i) = Eigen::Vector3d(points[i].x, points[i].y, points[i].z);
+
+		// calculate centroid
+		Eigen::Vector3d centroidEigen(pointsEigen.row(0).mean(), pointsEigen.row(1).mean(), pointsEigen.row(2).mean());
+
+		// subtract centroid
+		pointsEigen.row(0).array() -= centroidEigen(0);
+		pointsEigen.row(1).array() -= centroidEigen(1);
+		pointsEigen.row(2).array() -= centroidEigen(2);
+
+		// we only need the left-singular matrix here
+		//  http://math.stackexchange.com/questions/99299/best-fitting-plane-given-a-set-of-points
+
+		auto svd = pointsEigen.jacobiSvd(Eigen::ComputeThinU | Eigen::ComputeThinV);
+		Eigen::Vector3d normalEigen = svd.matrixU().rightCols<1>();
+
+		normal_ = -cv::Vec3d(normalEigen[0], normalEigen[1], normalEigen[2]);
+		normal_ /= sqrt(normal_.dot(normal_));
+		distance_ = -normal_.dot(cv::Vec3d(centroidEigen[0], centroidEigen[1], centroidEigen[2]));
+	}
 
 	cv::Mat rot = Ancillary::getMinArclengthRotationMat33d(cv::Vec3d(0, 0, -1), normal_);
 
@@ -95,7 +137,7 @@ Plane::Plane(std::vector<cv::Point3f> points)
 			rigid_.at<double>(y, x) = rot.at<double>(y, x);
 
 	for (int i = 0; i < 3; i++)
-	    rigid_.at<double>(i, 3) = ptEigen[i];
+		rigid_.at<double>(i, 3) = ptEigen[i];
 }
 
 void Plane::rigidTransform(cv::Mat & rigid44d)
