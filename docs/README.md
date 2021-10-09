@@ -1,7 +1,5 @@
-Sebastians Favorit wäre:
-- [CIRP Journal of Manufacturing Science and Technology](https://www.journals.elsevier.com/cirp-journal-of-manufacturing-science-and-technology)
- 
-Alternativ gern hier:
-- [International Journal of Computer Integrated Manufacturing](https://www.tandfonline.com/toc/tcim20/current)
-- [Journal of Industrial Information Integration](https://www.journals.elsevier.com/journal-of-industrial-information-integration)
-- [Robotics and Computer-Integrated Manufacturing](https://www.journals.elsevier.com/robotics-and-computer-integrated-manufacturing)
+New ideas:
+
+- RANSAC plane using all trianulated circles points (ideally, plane and projector calibration in joint optimization)
+- projected checkerboard vs projected circles
+- control projector pointing by clicking: (i) calibration as now but such that single ground plane is recovered, (ii) compute intersection point of all virtual projector look directions, (iii) compute new look direction by intersecting back-projection of clicked pixel with ground plane and drawing line between that point of intersection with the point of intersection from (ii), and compute angle between that new line and the current look direction... convert that angle to representation of steerable mirror
