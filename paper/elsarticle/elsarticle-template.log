@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  8 OCT 2021 17:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  22 OCT 2021 15:05
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -531,9 +531,9 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 78.
 (C:\Users\micha\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (0.72455pt too wide) has occurred while \output is active
+Overfull \hbox (5.11345pt too wide) has occurred while \output is active
 \OT1/cmr/m/it/8 Preprint submitted to CIRP Journal of Manufacturing Science and
- Technology October 8, 2021
+ Technology October 22, 2021
  []
 
 
@@ -551,68 +551,75 @@ Package hyperref Warning: Composite letter `\textasciicaron+c'
 
 {C:/Users/micha/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] [2] [3]
 [4] [5] [6] [7] [8]
-<images/circles.png, id=156, 722.7pt x 451.6875pt>
-File: images/circles.png Graphic file (type png)
-<use images/circles.png>
-Package pdftex.def Info: images/circles.png  used on input line 127.
-(pdftex.def)             Requested size: 147.95596pt x 92.47145pt.
 <images/detections.png, id=158, 831.105pt x 467.49657pt>
 File: images/detections.png Graphic file (type png)
 <use images/detections.png>
 Package pdftex.def Info: images/detections.png  used on input line 129.
-(pdftex.def)             Requested size: 164.39189pt x 92.47145pt.
- [9 <./images/circles.png> <./images/detections.png>]
-[10]
-<images/2d3d.png, id=185, 454.69875pt x 380.17032pt>
+(pdftex.def)             Requested size: 151.74832pt x 85.35826pt.
+<images/2d3d.png, id=160, 697.10437pt x 392.21532pt>
 File: images/2d3d.png Graphic file (type png)
 <use images/2d3d.png>
-Package pdftex.def Info: images/2d3d.png  used on input line 144.
-(pdftex.def)             Requested size: 170.51161pt x 142.5635pt.
- [11 <./images/2d3d.png>]
-<images/3_cam.png, id=199, 572.1375pt x 421.575pt>
-File: images/3_cam.png Graphic file (type png)
-<use images/3_cam.png>
-Package pdftex.def Info: images/3_cam.png  used on input line 155.
-(pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
-<images/3_above3_cam.png, id=200, 572.1375pt x 421.575pt>
+Package pdftex.def Info: images/2d3d.png  used on input line 131.
+(pdftex.def)             Requested size: 151.70407pt x 85.35826pt.
+ [9] [10 <./images/detections.png> <./images/2d3d.png>]
+<images/3_cam.pdf, id=187, 762.85pt x 562.1pt>
+File: images/3_cam.pdf Graphic file (type pdf)
+<use images/3_cam.pdf>
+Package pdftex.def Info: images/3_cam.pdf  used on input line 148.
+(pdftex.def)             Requested size: 162.17041pt x 119.50148pt.
+<images/3_above3_cam.png, id=188, 572.1375pt x 421.575pt>
 File: images/3_above3_cam.png Graphic file (type png)
 <use images/3_above3_cam.png>
-Package pdftex.def Info: images/3_above3_cam.png  used on input line 157.
+Package pdftex.def Info: images/3_above3_cam.png  used on input line 150.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
-<images/1_big.pdf, id=201, 762.85pt x 562.1pt>
-File: images/1_big.pdf Graphic file (type pdf)
-<use images/1_big.pdf>
-Package pdftex.def Info: images/1_big.pdf  used on input line 165.
+
+[11]
+<images/3_proj.pdf, id=195, 762.85pt x 562.1pt>
+File: images/3_proj.pdf Graphic file (type pdf)
+<use images/3_proj.pdf>
+Package pdftex.def Info: images/3_proj.pdf  used on input line 159.
 (pdftex.def)             Requested size: 162.17041pt x 119.50148pt.
-<images/3_above3_proj.png, id=202, 572.1375pt x 421.575pt>
+<images/3_above3_proj.png, id=196, 572.1375pt x 421.575pt>
 File: images/3_above3_proj.png Graphic file (type png)
 <use images/3_above3_proj.png>
-Package pdftex.def Info: images/3_above3_proj.png  used on input line 167.
+Package pdftex.def Info: images/3_above3_proj.png  used on input line 161.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
- [12 <./images/3_cam.png> <./images/3_above3_cam.png>] [13 <./images/1_big.pdf>
- <./images/3_above3_proj.png>]
-<images/proj_projim.png, id=274, 572.1375pt x 421.575pt>
+ [12 <./images/3_cam.pdf> <./images/3_above3_cam.png>] [13 <./images/3_proj.pdf
+> <./images/3_above3_proj.png>]
+<images/projim.png, id=346, 722.7pt x 451.6875pt>
+File: images/projim.png Graphic file (type png)
+<use images/projim.png>
+Package pdftex.def Info: images/projim.png  used on input line 172.
+(pdftex.def)             Requested size: 154.78198pt x 96.73918pt.
+<images/proj_projim.png, id=347, 722.7pt x 421.575pt>
 File: images/proj_projim.png Graphic file (type png)
 <use images/proj_projim.png>
-Package pdftex.def Info: images/proj_projim.png  used on input line 178.
-(pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
-<images/proj_projim_waped.png, id=275, 572.1375pt x 421.575pt>
+Package pdftex.def Info: images/proj_projim.png  used on input line 174.
+(pdftex.def)             Requested size: 165.83153pt x 96.73918pt.
+<images/projim_warped_scaled.png, id=348, 963.6pt x 602.25pt>
+File: images/projim_warped_scaled.png Graphic file (type png)
+<use images/projim_warped_scaled.png>
+Package pdftex.def Info: images/projim_warped_scaled.png  used on input line 18
+1.
+(pdftex.def)             Requested size: 154.78198pt x 96.73918pt.
+<images/proj_projim_waped.png, id=349, 722.7pt x 421.575pt>
 File: images/proj_projim_waped.png Graphic file (type png)
 <use images/proj_projim_waped.png>
-Package pdftex.def Info: images/proj_projim_waped.png  used on input line 180.
-(pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
- [14 <./images/proj_projim.png> <./images/proj_projim_waped.png>] [15]
-<images/system2.png, id=299, 963.6pt x 542.025pt>
+Package pdftex.def Info: images/proj_projim_waped.png  used on input line 183.
+(pdftex.def)             Requested size: 165.83153pt x 96.73918pt.
+ [14 <./images/projim.png> <./images/proj_projim.png>]
+<images/system2.png, id=362, 963.6pt x 542.025pt>
 File: images/system2.png Graphic file (type png)
 <use images/system2.png>
 Package pdftex.def Info: images/system2.png  used on input line 198.
 (pdftex.def)             Requested size: 166.91223pt x 93.89418pt.
-<images/hans_undist_inset.png, id=300, 722.7pt x 406.51875pt>
+<images/hans_undist_inset.png, id=363, 722.7pt x 406.51875pt>
 File: images/hans_undist_inset.png Graphic file (type png)
 <use images/hans_undist_inset.png>
 Package pdftex.def Info: images/hans_undist_inset.png  used on input line 200.
 (pdftex.def)             Requested size: 166.92326pt x 93.89418pt.
- [16 <./images/system2.png> <./images/hans_undist_inset.png>]
+ [15 <./images/projim_warped_scaled.png (PNG copy)> <./images/proj_projim_waped
+.png>] [16 <./images/system2.png> <./images/hans_undist_inset.png>]
 Overfull \hbox (2.2512pt too wide) in paragraph at lines 227--227
 []|\OT1/cmr/m/n/9 Bottom| 
  []
@@ -650,13 +657,13 @@ Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 (rerunfilecheck)             Checksum: 8F68007EB22B4038C97A9D89F7E9D6D4;444.
  ) 
 Here is how much of TeX's memory you used:
- 10508 strings out of 480790
- 166402 string characters out of 2897301
- 452598 words of memory out of 3000000
- 26214 multiletter control sequences out of 15000+200000
+ 10515 strings out of 480790
+ 166641 string characters out of 2897301
+ 451677 words of memory out of 3000000
+ 26219 multiletter control sequences out of 15000+200000
  542841 words of font info for 66 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,11n,49p,1902b,520s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,11n,49p,1902b,524s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmbx10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmex10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/p
@@ -683,9 +690,9 @@ pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmtt10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
 msfonts/cm/cmtt8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/
 public/amsfonts/symbols/msbm10.pfb>
-Output written on elsarticle-template.pdf (23 pages, 3489429 bytes).
+Output written on elsarticle-template.pdf (23 pages, 3799828 bytes).
 PDF statistics:
- 457 PDF objects out of 1000 (max. 8388607)
- 96 named destinations out of 1000 (max. 500000)
- 120 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 530 PDF objects out of 1000 (max. 8388607)
+ 97 named destinations out of 1000 (max. 500000)
+ 125 words of extra memory for PDF output out of 10000 (max. 10000000)
 
