@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  29 OCT 2021 13:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  29 OCT 2021 13:57
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -654,15 +654,11 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 269.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 269.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 (rerunfilecheck)             Checksum: 8F68007EB22B4038C97A9D89F7E9D6D4;444.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
  10517 strings out of 480790
  166677 string characters out of 2897301
- 451724 words of memory out of 3000000
+ 451701 words of memory out of 3000000
  26219 multiletter control sequences out of 15000+200000
  542841 words of font info for 66 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -693,9 +689,9 @@ pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmtt10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
 msfonts/cm/cmtt8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/
 public/amsfonts/symbols/msbm10.pfb>
-Output written on elsarticle-template.pdf (23 pages, 5718728 bytes).
+Output written on elsarticle-template.pdf (23 pages, 5724522 bytes).
 PDF statistics:
- 625 PDF objects out of 1000 (max. 8388607)
+ 627 PDF objects out of 1000 (max. 8388607)
  99 named destinations out of 1000 (max. 500000)
  125 words of extra memory for PDF output out of 10000 (max. 10000000)
 
