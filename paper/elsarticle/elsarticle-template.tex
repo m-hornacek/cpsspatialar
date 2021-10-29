@@ -160,14 +160,14 @@ Recall that the pose~($\hat{\mathtt{R}}_j, \hat{\mathbf{t}}_j) \in SE(3)$ of the
     \label{fig:virtualcam}
 \end{figure} 
 
-If the projector is calibrated and its pose relative to the scene plane is known, a `virtual' projector (with the same calibration $\mathtt{K}$ and lens distortion model coefficients) can be placed elsewhere relative to the scene plane. If we for a moment imagine that the projector---at its recovered pose---functions as a camera,\footnote{Recall that the calibration matrix~$\mathtt{K}$ enables computing (i) the projection of a scene point to the image plane (the function of a camera), or (ii) the back-projection of a pixel in the image plane, giving a ray into the scene (along which a projector illuminates the scene with the given pixel).} then (i) projecting an image to the scene plane \textit{from the viewpoint of the virtual projector} and (ii) acquiring the resulting projected image from the viewpoint of the recovered projector gives the desired corrective warp. Projecting an image warped in this manner to the scene plane \textit{from the viewpoint of the recovered projector} then has the same effect as projecting the original image to the scene plane from the viewpoint of the virtual projector. This warp can be effected using a plane-induced homography, computed analytically as a function of the scene plane, the projector, and the virtual projector.
+If the projector is calibrated and its pose relative to the scene plane is known, a `virtual' projector (with the same calibration $\mathtt{K}$ and lens distortion model coefficients) can be placed elsewhere relative to the scene plane. If we for a moment imagine that the projector---at its recovered pose---functions as a camera,\footnote{Recall that the calibration matrix~$\mathtt{K}$ enables computing (i) the projection of a scene point to the image plane (the function of a camera), or (ii) the back-projection of a pixel in the image plane, giving a ray into the scene (along which a projector illuminates the scene with the given pixel).} then (i) projecting an image to the scene plane \textit{from the viewpoint of the virtual projector} and (ii) acquiring the resulting projected image \textit{from the viewpoint of the recovered projector} gives the desired corrective warp. Projecting an image warped in this manner to the scene plane from the viewpoint of the recovered projector then has the same effect as projecting the original image to the scene plane from the viewpoint of the virtual projector. This warp can be effected using a plane-induced homography, computed analytically as a function of the scene plane, the projector, and the virtual projector.
 
 \begin{figure}
     \centering
     \subfloat[\centering Oblique view (annotated).]{{\includegraphics[height=4.2cm]{images/3_proj.pdf}}}
     \qquad
     \subfloat[\centering Downwards view.]{{\includegraphics[height=4.2cm]{images/3_above3_proj.png}}}
-    \caption{Obtaining the virtual projector. For a given target location, the virtual projector is obtained by (i) rotating the recovered projector (black) about the point of intersection of its optical axis with the scene plane such that the optical axis be made parallel with the scene plane's normal vector, (ii) rotating the $X$- and $Y$-axes to align them with those of the virtual camera (cf.\ Figure \ref{fig:virtualcam}), and (iii) translating along the normal direction to achieve the desired metric projected image dimensions.} %The virtual projector is thus rendered fronto-parallel with the ground plane and axially aligned with the virtual camera.
+    \caption{Obtaining the virtual projector. For a given target location, the virtual projector is obtained by (i) rotating the recovered projector (bottom left, black) about the point of intersection of its optical axis with the scene plane such that the optical axis be made parallel with the scene plane's normal vector, (ii) rotating the $X$- and $Y$-axes to align them with those of the virtual camera (cf.\ Figure \ref{fig:virtualcam}), and (iii) translating along the normal direction to achieve the desired metric projected image dimensions.} %The virtual projector is thus rendered fronto-parallel with the ground plane and axially aligned with the virtual camera.
     \label{fig:virtualproj}
 \end{figure}
 
@@ -189,7 +189,7 @@ It is, strictly speaking, in the sense that we set the $X$- and $Y$-axes of the 
     \subfloat[\centering Our warped image.]{{\includegraphics[height=3.4cm]{images/projim_warped_scaled.png}}}
     \qquad
     \subfloat[\centering Projecting our warped image (downwards view).]{{\includegraphics[height=3.4cm]{images/proj_projim_waped.png}}}
-    \caption{Projection to the scene plane from the viewpoint of the recovered projector (bottom left, black; virtual projector in center, gray) for a given target location. (a) Original image warped using our approach. (b) After warping the original image according to our approach for the given target location, the image is projected with the effect of having the original image from the viewpoint of the virtual projector. This renders the projection free of projective distortions, aligned with the axes of the virtual camera, and with the desired metric dimensions (i.e., desired scale) in the scene plane. Note that pixels shown in black will in effect be ignored by the projector.}
+    \caption{Projection to the scene plane from the viewpoint of the recovered projector (bottom left, black; virtual projector in center, gray) for a given target location. (a) Original image warped using our approach. (b) After warping the original image according to our approach for the given target location, the image is projected with the effect of projecting the original image from the viewpoint of the virtual projector. This renders the projection free of projective distortions, aligned with the axes of the virtual camera, and at the desired metric scale. Note that pixels shown in black will in effect be ignored by the projector.}
     \label{fig:warp}
 \end{figure}
 
@@ -203,10 +203,10 @@ a form of `plane-induced' 2D homography \cite{Hartley2004}. For convenience, we 
 
 \begin{figure}
     \centering
-    \subfloat[\centering Hardware setup (projector, steerable mirror system, camera).]{{\includegraphics[height=3.3cm]{images/system2.png}}}
+    \subfloat[\centering Hardware setup (projector, steerable mirror system, camera).]{{\includegraphics[height=3.3cm]{images/system2.pdf}}}
     \quad
-    \subfloat[\centering Example projection of image warped for target location using our approach.]{{\includegraphics[height=3.3cm]{images/hans_undist_inset.png}}}
-    \caption{Evaluation scenario. (a) Our hardware setup, comprised of a Panasonic PT-RZ660BE projector, a steerable mirror system manufactured by Dynamic Projection Institute, and a Stereolabs Zed 2 stereo camera (extreme front, black), of which we used only the left view. (b) Example augmentation produced by projecting---to one of our 15 target locations---an image warped using our approach, as seen from the downwards-facing camera. Note that the warp places the axes of the augmentation in accordance with the axes of the camera, and that the dimensions of the augmentation are in line with the desired target dimensions (50~cm~$\times$~31.25~cm). Corners of the full projected image extent projected to the floor in light green.}
+    \subfloat[\centering Example projection of image warped for target location using our approach.]{{\includegraphics[height=3.3cm]{images/hans_undist.pdf}}}
+    \caption{Evaluation scenario. (a) Our hardware setup, comprised of a Panasonic PT-RZ660BE projector, a steerable mirror system manufactured by Dynamic Projection Institute, and a Stereolabs Zed 2 stereo camera (extreme front, black), of which we used only the left view. (b) Example augmentation produced by projecting---to one of our 15 target locations across the floorspace---an image warped using our approach, as seen from the downwards-facing camera. Note that the warp places the axes of the augmentation in accordance with the axes of the camera, and that the dimensions of the augmentation are in line with the desired target dimensions (50~cm~$\times$~31.25~cm). Corners of the full projected image extent projected to the floor in light green.}
     \label{fig:eval}
 \end{figure}
 
@@ -218,7 +218,7 @@ The hardware setup employed in the evaluation (cf.\ Figure \ref{fig:eval}(a)) co
 \paragraph{Manual approach} Having pointed the steerable mirror to the desired location, manual keystone correction using the MDC-X software involves warping the image to be projected by manipulating the corners of the image until the desired effect is produced on the projection surface. In order to provide a template for manually carrying out keystone correction, we prepared a rectangular 50~cm~$\times$~31.25~cm cutout of cardboard. For each target location, we placed this piece of cardboard in a manner that its axes were aligned with the principal axes of the scene (cf.\ the yellow and red lines in Figure \ref{fig:eval}(b)); we then manually warped the image for the given target location so that any corner of the augmentation deviated by at most 1 cm from the corresponding corner of the template. End-to-end, the process of setting the presets in the MDC-X software having carried out keystone correction manually took ca.\ 32 min for the 15 target locations.
 
 \begin{table}[ht]
-\caption{Means and standard deviations (in units of centimeters and pixels, respectively) of deviations in measured lengths from 50 cm for top and bottom and from 21.25 cm for left and right, with respect to the 15 augmentations produced using our approach (intended augmentation dimensions 50~cm~$\times$~31.25~cm). Pixel size given the downward-facing camera's height above the ground plane was 3.5 mm; note that in no instance do mean and standard deviation exceed 1 pixel from the viewpoint of the camera.}
+\caption{Means and standard deviations (in units of centimeters and pixels, respectively) of deviations in measured lengths from 50 cm for top and bottom and from 21.25 cm for left and right, with respect to the 15 augmentations produced using our approach  for 15 respective target locations (intended augmentation dimensions 50~cm~$\times$~31.25~cm). Pixel size given the downward-facing camera's height above the ground plane was 3.5 mm; note that in no instance did mean and standard deviation exceed 1 pixel from the viewpoint of the camera.}
 \label{table:length}
 \centering
 {\small
@@ -236,7 +236,7 @@ Stdev {\tiny[px]} & 0.95 & 0.48 & 0.49 & 0.49 \\
 \end{table}
 
 \begin{table}[ht]
-\caption{Means and standard deviations of deviations in measured angles from $90^\circ{}$ with respect to the 15 augmentations produced using our approach.}
+\caption{Means and standard deviations of deviations in measured angles from $90^\circ{}$ with respect to the 15 augmentations produced using our approach for 15 respective target locations.}
 \label{table:angle}
 \centering
 {\small
