@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  2 NOV 2021 06:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  7 NOV 2021 12:18
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -533,7 +533,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 Overfull \hbox (8.63289pt too wide) has occurred while \output is active
 \OT1/cmr/m/it/8 Preprint submitted to CIRP Journal of Manufacturing Science and
- Technology November 2, 2021
+ Technology November 7, 2021
  []
 
 
@@ -573,53 +573,51 @@ File: images/proj_projim_waped.png Graphic file (type png)
 Package pdftex.def Info: images/proj_projim_waped.png  used on input line 103.
 (pdftex.def)             Requested size: 165.83153pt x 96.73918pt.
  [4] [5 <./images/projim_warped_scaled.png (PNG copy)> <./images/proj_projim_wa
-ped.png>] [6] [7] [8] [9]
-<images/detections.png, id=184, 831.105pt x 467.49657pt>
+ped.png>] [6] [7]
+<images/detections.png, id=147, 831.105pt x 467.49657pt>
 File: images/detections.png Graphic file (type png)
 <use images/detections.png>
-Package pdftex.def Info: images/detections.png  used on input line 151.
-(pdftex.def)             Requested size: 151.74832pt x 85.35826pt.
-<images/2d3d.png, id=185, 697.10437pt x 392.21532pt>
+Package pdftex.def Info: images/detections.png  used on input line 136.
+(pdftex.def)             Requested size: 156.79561pt x 88.2037pt.
+<images/2d3d.png, id=148, 697.10437pt x 392.21532pt>
 File: images/2d3d.png Graphic file (type png)
 <use images/2d3d.png>
-Package pdftex.def Info: images/2d3d.png  used on input line 153.
-(pdftex.def)             Requested size: 151.70407pt x 85.35826pt.
- [10]
-[11 <./images/detections.png> <./images/2d3d.png>]
-<images/3_cam.pdf, id=212, 762.85pt x 562.1pt>
+Package pdftex.def Info: images/2d3d.png  used on input line 138.
+(pdftex.def)             Requested size: 156.76726pt x 88.2037pt.
+ [8] [9 <./images/detections.png> <./images/2d3d.png>] [10] [11] [12]
+<images/3_cam.pdf, id=219, 762.85pt x 562.1pt>
 File: images/3_cam.pdf Graphic file (type pdf)
 <use images/3_cam.pdf>
 Package pdftex.def Info: images/3_cam.pdf  used on input line 172.
 (pdftex.def)             Requested size: 162.17041pt x 119.50148pt.
-<images/3_above3_cam.png, id=213, 572.1375pt x 421.575pt>
+<images/3_above3_cam.png, id=220, 572.1375pt x 421.575pt>
 File: images/3_above3_cam.png Graphic file (type png)
 <use images/3_above3_cam.png>
 Package pdftex.def Info: images/3_above3_cam.png  used on input line 174.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
- [12]
-<images/3_proj.pdf, id=222, 762.85pt x 562.1pt>
+ [13 <./images/3_cam.pdf> <./images/3_above3_cam.png>]
+<images/3_proj.pdf, id=306, 762.85pt x 562.1pt>
 File: images/3_proj.pdf Graphic file (type pdf)
 <use images/3_proj.pdf>
 Package pdftex.def Info: images/3_proj.pdf  used on input line 183.
 (pdftex.def)             Requested size: 162.17041pt x 119.50148pt.
-<images/3_above3_proj.png, id=223, 572.1375pt x 421.575pt>
+<images/3_above3_proj.png, id=307, 572.1375pt x 421.575pt>
 File: images/3_above3_proj.png Graphic file (type png)
 <use images/3_above3_proj.png>
 Package pdftex.def Info: images/3_above3_proj.png  used on input line 185.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
- [13 <./images/3_cam.pdf> <./images/3_above3_cam.png>] [14 <./images/3_proj.pdf
-> <./images/3_above3_proj.png>]
-<images/system2.pdf, id=375, 963.6pt x 550.055pt>
+ [14 <./images/3_proj.pdf> <./images/3_above3_proj.png>] [15]
+<images/system2.pdf, id=381, 963.6pt x 550.055pt>
 File: images/system2.pdf Graphic file (type pdf)
 <use images/system2.pdf>
 Package pdftex.def Info: images/system2.pdf  used on input line 204.
 (pdftex.def)             Requested size: 166.97104pt x 95.3169pt.
-<images/hans_undist.pdf, id=376, 963.6pt x 550.055pt>
+<images/hans_undist.pdf, id=382, 963.6pt x 550.055pt>
 File: images/hans_undist.pdf Graphic file (type pdf)
 <use images/hans_undist.pdf>
 Package pdftex.def Info: images/hans_undist.pdf  used on input line 206.
 (pdftex.def)             Requested size: 166.97104pt x 95.3169pt.
- [15] [16 <./images/system2.pdf> <./images/hans_undist.pdf>]
+ [16 <./images/system2.pdf> <./images/hans_undist.pdf>] [17]
 Overfull \hbox (2.2512pt too wide) in paragraph at lines 233--233
 []|\OT1/cmr/m/n/9 Bottom| 
  []
@@ -634,7 +632,7 @@ Underfull \hbox (badness 10000) in alignment at lines 248--248
 [][][] 
  []
 
-[17] [18] [19]
+[18] [19]
 Overfull \hbox (0.76443pt too wide) in paragraph at lines 263--264
 []\OT1/cmr/m/n/10 This work was sup-ported by the Aus-trian Re-search Pro-mo-ti
 on Agency (FFG)
@@ -658,12 +656,12 @@ Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  10517 strings out of 480790
- 166677 string characters out of 2897301
- 451539 words of memory out of 3000000
- 26219 multiletter control sequences out of 15000+200000
+ 166675 string characters out of 2897301
+ 449074 words of memory out of 3000000
+ 26220 multiletter control sequences out of 15000+200000
  542841 words of font info for 66 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,11n,49p,1969b,524s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 48i,11n,49p,2140b,512s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmbx10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/cm/cmex10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/p
@@ -690,9 +688,9 @@ pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmtt10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
 msfonts/cm/cmtt8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/
 public/amsfonts/symbols/msbm10.pfb>
-Output written on elsarticle-template.pdf (23 pages, 5724884 bytes).
+Output written on elsarticle-template.pdf (23 pages, 5726504 bytes).
 PDF statistics:
  636 PDF objects out of 1000 (max. 8388607)
- 99 named destinations out of 1000 (max. 500000)
+ 98 named destinations out of 1000 (max. 500000)
  125 words of extra memory for PDF output out of 10000 (max. 10000000)
 
