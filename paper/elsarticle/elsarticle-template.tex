@@ -202,7 +202,7 @@ It is thus in the sense that we set the $X$- and $Y$-axes of the virtual project
     \label{fig:final_proj}
 \end{figure}
 
-\paragraph{Plane-induced homography} Let $\mathtt{K}_\text{proj}$ express the calibration matrix of the recovered projector and $(\mathtt{R}, \mathbf{t}) \in SE(3)$ the rigid body transformation that transforms points from the coordinate frame of the recovered projector to that of the virtual projector, for a given target location. Moreover, let $(\mathbf{n}^\top, -d)^\top \in \mathbb{P}^3$ give the scene plane, expressed in the coordinate frame of the recovered projector, where $\mathbf{n} \in \mathbb{R}^3$ is the scene plane's normal vector and $d = \mathbf{n}^\top\mathbf{X}$ for any point~$\mathbf{X} \in \mathbb{R}^3$ in the plane, so that $(\mathbf{n}^\top, -d) (\mathbf{X}^\top, 1)^\top = 0$. The transformation that warps the image to be projected---by the recovered projector to the scene plane---such that it appear as if were projected to the scene plane by the virtual projector (cf.\ Figure~\ref{fig:warp}) is given the by the $3~\times~3$ matrix
+\paragraph{Plane-induced homography} Let $\mathtt{K}_\text{proj}$ express the calibration matrix of the recovered projector and $(\mathtt{R}, \mathbf{t}) \in SE(3)$ the rigid body transformation that transforms points from the coordinate frame of the recovered projector to that of the virtual projector, for a given target location. Moreover, let $(\mathbf{n}^\top, -d)^\top \in \mathbb{P}^3$ give the scene plane, expressed in the coordinate frame of the recovered projector, where $\mathbf{n} \in \mathbb{R}^3$ is the scene plane's normal vector and $d = \mathbf{n}^\top\mathbf{X}$ for any point~$\mathbf{X} \in \mathbb{R}^3$ in the plane, so that $(\mathbf{n}^\top, -d) (\mathbf{X}^\top, 1)^\top = 0$. The transformation that warps the image to be projected---by the recovered projector to the scene plane---such that it appear as if were projected to the scene plane by the virtual projector (cf.\ Figures~\ref{fig:warp} and \ref{fig:final_proj}) is given the by the $3~\times~3$ matrix
 \begin{equation}
 \mathtt{H} = \mathtt{K}_\text{proj}\left(\mathtt{R} - \frac{\mathbf{t}\mathbf{n}^\top}{d}\right)\mathtt{K}_\text{proj}^{-1},
 \label{homgen}
@@ -213,8 +213,8 @@ a form of `plane-induced' 2D homography \cite{Hartley2004}. For convenience, we 
     \centering
     \subfloat[\centering Hardware setup (projector, steerable mirror system, camera).]{{\includegraphics[height=3.6cm]{images/system3_.pdf}}}
     \quad
-    \subfloat[\centering Measurement for example target location, using a steel rule and a digital angle gauge.]{{\includegraphics[height=3.6cm]{images/meas2_.pdf}}}
-    \caption{Evaluation scenario. (a) Our hardware setup, comprised of a projector, a steerable mirror system, and a stereo camera, of which we used only the left view. (b) Example augmentation produced by projecting---to one of the 15 target locations across the floorspace considered in our evaluation---an image warped using our approach. The angle gauge reads $89.6^\circ{}$, and the steel rule 49.9 cm. Corners of the full projected image extent projected to the floor in light green.}
+    \subfloat[\centering Measurement for augmentation, using a steel rule and a digital angle gauge.]{{\includegraphics[height=3.6cm]{images/meas2_.pdf}}}
+    \caption{Evaluation scenario. (a) Our hardware setup, comprised of a projector, a steerable mirror system, and a stereo camera, of which we used only the left view. (b) Example augmentation produced by projecting---to one of the 15 target locations across the floorspace considered in our evaluation---an image warped using our approach. The angle gauge reads $89.6^\circ{}$ for the top-left corner, and the steel rule 49.9 cm for the bottom edge. Corners of the full projected image extent projected to the floor in light green to provide context.}
     \label{fig:eval}
 \end{figure}
 
