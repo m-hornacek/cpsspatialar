@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  13 NOV 2021 16:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  17 NOV 2021 08:23
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -533,7 +533,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 Overfull \hbox (13.02179pt too wide) has occurred while \output is active
 \OT1/cmr/m/it/8 Preprint submitted to CIRP Journal of Manufacturing Science and
- Technology November 13, 2021
+ Technology November 17, 2021
  []
 
 
@@ -611,7 +611,7 @@ Package pdftex.def Info: images/3_above3_proj.png  used on input line 185.
 File: images/hans_undist_.pdf Graphic file (type pdf)
 <use images/hans_undist_.pdf>
 Package pdftex.def Info: images/hans_undist_.pdf  used on input line 200.
-(pdftex.def)             Requested size: 187.84978pt x 106.69783pt.
+(pdftex.def)             Requested size: 192.86362pt x 109.54327pt.
  [15]
 <images/system3_.pdf, id=386, 876.27374pt x 542.025pt>
 File: images/system3_.pdf Graphic file (type pdf)
@@ -664,7 +664,7 @@ Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 Here is how much of TeX's memory you used:
  10527 strings out of 480790
  166877 string characters out of 2897301
- 449638 words of memory out of 3000000
+ 449853 words of memory out of 3000000
  26226 multiletter control sequences out of 15000+200000
  542841 words of font info for 66 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -695,7 +695,7 @@ pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmtt10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
 msfonts/cm/cmtt8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/
 public/amsfonts/symbols/msbm10.pfb>
-Output written on elsarticle-template.pdf (24 pages, 10823374 bytes).
+Output written on elsarticle-template.pdf (24 pages, 10823542 bytes).
 PDF statistics:
  719 PDF objects out of 1000 (max. 8388607)
  101 named destinations out of 1000 (max. 500000)

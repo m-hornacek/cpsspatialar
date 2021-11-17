@@ -197,8 +197,8 @@ It is thus in the sense that we set the $X$- and $Y$-axes of the virtual project
 
 \begin{figure}
     \centering
-    \includegraphics[height=3.75cm]{images/hans_undist_.pdf}
-    \caption{Projection of the warped image from Figure \ref{fig:warp}(a) to corresponding target location, acquired by the `downwards-facing' camera. Note that besides correcting for projective distortions, the warp places the axes of the augmentation in accordance with the axes of the `downwards-facing' camera, and that the dimensions of the augmentation are in line with the desired target dimensions (50~cm~$\times$~31.25~cm). To provide context, the corners of the full projected image extent are projected to the floor in light green (emphasized with overlain dashed circles).}
+    \includegraphics[height=3.85cm]{images/hans_undist_.pdf}
+    \caption{Projection of the warped image from Figure \ref{fig:warp}(a) to corresponding target location at the upper-right corner of the floorspace, acquired by the `downwards-facing' camera. Note that besides correcting for projective distortions, the warp places the axes of the augmentation in accordance with the axes of the `downwards-facing' camera, and that the dimensions of the augmentation are in line with the desired target dimensions (50~cm~$\times$~31.25~cm). To provide context, the corners of the full projected image extent are projected to the floor in light green (emphasized with overlain dashed circles).}
     \label{fig:final_proj}
 \end{figure}
 
@@ -214,7 +214,7 @@ a form of `plane-induced' 2D homography \cite{Hartley2004}. For convenience, we 
     \subfloat[\centering Hardware setup (projector, steerable mirror system, camera).]{{\includegraphics[height=3.6cm]{images/system3_.pdf}}}
     \quad
     \subfloat[\centering Measurement for augmentation, using a steel rule and a digital angle gauge.]{{\includegraphics[height=3.6cm]{images/meas2_.pdf}}}
-    \caption{Evaluation scenario. (a) Our hardware setup, comprised of a projector, a steerable mirror system, and a stereo camera, of which we used only the left view. (b) Example augmentation produced by projecting---to one of the 15 target locations across the floorspace considered in our evaluation---an image warped using our approach. The angle gauge reads $89.6^\circ{}$ for the top-left corner, and the steel rule 49.9 cm for the bottom edge. Corners of the full projected image extent projected to the floor in light green to provide context.}
+    \caption{Evaluation scenario. (a) Our hardware setup, comprised of a projector, a steerable mirror system, and a stereo camera, of which we used only the left view. (b) Example augmentation produced by projecting---to one of the 15 target locations across the floorspace considered in our evaluation, to the upper-left corner of our floorspace---an image warped using our approach. The digital angle gauge reads $89.6^\circ{}$ for the top-left corner, and the steel rule 49.9 cm for the bottom edge. Corners of the full projected image extent projected to the floor in light green to provide context. Note that blur has a minimal impact on the quality of the augmentation, and hence on the accuracy of the measurements.}
     \label{fig:eval}
 \end{figure}
 
@@ -266,7 +266,7 @@ Tables~\ref{table:length} and \ref{table:angle} give the errors in measured leng
 
 We presented a spatial AR system for planar scenes that produces the effect of keystone correction analytically as a function of the geometry relating projector and scene plane, exploiting a steerable mirror system to enable augmentation exceeding the bounds of the projector's own immediate field of view. Our method produces this effect in a manner that enables intuitive placement of the augmentations in accordance with the $X$- and $Y$-axes of a camera placed to face downwards towards the scene plane. Moreover, our method allows for specifying the desired dimensions of augmentations in metric terms, thus enabling consistent scaling. Our evaluation demonstrated our approach to produce compelling results---with mean and standard deviation of errors in measured lengths within the `downwards-facing' camera's pixel size---at less time than a more cumbersome manual approach to keystone correction.
 
-A natural extension of this work would be to consider the impact of varying calibration patterns, their dimensions, and their scale relative to the camera. Still another would be to address the augmentation of non-planar scenes. To handle non-planar scenes would call for a change in how scene geometry is recovered and how warping of the image to be projected is carried out; the methodology we proposed for projector calibration could, however, be left unchanged.
+A natural extension of this work would be to consider the impact of varying calibration patterns, their dimensions, and their scale relative to the camera, or to consider the impact of the `downwards-facing' camera's pixel size. Still another would be to address the augmentation of non-planar scenes. To handle non-planar scenes would call for a change in how scene geometry is recovered and how warping of the image to be projected is carried out; the methodology we proposed for projector calibration could, however, be left unchanged.
 
 \section{Acknowledgments}
 
