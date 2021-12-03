@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  17 NOV 2021 08:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  20 NOV 2021 09:44
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -533,7 +533,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 Overfull \hbox (13.02179pt too wide) has occurred while \output is active
 \OT1/cmr/m/it/8 Preprint submitted to CIRP Journal of Manufacturing Science and
- Technology November 17, 2021
+ Technology November 20, 2021
  []
 
 
@@ -583,7 +583,7 @@ Package pdftex.def Info: images/detections.png  used on input line 136.
 File: images/2d3d.png Graphic file (type png)
 <use images/2d3d.png>
 Package pdftex.def Info: images/2d3d.png  used on input line 138.
-(pdftex.def)             Requested size: 156.76726pt x 88.2037pt.
+(pdftex.def)             Requested size: 164.85133pt x 92.75581pt.
  [8] [9 <./images/detections.png> <./images/2d3d.png>] [10] [11] [12]
 <images/3_cam.pdf, id=219, 762.85pt x 562.1pt>
 File: images/3_cam.pdf Graphic file (type pdf)
@@ -596,29 +596,29 @@ File: images/3_above3_cam.png Graphic file (type png)
 Package pdftex.def Info: images/3_above3_cam.png  used on input line 174.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
  [13 <./images/3_cam.pdf> <./images/3_above3_cam.png>]
-<images/3_proj.pdf, id=306, 762.85pt x 562.1pt>
+<images/3_proj.pdf, id=309, 762.85pt x 562.1pt>
 File: images/3_proj.pdf Graphic file (type pdf)
 <use images/3_proj.pdf>
 Package pdftex.def Info: images/3_proj.pdf  used on input line 183.
 (pdftex.def)             Requested size: 162.17041pt x 119.50148pt.
-<images/3_above3_proj.png, id=307, 572.1375pt x 421.575pt>
+<images/3_above3_proj.png, id=310, 572.1375pt x 421.575pt>
 File: images/3_above3_proj.png Graphic file (type png)
 <use images/3_above3_proj.png>
 Package pdftex.def Info: images/3_above3_proj.png  used on input line 185.
 (pdftex.def)             Requested size: 162.17914pt x 119.50148pt.
  [14 <./images/3_proj.pdf> <./images/3_above3_proj.png>]
-<images/hans_undist_.pdf, id=374, 963.6pt x 547.2947pt>
+<images/hans_undist_.pdf, id=376, 963.6pt x 547.2947pt>
 File: images/hans_undist_.pdf Graphic file (type pdf)
 <use images/hans_undist_.pdf>
 Package pdftex.def Info: images/hans_undist_.pdf  used on input line 200.
-(pdftex.def)             Requested size: 192.86362pt x 109.54327pt.
+(pdftex.def)             Requested size: 200.37701pt x 113.81102pt.
  [15]
-<images/system3_.pdf, id=386, 876.27374pt x 542.025pt>
+<images/system3_.pdf, id=388, 876.27374pt x 542.025pt>
 File: images/system3_.pdf Graphic file (type pdf)
 <use images/system3_.pdf>
 Package pdftex.def Info: images/system3_.pdf  used on input line 214.
 (pdftex.def)             Requested size: 165.58452pt x 102.43008pt.
-<images/meas2_.pdf, id=387, 922.02365pt x 569.35611pt>
+<images/meas2_.pdf, id=389, 922.02365pt x 569.35611pt>
 File: images/meas2_.pdf Graphic file (type pdf)
 <use images/meas2_.pdf>
 Package pdftex.def Info: images/meas2_.pdf  used on input line 216.
@@ -660,11 +660,15 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 277.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 277.
 Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
 (rerunfilecheck)             Checksum: 8F68007EB22B4038C97A9D89F7E9D6D4;444.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
  10527 strings out of 480790
  166877 string characters out of 2897301
- 449853 words of memory out of 3000000
+ 450056 words of memory out of 3000000
  26226 multiletter control sequences out of 15000+200000
  542841 words of font info for 66 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -695,9 +699,9 @@ pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmtt10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
 msfonts/cm/cmtt8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/
 public/amsfonts/symbols/msbm10.pfb>
-Output written on elsarticle-template.pdf (24 pages, 10823542 bytes).
+Output written on elsarticle-template.pdf (24 pages, 10823550 bytes).
 PDF statistics:
- 719 PDF objects out of 1000 (max. 8388607)
+ 721 PDF objects out of 1000 (max. 8388607)
  101 named destinations out of 1000 (max. 500000)
  130 words of extra memory for PDF output out of 10000 (max. 10000000)
 
