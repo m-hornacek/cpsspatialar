@@ -125,9 +125,9 @@ Correcting for projective distortions of the sort outlined in Section~\ref{sec:i
 
 \begin{figure}[t]
     \centering
-    \subfloat[\centering Projector calibration image (2D pattern position detections overlain).]{{\includegraphics[width=5.15cm]{images/detections_.png}}}
+    \subfloat[\centering Projector calibration image (2D pattern position detections overlain).]{{\includegraphics[width=5.85cm]{images/detections_.png}}}
     \quad
-    \subfloat[\centering Recovered 3D positions corresponding to projector calibration image for use in projector calibration (red, in scene plane).]{{\includegraphics[height=3.7cm]{images/2d3d.png}}}
+    \subfloat[\centering Recovered 3D positions corresponding to projector calibration image for use in projector calibration (red, in scene plane).]{{\includegraphics[height=4.75cm]{images/2d3d.pdf}}}
     \caption{Obtaining the 3D positions of the 2D-3D correspondences for use in projector calibration. (a) For each target location, a projector calibration image is acquired from the viewpoint of the `downwards-facing' camera, containing a projected asymmetric circle pattern at the target location and a chessboard pattern placed on the floor nearby. Circle pattern center points and chessboard corners detected automatically (overlain for illustration). (b) Given a projector calibration image, the scene plane is recovered in the coordinate frame of the `downwards-facing' camera (black with up vector red) via spatial resection with respect to 2D-3D correspondences obtained using the chessboard pattern (blue); the 3D positions of the 2D-3D correspondences to be used in calibrating the projector (red, in scene plane) are obtained by intersection with the scene plane of the back-projections (rays, likewise gray) of the 2D center points of the circle pattern detected in the image plane of the camera.} %The corresponding 2D positions are detected in the image of the asymmetric circles pattern image projected by the projector (not shown). The `downwards-facing' camera is shown relative to the scene plane in terms of its camera frustum (black, with up vector in red).
     \label{fig:2d}
 \end{figure}
