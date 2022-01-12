@@ -89,7 +89,7 @@ In turn, a form of augmented reality referred to as \textit{spatial} AR\cite{bim
     \centering
     \subfloat[\centering Original image (to be projected).]{\raisebox{10mm}{\includegraphics[width=5cm]{images/projim.png}}}
     \qquad
-    \subfloat[\centering Projection from side to scene plane (viewed directly downwards to scene plane).]{{\includegraphics[width=6cm]{images/proj_projim_full_.png}}}
+    \subfloat[\centering Projection from side to scene plane (viewed directly downwards to scene plane).]{{\includegraphics[width=6cm]{images/proj_projim_full_.pdf}}}
     \caption{Na\"ive projection to a given target location in the scene plane (e.g., the floor, a wall, or table) if not facing the scene plane directly. (a) Original image, which we wish to project to the scene plane. (b) Projecting the original image to the scene plane from the viewpoint of the projector (shown as a frustum in the bottom left, in black with up vector red) directed to the target location introduces projective distortions if the projector does not face the scene plane directly (as is the case here), with orientation and scale of the augmentation varying in the scene plane as a function of target location.}
     \label{fig:proj}
 \end{figure}
@@ -100,7 +100,7 @@ While interest in spatial AR in industrial settings has been growing, its deploy
     \centering
     \subfloat[\centering Our warped image (to be projected).]{\raisebox{10mm}{\includegraphics[width=5cm]{images/projim_warped_scaled.png}}}
     \qquad
-    \subfloat[\centering Projection from side to scene plane (viewed directly downwards to scene plane).]{{\includegraphics[width=6cm]{images/proj_projim_waped_full_.png}}}
+    \subfloat[\centering Projection from side to scene plane (viewed directly downwards to scene plane).]{{\includegraphics[width=6cm]{images/proj_projim_waped_full_.pdf}}}
     \caption{Projection to a given target location in the scene plane, correcting for projective distortions in terms of a \textit{virtual} projector placed and utilized according to our approach. (a) Original image (cf.\ Figure~\ref{fig:proj}(a)) warped using our approach. (b) Projecting the warped image to the scene plane from the viewpoint of the projector (bottom left, frustum in black with up vector red; same as in Figure~\ref{fig:proj}(b)) directed to the target location has the effect of projecting the \textit{original} image from the viewpoint of a virtual projector (center, frustum in gray with up vector red). This renders the projection free of projective distortions, aligned with the axes of the virtual camera, and at the desired metric scale. Note that black pixels will in effect be ignored by the projector.}
     \label{fig:warp}
 \end{figure}
