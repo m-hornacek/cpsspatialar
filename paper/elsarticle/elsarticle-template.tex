@@ -171,7 +171,7 @@ Recall that the pose~($\hat{\mathtt{R}}_j, \hat{\mathbf{t}}_j)$ of the projector
 
 \begin{figure}[t]
     \centering
-    \subfloat[\centering Oblique view (annotated).]{{\includegraphics[height=5.25cm]{images/3_cam_.pdf}}}
+    \subfloat[\centering Oblique view (annotated).]{{\includegraphics[height=5.25cm]{images/3_cam.pdf}}}
     \qquad
     \subfloat[\centering View directly downwards to scene~plane.]{{\includegraphics[height=5.25cm]{images/3_above3_cam.png}}}
     \caption{Obtaining the virtual camera. Our physical `downwards-facing' camera---placed to face downwards towards the scene plane, and in terms of whose rotation relative to the normal vector of the scene plane we wish to orient our augmentations---is almost certain to not face downwards towards the scene plane precisely. Accordingly, we rotate the recovered `downwards-facing' camera (frustum in black) about its center of projection such that its optical axis be made parallel with the scene plane's normal, with respect to the minimum arc-length rotation relating the two.} %It is then, for each respective target location, the $X$- and $Y$-axes of the resulting \textit{virtual} camera (gray) that we subsequently use to orient the virtual projector (cf.\ Figure~\ref{fig:virtualproj}) in terms of which the augmentation is to appear to be projected, which is itself placed to face downwards towards the scene plane precisely. The virtual projector is thus rendered fronto-parallel with the ground plane and axially aligned with the virtual camera. This rotated camera is our virtual camera, and it is the orientation of the virtual camera that we subsequently use to orient our virtual projector.
