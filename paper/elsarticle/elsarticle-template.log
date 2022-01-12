@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  12 JAN 2022 08:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  12 JAN 2022 08:38
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -588,10 +588,10 @@ File: images/2d3d.pdf Graphic file (type pdf)
 Package pdftex.def Info: images/2d3d.pdf  used on input line 130.
 (pdftex.def)             Requested size: 161.64513pt x 135.15059pt.
  [8] [9 <./images/detections_.png> <./images/2d3d.pdf>] [10] [11] [12]
-<images/3_cam_.pdf, id=340, 611.6009pt x 565.72456pt>
-File: images/3_cam_.pdf Graphic file (type pdf)
-<use images/3_cam_.pdf>
-Package pdftex.def Info: images/3_cam_.pdf  used on input line 174.
+<images/3_cam.pdf, id=340, 611.6009pt x 565.72456pt>
+File: images/3_cam.pdf Graphic file (type pdf)
+<use images/3_cam.pdf>
+Package pdftex.def Info: images/3_cam.pdf  used on input line 174.
 (pdftex.def)             Requested size: 161.48553pt x 149.37697pt.
 <images/3_above3_cam.png, id=341, 459.21562pt x 421.575pt>
 File: images/3_above3_cam.png Graphic file (type png)
@@ -599,7 +599,7 @@ File: images/3_above3_cam.png Graphic file (type png)
 Package pdftex.def Info: images/3_above3_cam.png  used on input line 176.
 (pdftex.def)             Requested size: 162.71786pt x 149.37697pt.
 
-[13] [14 <./images/3_cam_.pdf> <./images/3_above3_cam.png>]
+[13] [14 <./images/3_cam.pdf> <./images/3_above3_cam.png>]
 <images/3_proj_.pdf, id=408, 611.6009pt x 565.72456pt>
 File: images/3_proj_.pdf Graphic file (type pdf)
 <use images/3_proj_.pdf>
@@ -701,7 +701,7 @@ Package rerunfilecheck Info: File `elsarticle-template.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  10529 strings out of 480790
- 167051 string characters out of 2897301
+ 167045 string characters out of 2897301
  450293 words of memory out of 3000000
  26227 multiletter control sequences out of 15000+200000
  542841 words of font info for 66 fonts, out of 3000000 for 9000
@@ -733,7 +733,7 @@ pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmtt10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
 msfonts/cm/cmtt8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/
 public/amsfonts/symbols/msbm10.pfb>
-Output written on elsarticle-template.pdf (25 pages, 11306262 bytes).
+Output written on elsarticle-template.pdf (25 pages, 11311113 bytes).
 PDF statistics:
  813 PDF objects out of 1000 (max. 8388607)
  102 named destinations out of 1000 (max. 500000)
