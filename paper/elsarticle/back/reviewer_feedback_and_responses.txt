@@ -1,0 +1,81 @@
+The authors wish to thank the reviewers for valuable feedback and for the chance to address that feedback in a revised version of the manuscript. Please find below our response to each of the points raised by the reviewers (our responses in each instance begin with an arrow '->').
+
+
+
+Reviewers' comments:
+
+Reviewer #1: The manuscript describes an interesting approach to registering a scene to a projector by way of a separate camera, and using the relative position and orientation of scene and projector to apply warp correction and scaling to the projected image. My biggest concern is that the measurements being used to validate the scaling are not sufficiently described. Given that this journal has a strong focus on measurement science, the authors should strengthen this part of the manuscript.
+
+Specific feedback:
+
+Minor English mistakes throughout, though nothing catastrophic.
+
+-> We have gone through the entire paper and paid attention to ensuring those mistakes have been removed
+
+Line 16: After mentioning a product name, it is typical to put in parentheses the name of the company and its country, i.e. "(Microsoft Corporation, USA)"
+
+-> Done (in all instances)
+
+Line 138: Shouldn't (px,py)T actually be (xo,yo)T?
+
+-> Corrected (the reviewer was correct)
+
+Pages 10-12: The section on 'Projector calibration' is difficult to understand. Please, consider rewording.
+
+-> Addressed (we believe the section should now be substantially more readable)
+
+Lines 246-248: The sentence "Finally, we (iii)... (cf. again Figure 3)" feels like it's not complete. Please, consider rewording.
+
+-> Addressed
+
+Figure 5b: Please accentuate that the inset image is a magnified view of a portion of the normal image, e.g. using borders around both the magnified view and the portion that is being magnified, with lines connecting the corners of both.
+
+-> We decided to remove the inset and instead provide additonal figures to the paper
+
+Footnote 8: Please note that this footnote carries forward from page 15 into page 16.
+
+-> Addressed (no footnote carries over across multiple pages any more)
+
+Table 1: It is difficult to understand how sub-mm measurements can be made using a tape measure. Can you elaborate on how these measurements were made, and perhaps provide some information about the tape measure?
+
+-> In the earlier reviewer copy, measurements were not sub-mm, but the computed means and standard deviations were provided at sub-mm. Reflecting feedback of reviewer 2 we have switched to providing errors in terms of absolute values; we give min and max abs val error with respect to actual measurements (not sub-mm), and mean absolute error (sub-mm, to one decimal point)
+
+Table 1: More information is needed on how the standard deviation is calculated. What do the multiple measurements in this calculation correspond to? Repeated measurements? How many?
+
+-> Reflecting feedback of reviewer 2 we have switched to providing errors in terms of absolute values; we give min and max abs val error with respect to actual measurements (not sub-mm), and mean absolute error (sub-mm, to one decimal point). The numbers are computed with respect to 15 augmentations produced at varying target locations across the floorspace (we have tried in the latest version to further emphasize this point, both in the captions to the tables and by providing a new Figure 7(b) for illustration)
+
+
+
+Reviewer #2: In this paper, the authors presented a keystone correction method for image projection on a planar scene surface. The keystone correction is produced as a function of the relative geometry of the projector and scene plane, and a steerable mirror is used to direct the projection across varying target locations.  A camera facing the scene plane is used to calibrate the system. It is demonstrated that the system can be adjusted more efficiently than manual keystone correction, and with an average dimension error of less than 1 mm for 50 cm x 31.25 cm projected images over 15 locations of the projection floor.
+
+The work is interesting as the method has practical application for industry such as displaying user manual on the factory floor. However, the reviewer found the paper a little bit to follow, hence suggest the authors put a flow chart for their procedures. Also, some figures are of poor quality, that needs to be redrawn and properly labeled. Most important, the reviewer has concern about how the measurement in Table 1 and Table 2 was made. The detailed suggestions/questions are listed below. They need to be addressed before the paper can be considered for publication.
+
+ 
+1.      The projector is calibrated by circles projected at different target locations (Figure 1b). These circles will be distorted due to the projection angle. Since the camera and the projector are not at the same physical location, the camera calibration (by chessboard pattern) cannot fully compensate for this distortion. Will this affect the center point detection for the circles?
+
+-> Correct, the circles undergo projective distortion when not projected in a fronto-parallel manner to the ground plane. However, the OpenCV circle pattern center detection algorithm we rely on is - like the OpenCV algorithm for detecting chessboard corners - intended to be invariant to such projective effects (i.e., it does *not* proceed by looking for circles in the image, but more generally is intended to handle ellipses). We agree with the reviewer that the question of the impact of the choice of calibration pattern on the results is not an uninteresting one; in both the reivewer copy and the latest version, we mentioned in the conclusion that an open question for future work would be to consider the impact of the choice of pattern on accuracy. In a followup paper, it is our intention to present a variant of our approach that would no longer require the presence of two separate patterns in each projector calibration image (as is the case now); it is as part of that paper that we wish to evaluate the impact of the choice of calibration pattern (chessboard vs. circles)
+
+2.      Figure 2 does not show very well under normal size. The author should consider redrawing it.  The authors mentioned "scene plane (gray) recovered", "scene plane of back-projections", and "image plane (red)". Please label these planes in the figure, as the gray color does not show very well and there is no plane in red.
+
+-> We have reworded the caption (now Figure 3(b)); we hope that doing so makes the figure as is - which is not merely an illustration, but is the actual rendering of our recovered camera relative to the scene plane) more clear
+
+3.      Figure 3 is very difficult to follow. For example, the figure caption says: "The virtual projector is obtained by (ii) rotating the projector (bottom left, black) about the point of intersection of its optical axis with the scene plane such that the optical axis be made parallel with the scene plane's normal vector". 3a shows an arrow labeled as (ii), which indicates the projector is moved to a new position, which is different from the camera. However, 3b shows the camera and projector optical axis is aligned (after step (ii)?).  It seems the four steps are (1) Align the camera plane with the scene plane (so they are parallel to each other). (2) Align the projector plane with the scene plane. (3) Align the projector plane x-y coordinate with the camera plane. (4) Adjust the height of the projector. It is better to put each step into a separate figure.
+
+-> The reviewer's understanding of the steps is correct (minor detail: in the reviewer's step 3, a more accurate phrasing would be "Align the projector plane x-y axes with those of the virtual camera"). To increase clarity, we split Figure 3 from the reviewer copy into two new figures (in the latest version): Figure 4 for the virtual camera, and Figure 5 for the virtual projector. 
+4.      The virtual projector is shown for both 4a and 4b. It is understood the warped image in 4b is 'projected' by the virtual camera, but what is the role of the virtual camera in projecting the original image in 4a?
+
+-> The warped image is projected by the projector; the effect of the warp is the appearance of projecting the unwarped original image from the virtual projector. The role of the virtual camera is to supply the x-y axes of the virtual projector. Ideally, we would get them directly from the 'downwards-facing' physical camera (since it is one of our claims that we orient augmentations 'in accordance' with the 'downwards-facing' camera), but this only works if the 'downwards-facing' physical camera accurately (i.e., precisely) faces downwards to the scene plane. This is because the virtual projector itself is precisely downwards facing. Since it is almost certain to not be the case that the 'downwards-facing' camera faces downwards to the scene plane exactly (at least by some small deviation; cf. Figure 4 for the real-world example of the deviation present in the setup used in the evaluation), we (i) apply the min arc length rotation to the recovered 'downwards-facing' physical camera that rotates that camera to make it face precisely downwards to the scene plane (by making its view direction colinear with the normal vector of the scene plane) and then (ii) obtain the x-y axes we use for orienting the virtual projector are obtained by applying. It is our hope that the relevance of the virtual camera is more clear in the latest version (cf. e.g. the caption of Figure 4 in the latet version). In the current version, we now refer to the physical placed to face downwards in single quotes as the 'downwards-facing' camera to further emphasize the distinction between the physical 'downwards-facing' camera and the virtual camera.
+
+5.      Figure 5. It is not clear where is the camera in 5a, please mark it with an arrow. The projected image insert at lower-left corner of 5b is at very low resolution. The warped image is the most important result from this study, please show it with a high-resolution image. 
+
+-> Figure 5 from the reviewer copy is now Figure 7a in the latest version; in the latest version, we have marked the three components of the hardware setup textually
+
+6.      The authors mentioned, "the measuring tape and angle gauge are both visible in Figure 5(b)" (line 46, page 18). The image is not clear but appears it is a regular tape and angle gauge after enlarged the image. Table 1 shows, for example, the mean measure error for Top is 0.03 cm with a standard deviation of 0.33. Similarly, for Table 2, the mean error for the bottom right is 0.0 degree, with stdev 0.34. The reviewer's questions are:
+(a)     What is the mean error if the absolute value is taken for each measurement before the average?
+(b)     What is the measurement uncertainty due to the resolution of the tape ruler and the angle gauge?
+(c)     What is the error caused by the edge blur, especially when the image was projected at an angle on the floor, some regions will be out of the focus?
+(d)     The pixel size is 3.5mm and the distortion adjustment has to be based on an integer number of pixels, so theoretically speaking one can only correct the image within half pixel size. Is this understanding correct? If it is, reporting an error below this limit may not be meaningful?
+
+-> For the current version of the paper, we redid the measurements by newly projecting our 15 augmentations to the respective 15 target locations across the floorspace and using a metal rule (visible in Figure 7(b) of the current version) to measure error in lengths. We did this because the placement of the metal rule can be shown more clearly in a figure than the previously used measuring tape (in Figure 7(b), where both the metal rule and digital angle gauge are now visible; the original measuring tape remains visible in remains visible in Figure 6, but no mention is made of it anywhere in the paper). (a) In Tables 1 and 2 we now report MEA (to one sub-mm decimal place), min error, and max error. (b) Our main reported claim concerning accuracy is now that errors in measured lengths now in no instance exceed 1 cm, and errors in angles at the measured corners in no instance exceed 1 deg. The metal rule and digital angle gauge are with certainty accurate enough to be able to make this claim. (c) Given the 6 m x 4 m extent of the floorspace considered in the evaluation, blur was not observed increase as the projection was directed further and further from directly downwards.  Figure 7(b) shows an augmentation carried out at one of the corners of the floorspace and shows that blur has a minimal impact on the quality of the augmentation, and hence on the accuracy of the measurements (as now mentioned in the figure caption). (d) The pixel size certainly has an impact on the accuracy our approach is able to provide, but is not necessarily to be seen so strictly (e.g., the algorithms we rely on to detect circle pattern center points or chessboard corners provide outputs at subpixel accuracy); we leave the question of the impact of the pixel size of the camera as an interesting question for potential future work, and make mention of this in the conclusion in the current version.
+
+

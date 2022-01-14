@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  12 JAN 2022 12:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2021.6.18)  12 JAN 2022 16:43
 entering extended mode
 **./elsarticle-template.tex
 (elsarticle-template.tex
@@ -676,13 +676,13 @@ Overfull \hbox (6.52742pt too wide) in alignment at lines 273--273
 [][][] 
  []
 
-[20] [21] [22]
+[20] [21]
 Overfull \hbox (0.76443pt too wide) in paragraph at lines 288--289
 []\OT1/cmr/m/n/10 This work was sup-ported by the Aus-trian Re-search Pro-mo-ti
 on Agency (FFG)
  []
 
-(elsarticle-template.bbl [23]
+[22] (elsarticle-template.bbl [23]
 Underfull \hbox (badness 3000) in paragraph at lines 83--86
 []\OT1/cmr/m/n/10 C. Pin-hanez, R. Kjeld-sen, A. Levas, G. Pin-gali, M. Pod-las
 eck,
@@ -732,7 +732,7 @@ pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmtt10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/public/a
 msfonts/cm/cmtt8.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX/fonts/type1/
 public/amsfonts/symbols/msbm10.pfb>
-Output written on elsarticle-template.pdf (26 pages, 11311566 bytes).
+Output written on elsarticle-template.pdf (26 pages, 11311440 bytes).
 PDF statistics:
  818 PDF objects out of 1000 (max. 8388607)
  103 named destinations out of 1000 (max. 500000)

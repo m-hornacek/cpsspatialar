@@ -1,0 +1,28 @@
+The authors would like to thank the reviewers for their valuable feedback to the manuscript. Please find below our responses to the reviewer feedback.
+
+Reviewer #2:
+
+- The reviewer appreciates the authors' effort, the revised version has addressed most of the reviewer's comments. However, there is still a major concern for the errors reported in Table 1. The Min AE (minimum absolute error) shows 0.0 cm, but the minimum division on the steel ruler is 0.1 cm. Not sure if that is proper to claim that ruler can measure a projected image edge on a shop floor down to 0.05 cm resolution.  More important, the impact of the pixel resolution of the dimension accuracy of the projected image can not be ignored. Question 6D in the original review is about the size of the projected image having to be an integer number of the pixel, not about the measurement accuracy of the image. For example, if the correction algorithm calculates that the corrected dimension is equivalent to 100.5 pixels, but the size can only be set either to 100 or 101 pixels. That difference is half of the pixel resolution,  or 1.75 mm. This is a limitation of digital projection. Therefore, reporting an error of 0.0 cm in Table 1 is not convincing. It could only happen when the corrected dimension matches the integer multiple of the pixel resolution very well. Therefore, a very special case.  It is recommended to take the Min AE lines out from Table 1.
+
+Response: The reviewer is of course correct; the quality of the augmentation is bounded by the resolution of the projector, even if a perfect corrective warp is computed and applied. We accordingly acknowledge the reviewer's reservations about reporting errors of 0 mm. In line with the reviewer's recommendation, we have removed the Min AE lines from the error tables.
+
+
+How big an issue this is depends on the use case; , the corrective image warp is applied in a manner that bilinear interpolation (rather than nearest neighbour interpolation) is used to produce a smooth warped image (cf. Figure 2(a) - note that the edges appear smooth). This means that corrected dimensions of 100.5 pixels may arguably appear like 100.5 pixels to the viewer, even if in fact 101 pixels are used for the effect.
+
+Reviewer #3:
+
+- The diagrams in the figurers are hard to read, they should be enlarged with better image quality
+
+Response: We have enlarged most of the figures and added additional annotations to improve clarity. Additionally, we have refined several figure captions.
+
+- The terms "up vector" and gravity vector" are used in the manuscript.  Are they describing the same vector?  If so, harmonization of terms are needed, otherwise better explanation of these terms should be provided.
+
+Response: The up vector of a camera (or projector) gives the vertical direction of the image plane in the camera's (or projector's) local coordinate frame (cf. the red vector in e.g. Figure 3(b)). A gravity vector points in the direction of the force of gravity.
+
+- The jargons used such as "fronto-parallel", "frontally", "face towards", or "facing downwards" are not precise descriptions in metrology domain. Better descriptions such as "projector (or camera) optical axis normal (or orthogonal) to the scene plane" are needed.
+
+Response: We now clarify this point in Footnote 1.
+
+- The acronym SE(3) associated with (R_j, t_j) is not defined.
+
+Response: SE(3) is the set of 3D rigid body transformations (cf. https://www.seas.upenn.edu/~meam620/slides/kinematicsI.pdf). We agree that the notation is a bit obscure and does not add to the readability of the paper, so we removed it.
