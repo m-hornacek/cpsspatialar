@@ -20,6 +20,8 @@ ADD_SUBDIRECTORY(apps/rectify)
 ADD_SUBDIRECTORY(apps/undistort)
 ADD_SUBDIRECTORY(apps/calibrateCam)
 ADD_SUBDIRECTORY(apps/calibrateProj)
+ADD_SUBDIRECTORY(apps/calibrateProjMirror)
+ADD_SUBDIRECTORY(apps/visPanTilt)
 ADD_SUBDIRECTORY(apps/splitZed)
 
 FILE(COPY

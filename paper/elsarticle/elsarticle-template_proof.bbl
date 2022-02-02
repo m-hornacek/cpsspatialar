@@ -1,0 +1,142 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{van2010survey}
+D.~Van~Krevelen, R.~Poelman, A survey of augmented reality technologies,
+  applications and limitations, International Journal of Virtual Reality 9~(2)
+  (2010) 1--20.
+
+\bibitem{zhou2008trends}
+F.~Zhou, H.~B.-L. Duh, M.~Billinghurst, Trends in augmented reality tracking,
+  interaction and display: A review of ten years of {ISMAR}, in: 2008 7th
+  IEEE/ACM International Symposium on Mixed and Augmented Reality, IEEE, 2008,
+  pp. 193--202.
+
+\bibitem{schlund2018moglichkeiten}
+S.~Schlund, W.~Mayrhofer, P.~Rupprecht, {M{\"o}glichkeiten} der {Gestaltung}
+  individualisierbarer {Montagearbeitspl{\"a}tze} vor dem {Hintergrund}
+  aktueller technologischer {Entwicklungen}, Zeitschrift f{\"u}r
+  Arbeitswissenschaft 72~(4) (2018) 276--286.
+
+\bibitem{uva2018evaluating}
+A.~E. Uva, M.~Gattullo, V.~M. Manghisi, D.~Spagnulo, G.~L. Cascella,
+  M.~Fiorentino, Evaluating the effectiveness of spatial augmented reality in
+  smart manufacturing: a solution for manual working stations, The
+  International Journal of Advanced Manufacturing Technology 94~(1) (2018)
+  509--521.
+
+\bibitem{masood2019augmented}
+T.~Masood, J.~Egger, Augmented reality in support of industry
+  4.0---implementation challenges and success factors, Robotics and
+  Computer-Integrated Manufacturing 58 (2019) 181--195.
+
+\bibitem{gattullo2019towards}
+M.~Gattullo, G.~W. Scurati, M.~Fiorentino, A.~E. Uva, F.~Ferrise, M.~Bordegoni,
+  Towards augmented reality manuals for industry 4.0: A methodology, Robotics
+  and Computer-Integrated Manufacturing 56 (2019) 276--286.
+
+\bibitem{aschenbrenner2019comparing}
+D.~Aschenbrenner, F.~Leutert, A.~{\c{C}}en{\c{c}}en, J.~Verlinden,
+  K.~Schilling, M.~Latoschik, S.~Lukosch, Comparing human factors for augmented
+  reality supported single-user and collaborative repair operations of
+  industrial robots, Frontiers in Robotics and AI 6 (2019) 37.
+
+\bibitem{mayrhofer2019one}
+W.~Mayrhofer, P.~Rupprecht, S.~Schlund, One-fits-all vs. tailor-made:
+  user-centered workstations for field assembly with an application in aircraft
+  parts manufacturing, Procedia Manufacturing 39 (2019) 149--157.
+
+\bibitem{rupprecht2020information}
+P.~Rupprecht, H.~Kueffner-McCauley, S.~Schlund, Information provision utilizing
+  a dynamic projection system in industrial site assembly, Procedia CIRP 93
+  (2020) 1182--1187.
+
+\bibitem{Rupprecht2021}
+P.~Rupprecht, H.~Kueffner-McCauley, M.~Trimmel, S.~Schlund, Adaptive spatial
+  augmented reality for industrial site assembly, Procedia CIRP.
+
+\bibitem{hololens}
+Hololens 2---overview, features, and specs,
+  \url{https://www.microsoft.com/en-us/hololens/hardware}, [Online; accessed
+  2-September-2021] (2021).
+
+\bibitem{bimber2019spatial}
+O.~Bimber, R.~Raskar, Spatial Augmented Reality: Merging Real and Virtual
+  Worlds, AK Peters/CRC Press, 2019.
+
+\bibitem{pinhanez2001everywhere}
+C.~Pinhanez, The everywhere displays projector: A device to create ubiquitous
+  graphical interfaces, in: International Conference on Ubiquitous Computing,
+  Springer, 2001, pp. 315--331.
+
+\bibitem{kjeldsen2002interacting}
+R.~Kjeldsen, C.~Pinhanez, G.~Pingali, J.~Hartman, T.~Levas, M.~Podlaseck,
+  Interacting with steerable projected displays, in: Proceedings of Fifth IEEE
+  International Conference on Automatic Face Gesture Recognition, IEEE, 2002,
+  pp. 402--407.
+
+\bibitem{pinhanez2003applications}
+C.~Pinhanez, R.~Kjeldsen, A.~Levas, G.~Pingali, M.~Podlaseck, N.~Sukaviriya,
+  Applications of steerable projector-camera systems, in: Proceedings of the
+  IEEE International Workshop on Projector-Camera Systems at ICCV 2003, 2003.
+
+\bibitem{Hartley2004}
+R.~I. Hartley, A.~Zisserman, Multiple View Geometry in Computer Vision, 2nd
+  Edition, Cambridge University Press, ISBN: 0521540518, 2004.
+
+\bibitem{sukthankar2001smarter}
+R.~Sukthankar, R.~G. Stockton, M.~D. Mullin, Smarter presentations: Exploiting
+  homography in camera-projector systems, in: Proceedings Eighth IEEE
+  International Conference on Computer Vision (ICCV), Vol.~1, IEEE, 2001, pp.
+  247--253.
+
+\bibitem{raskar2001self}
+R.~Raskar, P.~Beardsley, A self-correcting projector, in: Proceedings of the
+  2001 IEEE Computer Society Conference on Computer Vision and Pattern
+  Recognition (CVPR), Vol.~2, IEEE, 2001, pp. II--II.
+
+\bibitem{duane1971close}
+D.~C. Brown, Close-range camera calibration, Photogrammetric Engineering 37~(8)
+  (1971) 855--866.
+
+\bibitem{weng1992camera}
+J.~Weng, P.~Cohen, M.~Herniou, et~al., Camera calibration with distortion
+  models and accuracy evaluation, IEEE Transactions on Pattern Analysis and
+  Machine Intelligence 14~(10) (1992) 965--980.
+
+\bibitem{triggs1999bundle}
+B.~Triggs, P.~F. McLauchlan, R.~I. Hartley, A.~W. Fitzgibbon, Bundle
+  adjustment---a modern synthesis, in: International Workshop on Vision
+  Algorithms, Springer, 1999, pp. 298--372.
+
+\bibitem{zhang2000flexible}
+Z.~Zhang, A flexible new technique for camera calibration, IEEE Transactions on
+  Pattern Analysis and Machine Intelligence 22~(11) (2000) 1330--1334.
+
+\bibitem{moreno2012simple}
+D.~Moreno, G.~Taubin, Simple, accurate, and robust projector-camera
+  calibration, in: 2012 Second International Conference on 3D Imaging,
+  Modeling, Processing, Visualization \& Transmission, IEEE, 2012, pp.
+  464--471.
+
+\bibitem{zhang2009projector}
+X.~Zhang, L.~Zhu, Projector calibration from the camera image point of view,
+  Optical Engineering 48~(11) (2009) 117208.
+
+\bibitem{zhang2006novel}
+S.~Zhang, P.~S. Huang, Novel method for structured light system calibration,
+  Optical Engineering 45~(8) (2006) 083601.
+
+\bibitem{bradski2000opencv}
+G.~Bradski, The {OpenCV} library, Dr.\ Dobb's Journal of Software Tools 25
+  (2000) 120--125.
+
+\bibitem{collins2014infinitesimal}
+T.~Collins, A.~Bartoli, Infinitesimal plane-based pose estimation,
+  International Journal of Computer Vision 109~(3) (2014) 252--286.
+
+\end{thebibliography}

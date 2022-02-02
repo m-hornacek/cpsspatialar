@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: elsarticle-template_proof.aux
+Reallocating 'name_of_file' (item size: 1) to 15 items.
+The style file: elsarticle-num.bst
+Reallocating 'name_of_file' (item size: 1) to 10 items.
+Database file #1: mybibfile.bib
+Warning--empty pages in pinhanez2003applications
+You've used 27 entries,
+            2937 wiz_defined-function locations,
+            835 strings with 10525 characters,
+and the built_in function-call counts, 8810 in all, are:
+= -- 839
+> -- 268
+< -- 10
++ -- 107
+- -- 80
+* -- 579
+:= -- 1149
+add.period$ -- 27
+call.type$ -- 27
+change.case$ -- 28
+chr.to.int$ -- 3
+cite$ -- 28
+duplicate$ -- 297
+empty$ -- 1013
+format.name$ -- 102
+if$ -- 2307
+int.to.chr$ -- 0
+int.to.str$ -- 27
+missing$ -- 28
+newline$ -- 89
+num.names$ -- 26
+pop$ -- 197
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 589
+stack$ -- 0
+substring$ -- 565
+swap$ -- 80
+text.length$ -- 9
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 75
+width$ -- 29
+write$ -- 230
+(There was 1 warning)
