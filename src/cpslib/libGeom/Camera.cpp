@@ -60,6 +60,50 @@ Camera::Camera(const Camera& cam)
 	hasDisplayList_ = false;
 }
 
+Camera::Camera(cv::Mat& K33d, cv::Mat& Rt34d, int width, int height, float CCDWidth)
+{
+	f_mm_ = CCDHeight_ = -1;
+
+	width_ = width;
+	height_ = height;
+	CCDWidth_ = CCDWidth;
+
+	std::cout << Rt34d << std::endl;
+
+	P34d_ = cv::Mat(3, 4, CV_64F);
+	cv::gemm(K33d, Rt34d, 1.0, cv::Mat(), 0.0, P34d_);
+
+	K33d.copyTo(K33d_);
+
+	cv::Mat R33d(3, 3, CV_64F);
+	R33d.at<double>(0, 0) = Rt34d.at<double>(0, 0);
+	R33d.at<double>(1, 0) = Rt34d.at<double>(1, 0);
+	R33d.at<double>(2, 0) = Rt34d.at<double>(2, 0);
+	R33d.at<double>(0, 1) = Rt34d.at<double>(0, 1);
+	R33d.at<double>(1, 1) = Rt34d.at<double>(1, 1);
+	R33d.at<double>(2, 1) = Rt34d.at<double>(2, 1);
+	R33d.at<double>(0, 2) = Rt34d.at<double>(0, 2);
+	R33d.at<double>(1, 2) = Rt34d.at<double>(1, 2);
+	R33d.at<double>(2, 2) = Rt34d.at<double>(2, 2);
+
+	R33d.copyTo(R33d_);
+
+	principalPt_ = cv::Vec2d();
+	KInv33d_ = cv::Mat(3, 3, CV_64F);
+	M33d_ = cv::Mat(3, 3, CV_64F);
+	MInv33d_ = cv::Mat(3, 3, CV_64F);
+	C_ = cv::Vec3d();
+	lookDir_ = cv::Vec3d();
+	t_ = cv::Vec3d();
+	Rt34d_ = cv::Mat(3, 4, CV_64F);
+	Rt44d_ = cv::Mat(4, 4, CV_64F);
+	RtInv44d_ = cv::Mat(4, 4, CV_64F);
+
+	hasDisplayList_ = false;
+	initVariables();
+	initDisplayList();
+}
+
 Camera::Camera(cv::Mat& K33d, cv::Mat& R33d, cv::Mat& T13d, int width, int height, float CCDWidth)
 {
 	f_mm_ = CCDHeight_ = -1;
@@ -81,6 +125,8 @@ Camera::Camera(cv::Mat& K33d, cv::Mat& R33d, cv::Mat& T13d, int width, int heigh
 	Rt34d.at<double>(0, 3) = T13d.at<double>(0, 0);
 	Rt34d.at<double>(1, 3) = T13d.at<double>(0, 1);
 	Rt34d.at<double>(2, 3) = T13d.at<double>(0, 2);
+
+	std::cout << Rt34d << std::endl;
 
 	P34d_ = cv::Mat(3, 4, CV_64F);
 	cv::gemm(K33d, Rt34d, 1.0, cv::Mat(), 0.0, P34d_);

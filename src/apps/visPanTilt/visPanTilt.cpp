@@ -28,8 +28,11 @@
 #include "ceres/ceres.h"
 #include "ceres/rotation.h"
 
+float M_PI = 3.14159265358979323846;
+
 using namespace std;
 using namespace cv;
+
 
 GLint viewportWidth;
 GLint viewportHeight;
@@ -47,34 +50,13 @@ GLdouble * cameraPos;
 
 int camIdx;
 int viewIdx;
-vector<Camera> cams;
+
+std::vector<Camera> cams;
+Camera projCanonical;
+
+PointCloud pointCloud;
+
 int imWidth, imHeight;
-
-Camera projCam;
-int projWidth, projHeight;
-
-int numPatterns;
-vector<vector<Mat>> capturedPattern;
-
-cv::Vec3d centroidChessboardObjectPts;
-
-PointCloud * pointCloud;
-std::vector<PointCloud*> pointCloudCirclesVec;
-PointCloud* pointCloud2Circles;
-std::vector<PointCloud*> triangulatedPointCloudCirclesVec;
-PointCloud* pointCloudImVis;
-PointCloud* pointCloud2ImVis;
-
-Plane * planeVis;
-Plane* fittedPlaneVis;
-
-std::vector<Plane> planes;
-std::vector<Plane> fittedPlanes;
-
-cv::Vec3d projCamIntersection;
-cv::Vec3d projPlaneIntersection;
-cv::Vec3d camPlaneIntersection;
-cv::Vec3d virtualCamPlaneIntersection;
 
 /* Previous x and y cursor coordinates (used to determine change in camera position) */
 double cursorPrevX, cursorPrevY;
@@ -85,7 +67,9 @@ int mousePrevWheelPos;
 int timeMousePrevWheelPos;
 int timeBetZeroAndOne;
 
-float x, y, cloudX, cloudY;
+
+
+float x, y, cloudX, cloudY, pan, tilt;
 float initX, initY, initCloudX, initCloudY;
 float step;
 int arrowKeyStep;
@@ -177,262 +161,147 @@ void display()
 
         glMultMatrixd(flip);
 
-        glMultMatrixd(Ancillary::flattenMat44d(cams[camIdx].getRt44()));
+        glMultMatrixd(Ancillary::flattenMat44d(projCanonical.getRt44()));
 
-        pointCloud->display(pointSize, 0, 0, 1);
+        projCanonical.displayWorld(0.0, 0.0, 0.0);
 
-        if (showImVis)
+        std::stringstream ss;
+        ss << "pan " << pan << "; tilt " << tilt;
+
+        // here we compute pose of virtual projector relative to canonical projector
         {
-            if (showVirtual)
-                pointCloud2ImVis->display(pointSize);
-            else
-                pointCloudImVis->display(pointSize);
-        }
-        else
-        {
-            if (showVirtual)
-                pointCloud2Circles->display(pointSize, 0, 1, 0);
-            else
-            {
-                
+            // rotation in degrees
+            float rot_p = pan;
+            float rot_t = tilt;
 
-                for (int i = 0; i < triangulatedPointCloudCirclesVec.size(); i++)
-                {
-                    pointCloudCirclesVec[i]->display(pointSize, 1, 0, 0);
-                    triangulatedPointCloudCirclesVec[i]->display(pointSize, 0, 1, 0);
-                }
+            // this never ever changes
+            // all in mm = > 1px = 1mm
+            float delta_p = 86 / 1000.0;                 // length of PAN axis
+            float delta_t = 24 / 1000.0;                // offset of mirror from the PAN axis
 
-                std::vector<cv::Point3f> points = pointCloudCirclesVec[viewIdx]->getPoints();
-                std::vector<cv::Point3f> points2 = pointCloud->getPoints();
+            Eigen::Vector3d PC(projCanonical.getC()[0], projCanonical.getC()[1], projCanonical.getC()[2]); // position of projector
 
-                float f = cams[0].getf();
-                float CCDWidth_half_mm = 20.0 * 0.02 * 0.5;
+            cv::Vec3d lookDirCV = projCanonical.backprojectLocal(projCanonical.getPrincipalPt());
+            Eigen::Vector3d Pf(lookDirCV[0], lookDirCV[1], lookDirCV[2]); // look dir of projector
+            //Eigen::Vector3d Pf(projCanonical.getLookDir()[0], projCanonical.getLookDir()[1], projCanonical.getLookDir()[2]); // look dir of projector
 
-                float fProj = cams[2].getf();
-                cv::Vec3d projC = cams[2].getC();
-                cv::Mat Rt44 = cams[2].getRt44();
-                cv::Mat Rt44Inv = cams[2].getRt44Inv();
+            Eigen::Vector3d M0(0, 0, 200 / 1000.0); // mirror system origin relative to canonical pose of projector
+            Eigen::Vector3d dt(0, delta_t, 0); // offset vector
+            Eigen::Vector3d dp(0, 0, -delta_p); // offset vector
 
-                for (int ptIdx = 0; ptIdx < points.size(); ptIdx++)
-                {
-                    glBegin(GL_POINTS);
-                        glPointSize(0.5 * pointSize);
-                        glColor3f(1.0, 0.0, 0.0);
-                        glVertex3f(CCDWidth_half_mm * points[ptIdx].x / points[ptIdx].z, CCDWidth_half_mm * points[ptIdx].y / points[ptIdx].z, CCDWidth_half_mm);
-                    glEnd();
+            float w_p = rot_p * M_PI / 180.0;
+            float w_t = rot_t * M_PI / 180.0;
 
-                    //glBegin(GL_LINES);
-                    //    glColor3f(0.9, 0.9, 0.9);
-                    //    glVertex3f(0, 0, 0);
-                    //    glVertex3f(points[ptIdx].x, points[ptIdx].y, points[ptIdx].z);
-                    //glEnd();
+            Eigen::Matrix3d R_t; // rotation matrix for Tilt(X axis)
+            R_t << 1, 0, 0,
+                0, std::cos(w_t), -std::sin(w_t),
+                0, std::sin(w_t), std::cos(w_t); 
 
-                    cv::Vec3d pt = Ancillary::Mat44dTimesVec3dHomog(Rt44, cv::Vec3d(points[ptIdx].x, points[ptIdx].y, points[ptIdx].z));
+            Eigen::Matrix3d R_p; // rotation matrix for Pan(Z axis)
+            R_p << std::cos(w_p), -std::sin(w_p), 0,
+                std::sin(w_p), std::cos(w_p), 0,
+                0, 0, 1;
 
-                    cv::Vec3d projPt(CCDWidth_half_mm * pt[0] / pt[2], CCDWidth_half_mm * pt[1] / pt[2], CCDWidth_half_mm);
-                    cv::Vec3d projPtLocal = Ancillary::Mat44dTimesVec3dHomog(Rt44Inv, projPt);
+            Eigen::Vector3d MC = R_p * (R_t * (M0 + dt)) + dp; // Mirror "center" MC
+            Eigen::Vector3d mn = (MC - dp) / (MC - dp).dot(MC - dp); // normalized mn mirror plane normal
 
+            Eigen::Vector3d PC_dash = PC - 2 * (PC - MC).dot(mn) * mn;  // new projector center
+            Eigen::Vector3d Pf_dash = Pf - 2 * Pf.dot(mn) * mn; // new normalized forward projection vector
 
-                    glBegin(GL_POINTS);
-                        glPointSize(0.5 * pointSize);
-                        glColor3f(1.0, 0.0, 0.0);
-                        glVertex3f(projPtLocal[0], projPtLocal[1], projPtLocal[2]);
-                    glEnd();
+            std::cout << Pf_dash << std::endl;
 
-                    //glBegin(GL_LINES);
-                    //    glColor3f(0.9, 0.9, 0.9);
-                    //    glVertex3f(projC[0], projC[1], projC[2]);
-                    //    glVertex3f(points[ptIdx].x, points[ptIdx].y, points[ptIdx].z);
-                    //glEnd();
-                }
-                   
-                for (int ptIdx = 0; ptIdx < points2.size(); ptIdx++)
-                {
-                    glBegin(GL_POINTS);
-                        glPointSize(0.5 * pointSize);
-                        glColor3f(0.0, 0.0, 1.0);
-                        glVertex3f(CCDWidth_half_mm * points2[ptIdx].x / points2[ptIdx].z, CCDWidth_half_mm * points2[ptIdx].y / points2[ptIdx].z, CCDWidth_half_mm);
-                    glEnd();
-                }
-            }
-        }
-
-        planeVis->display(2, pointSize);
-        fittedPlaneVis->display(2, pointSize);
-
-        float offset = 0.02;
-        for (int i = 0; i < cams.size(); i++)
-        {
-            if (viewIdx == 0 && (i == 4 || i == 5))
-                continue;
-
-            if (viewIdx == 1 && (i == 4))
-                continue;
-
-            //if (viewIdx > 1 && (i == 0 || i == 1 || i == 3 || i == 5))
-            //    continue;
-
-            float r = 0.5;
-            float g = 0.5;
-            float b = 0.5;
-
-            if (i == 0 || i == 2)
-            { 
-                r = 0.0;
-                g = 0.0;
-                b = 0.0;
-            }
-
-            cams[i].displayWorld(r, g, b);
-
-            char* str;
-            if (i == 0)
-                str = "camera"; //"cam0";
-            else if (i == 1)
-                str = "cam1";
-            else if (i == 2)
-                str = "projector";
-            else if (i == 3)
-                str = "initial virtual projector"; //"projector virtual (downward)";
-            else if (i == 4)
-                str = "projector virtual (final)";
-            else if (i == 5)
-                str = "virtual camera"; //"cam0 virtual (downward)";
-
-            cv::Vec3d C = cams[i].getC();
-
-            //if (camIdx == i)
-            {
-                std::stringstream ss;
-                ss << "Rendering according to " << string(str);
-
-                displayText(15, 20, 0, 0, 0, ss.str().c_str());
-            }
-
-            float additionalOffset = 0;
-            if (i == 5)
-                additionalOffset = 0.03;
-
-            //displayText(C[0] + offset, C[1] + offset, C[2] - offset + additionalOffset, 0, 0, 0, str);
-        }
-
-        //displayText(
-        //    centroidChessboardObjectPts[0] + offset,
-        //    centroidChessboardObjectPts[1] + offset,
-        //    centroidChessboardObjectPts[2] - offset,
-        //    0, 0, 0, "ground plane");
-
-        if (true)
-        {
-            //cv::Vec3d camC = cams[0].getC();
-
-            //glBegin(GL_LINES);
-            //glVertex3f(camC[0], camC[1], camC[2]);
-            //glVertex3f(virtualCamPlaneIntersection[0], virtualCamPlaneIntersection[1], virtualCamPlaneIntersection[2]);
+            //glBegin(GL_POINTS);
+            //glVertex3f(PC_dash[0], PC_dash[1], PC_dash[2]);
             //glEnd();
 
-            //double distVirtualCamPlaneIntersection = sqrt(
-            //    (camC - virtualCamPlaneIntersection).dot(camC - virtualCamPlaneIntersection));
-
-            //std::stringstream ss0;
-            //ss0 << distVirtualCamPlaneIntersection << " m";
-
-            //displayText(
-            //    virtualCamPlaneIntersection[0] + (camC - virtualCamPlaneIntersection)[0] * 0.5 + offset,
-            //    virtualCamPlaneIntersection[1] + (camC - virtualCamPlaneIntersection)[1] * 0.5 + offset,
-            //    virtualCamPlaneIntersection[2] + (camC - virtualCamPlaneIntersection)[2] * 0.5 - offset,
-            //    0, 0, 0, ss0.str().c_str());
-
-            cv::Vec3d projC = cams[2].getC();
-
-            if (viewIdx == 0)
-            {
-                glBegin(GL_LINES);
-                    glColor3f(0.9, 0.9, 0.9);
-                    glVertex3f(projC[0], projC[1], projC[2]);
-                    glVertex3f(projPlaneIntersection[0], projPlaneIntersection[1], projPlaneIntersection[2]);
-                glEnd();
-
-                double distProjPlaneIntersection = sqrt(
-                    (projC - projPlaneIntersection).dot(projC - projPlaneIntersection));
-
-                std::stringstream ss1;
-                ss1 << distProjPlaneIntersection << " m";
-
-                //displayText(
-                //    projPlaneIntersection[0] + (projC - projPlaneIntersection)[0] * 0.5 + offset,
-                //    projPlaneIntersection[1] + (projC - projPlaneIntersection)[1] * 0.5 + offset,
-                //    projPlaneIntersection[2] + (projC - projPlaneIntersection)[2] * 0.5 - offset,
-                //    0, 0, 0, ss1.str().c_str());
-
-                //glBegin(GL_LINES);
-                //    glColor3f(0.9, 0.9, 0.9);
-                //    glVertex3f(0, 0, 0);
-                //    glVertex3f(projC[0], projC[1], projC[2]);
-                //glEnd();
-
-                double distCamLeftProj = sqrt(projC.dot(projC));
-
-                std::stringstream ss2;
-                ss2 << distCamLeftProj << " m";
-
-                //displayText(projC[0] * 0.5 + offset, projC[1] * 0.5 + offset, projC[2] * 0.5 - offset,
-                //    0, 0, 0, ss2.str().c_str());
+            //glBegin(GL_LINES);
+            //    glVertex3f(PC_dash[0], PC_dash[1], PC_dash[2]);
+            //    glVertex3f(PC_dash[0] + Pf_dash[0], PC_dash[1] + Pf_dash[1], PC_dash[2] + Pf_dash[2]);
+            //glEnd();
 
 
-                cv::Vec3d virtualProjC = cams[3].getC();
 
-                double distVirtualProjPlaneIntersection = sqrt(
-                    (virtualProjC - projPlaneIntersection).dot(virtualProjC - projPlaneIntersection));
 
-                glBegin(GL_LINES);
-                    glColor3f(0.9, 0.9, 0.9);
-                    glVertex3f(virtualProjC[0], virtualProjC[1], virtualProjC[2]);
-                    glVertex3f(projPlaneIntersection[0], projPlaneIntersection[1], projPlaneIntersection[2]);
-                glEnd();
+            Plane plane(cv::Vec3d(mn[0], mn[1], mn[2]), -mn.dot(MC));
+            plane.display(2);
+
+            cv::Vec3d lookDirPlaneIntersection = plane.intersect(projCanonical.getLookDir());
+
+            Eigen::Matrix4d translationMat;
+            translationMat << 1, 0, 0, -lookDirPlaneIntersection[0],
+                0, 1, 0, -lookDirPlaneIntersection[1],
+                0, 0, 1, -lookDirPlaneIntersection[2],
+                0, 0, 0, 1;
+
+            Eigen::Matrix4d translationMatInv = translationMat.inverse();
+
+            Eigen::Matrix4d projCanonicalPose;
+            cv::Mat projCanonicalPoseCV = projCanonical.getRt44();
+            cv::cv2eigen(projCanonicalPoseCV, projCanonicalPose);
+
+            cv::Vec3d planeXCV = plane.intersect(cv::Vec3d(
+                projCanonicalPoseCV.at<double>(0, 0),
+                projCanonicalPoseCV.at<double>(0, 1),
+                projCanonicalPoseCV.at<double>(0, 2))) -
+                plane.intersect(cv::Vec3d(
+                    projCanonicalPoseCV.at<double>(2, 0),
+                    projCanonicalPoseCV.at<double>(2, 1),
+                    projCanonicalPoseCV.at<double>(2, 2)));
+
+            planeXCV /= planeXCV.dot(planeXCV);
+
+            Eigen::Vector3d planeZ = mn;
+            Eigen::Vector3d planeX(planeXCV[0], planeXCV[1], planeXCV[2]);
+            Eigen::Vector3d planeY = planeX.cross(planeZ);
+
+
+            Eigen::Matrix4d rotMatInv;
+            rotMatInv << planeX[0], planeY[0], planeZ[0], 0,
+                planeX[1], planeY[1], planeZ[1], 0,
+                planeX[2], planeY[2], planeZ[2], 0,
+                0, 0, 0, 1;
+
+            Eigen::Matrix4d rotMat = rotMatInv.inverse();
+
+            Eigen::Matrix4d reflectionMat;
+            reflectionMat << 1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, -1, 0,
+                0, 0, 0, 1;
+
 
 
             
-                std::stringstream ss3;
-                ss3 << distVirtualProjPlaneIntersection << " m";
-            }
+            Eigen::Matrix4d transformationMat = translationMatInv * rotMatInv * reflectionMat * rotMat * translationMat;
+            Eigen::Matrix4d projVirtualPose = transformationMat * projCanonicalPose;
+            std::cout << "transformationMat: " << transformationMat << std::endl;
+            std::cout << "projCanonicalPose: " << projCanonicalPose << std::endl;
+            std::cout << "projVirtualPose: " << projVirtualPose << std::endl;
 
-            //displayText(
-            //    projPlaneIntersection[0] + (virtualProjC - projPlaneIntersection)[0] * 0.5 + offset,
-            //    projPlaneIntersection[1] + (virtualProjC - projPlaneIntersection)[1] * 0.5 + offset,
-            //    projPlaneIntersection[2] + (virtualProjC - projPlaneIntersection)[2] * 0.5 - offset,
-            //    0, 0, 0, ss3.str().c_str());
+            cv::Mat projVirtualPoseCV;
+            cv::eigen2cv(projVirtualPose, projVirtualPoseCV);
+            
+            cv::Mat Rt34d(3, 4, CV_64F);
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 4; j++)
+                    Rt34d.at<double>(i, j) = projVirtualPoseCV.at<double>(i, j);
 
-            if (viewIdx == 1)
-            {
-                cv::Vec3d camC = cams[0].getC();
+            Camera projVirtual(projCanonical.getK(), Rt34d, projCanonical.getWidth(), projCanonical.getHeight(), 0.01);
 
-                glBegin(GL_LINES);
-                    glColor3f(0.9, 0.9, 0.9);
-                    glVertex3f(camC[0], camC[1], camC[2]);
-                    glVertex3f(camPlaneIntersection[0], camPlaneIntersection[1], camPlaneIntersection[2]);
-                glEnd();
+            projVirtual.displayWorld();
 
-                cv::Vec3d virtualCamC = cams[5].getC();
+            glBegin(GL_LINES);
+                glVertex3f(PC[0], PC[1], PC[2]);
+                glVertex3f(lookDirPlaneIntersection[0], lookDirPlaneIntersection[1], lookDirPlaneIntersection[2]);
+            glEnd();
 
-                glBegin(GL_LINES);
-                    glColor3f(0.9, 0.9, 0.9);
-                    glVertex3f(virtualCamC[0], virtualCamC[1], virtualCamC[2]);
-                    glVertex3f(virtualCamPlaneIntersection[0], virtualCamPlaneIntersection[1], virtualCamPlaneIntersection[2]);
-                glEnd();
-            }
-
-            if (viewIdx == 2)
-            {
-                cv::Vec3d finalVirtualProjC = cams[3].getC();
-
-                glBegin(GL_LINES);
-                    glColor3f(0.9, 0.9, 0.9);
-                    glVertex3f(finalVirtualProjC[0], finalVirtualProjC[1], finalVirtualProjC[2]);
-                    glVertex3f(projPlaneIntersection[0], projPlaneIntersection[1], projPlaneIntersection[2]);
-                glEnd();
-            }
+            glBegin(GL_LINES);
+                glVertex3f(projVirtual.getC()[0], projVirtual.getC()[1], projVirtual.getC()[2]);
+                glVertex3f(lookDirPlaneIntersection[0], lookDirPlaneIntersection[1], lookDirPlaneIntersection[2]);
+            glEnd();
         }
+
+        displayText(15, 20, 0, 0, 0, ss.str().c_str());
 
         glFlush();
         glfwSwapBuffers(window);
@@ -451,8 +320,8 @@ void reshape(int width, int height)
 
     float scaleFactor = 1.0;
 
-	float w = cams[camIdx].getWidth();
-    float h = cams[camIdx].getHeight();
+	float w = projCanonical.getWidth();
+    float h = projCanonical.getHeight();
 
     if (w > width || h > height)
         scaleFactor = 0.5;
@@ -472,9 +341,9 @@ void reshape(int width, int height)
     float farPlane = 20000;
     float nearPlane = 0.0;
 
-    double f = cams[camIdx].getf() * scaleFactor;
-    double cx = cams[camIdx].getPrincipalPt()[0] * scaleFactor;
-    double cy = cams[camIdx].getPrincipalPt()[1] * scaleFactor;
+    double f = projCanonical.getf() * scaleFactor;
+    double cx = projCanonical.getPrincipalPt()[0] * scaleFactor;
+    double cy = projCanonical.getPrincipalPt()[1] * scaleFactor;
 
 	// http://ksimek.github.io/2013/06/03/calibrated_cameras_in_opengl
     // todo: compare with http://cvrr.ucsd.edu/publications/2008/MurphyChutorian_Trivedi_CVGPU08.pdf
@@ -510,62 +379,6 @@ void keyboard(GLFWwindow* window, int key, int scancode, int action, int mods)
 
             cloudX = initCloudX;
             cloudY = initCloudY;
-
-            newEvent = true;
-            display();
-        }
-        break;
-    case GLFW_KEY_F2:
-        if (action == GLFW_RELEASE || action == GLFW_REPEAT)
-        {
-            camIdx++;
-            if (camIdx > cams.size() - 1)
-                camIdx = 0;
-
-            reshape(-1, -1);
-
-            newEvent = true;
-            display();
-        }
-        break;
-    case GLFW_KEY_F3:
-        if (action == GLFW_RELEASE || action == GLFW_REPEAT)
-        {
-            camIdx--;
-            if (camIdx < 0)
-                camIdx = cams.size() - 1;
-
-            reshape(-1, -1);
-
-            newEvent = true;
-            display();
-        }
-        break;
-    case GLFW_KEY_F4:
-        if (action == GLFW_RELEASE || action == GLFW_REPEAT)
-        {
-            //showDistances = !showDistances;
-            viewIdx++;
-            if (viewIdx > 3)
-                viewIdx = 0;
-
-            newEvent = true;
-            display();
-        }
-        break;
-    case GLFW_KEY_F5:
-        if (action == GLFW_RELEASE || action == GLFW_REPEAT)
-        {
-            showVirtual = !showVirtual;
-
-            newEvent = true;
-            display();
-        }
-        break;
-    case GLFW_KEY_F6:
-        if (action == GLFW_RELEASE || action == GLFW_REPEAT)
-        {
-            showImVis = !showImVis;
 
             newEvent = true;
             display();
@@ -695,6 +508,9 @@ void zoom(GLFWwindow* window, double xoffset, double pos)
 
 void init(double w, double h)
 {
+    pan = 0;
+    tilt = 0;
+    
     viewportWidth = w;
     viewportHeight = h;
 
@@ -705,7 +521,7 @@ void init(double w, double h)
     cursorPrevX = 0;
     cursorPrevY = 0;
 
-    step = 0.1;
+    step = 0.5;
     arrowKeyStep = 0.001;
     cloudArrowKeyStep = 0.001;
     lockMouse = false;
@@ -723,7 +539,6 @@ void init(double w, double h)
 
     camIdx = 0;
     viewIdx = 0;
-    centroidChessboardObjectPts = cv::Vec3d(0, 0, 0);
 
     initCloudX = 0;
     initCloudY = 0;
@@ -862,35 +677,6 @@ int main(int argc, char** argv)
         hasVisIm = true;
     }
 
-    cv::Size chessboardPatternSize(chessboardDimsX, chessboardDimsY);
-    cv::Size circlesPatternSize(circlesDimsX, circlesDimsY);
-
-    std::vector<std::vector<cv::Point3f>> chessboardObjectPts;
-    CalibPattern::computeChessboardObjPts(numIms, chessboardSqSize, chessboardPatternSize,
-        chessboardObjectPts);
-
-    // compute circles projector points
-    std::vector<cv::Point2f> circlesProjPts_;
-    cv::Mat projIm = cv::imread(circlesImPath);
-    cv::Size projSize = projIm.size();
-    cv::Mat projImGray, projImVis;
-    projIm.copyTo(projImVis);
-    cv::cvtColor(projIm, projImGray, cv::COLOR_BGR2GRAY);
-    cv::findCirclesGrid(projImGray, circlesPatternSize, circlesProjPts_, cv::CALIB_CB_ASYMMETRIC_GRID);
-    cv::drawChessboardCorners(projImVis, circlesPatternSize, circlesProjPts_, true);
-    cv::imshow("projected image (with detected circles)", projImVis);
-    cv::waitKey(5);
-
-    cv::Mat visIm;
-    if (hasVisIm)
-        visIm = cv::imread(visImPath);
-    else
-        projIm.copyTo(visIm);
-
-    // store copy of circles projector points once per input image
-    std::vector<std::vector<cv::Point2f>> circlesProjPts;
-    for (int numIm = 0; numIm < numIms; numIm++)
-        circlesProjPts.push_back(circlesProjPts_);
 
     // read in intrinsics and extrinsics of cam0
     FileStorage fsCam0;
@@ -913,363 +699,8 @@ int main(int argc, char** argv)
         cam0K, cam0R, cam0T,
         imWidth, imHeight, 0.02));
 
-    // read in intrinsics and extrinsics of cam1
-    FileStorage fsCam1;
-    fsCam1.open(cam1Path, FileStorage::READ);
 
-    cv::Mat cam1K, cam1R, cam1T, cam1DistCoeffs;
-    fsCam1["K"] >> cam1K;
-    fsCam1["R"] >> cam1R;
-    fsCam1["t"] >> cam1T;
-    fsCam1["distCoeffs"] >> cam1DistCoeffs;
-
-    cams.push_back(Camera(
-        cam1K, cam1R, cam1T,
-        imWidth, imHeight, 0.02));
-
-    // get circles and chessboard image points determine corresponding plane parameters
-    std::vector<std::vector<cv::Point2f>> cam0ChessboardImPts, cam0CirclesImPts, cam0CirclesImPtsNormalized;
-    cv::Mat cam0ImVis;
-    CalibPattern::findChessboardAndCirclesImPts(cam0ImDir, numIms,
-        chessboardPatternSize, circlesPatternSize,
-        cam0ChessboardImPts, cam0CirclesImPts, cv::Size(),
-        true, cam0K, cam0DistCoeffs, cam0ImVis, visImIdx);
-
-    double cam0f = cams[0].getf();
-    cv::Vec2d cam0PrincipalPt = cams[0].getPrincipalPt();
-    for (int i = 0; i < cam0CirclesImPts.size(); i++)
-    {
-        cam0CirclesImPtsNormalized.push_back(std::vector<cv::Point2f>());
-        for (int j = 0; j < cam0CirclesImPts[i].size(); j++)
-        {
-            cv::Point2f px = cam0CirclesImPts[i][j];
-
-            float normalizedX = (px.x - cam0PrincipalPt[0]) / cam0f;
-            float normalizedY = (px.y - cam0PrincipalPt[1]) / cam0f;
-
-            cam0CirclesImPtsNormalized[i].push_back(cv::Point2f(
-                normalizedX, normalizedY));
-        }
-    }
-
-    std::vector<std::vector<cv::Point2f>> cam1ChessboardImPts, cam1CirclesImPts, cam1CirclesImPtsNormalized;
-    cv::Mat cam1ImVis;
-    CalibPattern::findChessboardAndCirclesImPts(cam1ImDir, numIms,
-        chessboardPatternSize, circlesPatternSize,
-        cam1ChessboardImPts, cam1CirclesImPts, cv::Size(),
-        true, cam1K, cam1DistCoeffs, cam1ImVis, visImIdx);
-
-    double cam1f = cams[1].getf();
-    cv::Vec2d cam1PrincipalPt = cams[1].getPrincipalPt();
-    for (int i = 0; i < cam1CirclesImPts.size(); i++)
-    {
-        cam1CirclesImPtsNormalized.push_back(std::vector<cv::Point2f>());
-        for (int j = 0; j < cam1CirclesImPts[i].size(); j++)
-        {
-            cv::Point2f px = cam1CirclesImPts[i][j];
-
-            float normalizedX = (px.x - cam1PrincipalPt[0]) / cam1f;
-            float normalizedY = (px.y - cam1PrincipalPt[1]) / cam1f;
-
-            cam1CirclesImPtsNormalized[i].push_back(cv::Point2f(
-                normalizedX, normalizedY));
-        }
-    }
-
-    // compute circles object points by intersecting circle pixel back-projections with ground plane
-    std::vector<std::vector<cv::Point3f>> circlesObjectPts, triangulatedCirclesObjectPts;
-    for (int numIm = 0; numIm < numIms; numIm++)
-    {
-        // compute ground plane w.r.t. checkerboard pattern
-
-        cv::Mat camNullDistCoeffs(cam0DistCoeffs.rows, cam0DistCoeffs.cols, CV_64F, cv::Scalar(0));
-
-        Mat rvec, tvec;
-        cv::solvePnP(chessboardObjectPts[numIm], cam0ChessboardImPts[numIm], cam0K, camNullDistCoeffs, rvec, tvec, false, SOLVEPNP_IPPE);
-
-        cv::Mat planeRot;
-        cv::Rodrigues(rvec, planeRot);
-
-        cv::Mat planeRigid = cv::Mat::eye(cv::Size(4, 4), CV_64F);
-        for (int y = 0; y < 3; y++)
-            for (int x = 0; x < 3; x++)
-                planeRigid.at<double>(y, x) = planeRot.at<double>(y, x);
-
-        planeRigid.at<double>(0, 3) = tvec.at<double>(0, 0);
-        planeRigid.at<double>(1, 3) = tvec.at<double>(1, 0);
-        planeRigid.at<double>(2, 3) = tvec.at<double>(2, 0);
-
-        Plane imPlane(planeRigid);
-
-        stringstream ssPlane;
-        ssPlane << outDir << "\\plane_" << numIm << ".yml";
-        cv::FileStorage fsPlane(ssPlane.str(), cv::FileStorage::WRITE);
-
-        fsPlane << "Rt" << planeRigid;
-
-        std::vector<cv::Point3f> circlesObjectPts_, triangulatedCirclesObjectPts_;
-        cv::Mat intersectionsHomog;
-       
-        cv::triangulatePoints(cams[0].getRt34(), cams[1].getRt34(), cam0CirclesImPtsNormalized.at(numIm), cam1CirclesImPtsNormalized.at(numIm), intersectionsHomog);
-        
-        for (int i = 0; i < intersectionsHomog.cols; i++)
-        {
-            cv::Vec4d ptHomog(intersectionsHomog.col(i));
-
-            cv::Point3d pt(
-                ptHomog[0] / ptHomog[3],
-                ptHomog[1] / ptHomog[3],
-                ptHomog[2] / ptHomog[3]);
-
-            triangulatedCirclesObjectPts_.push_back(pt);
-        }
-
-        Plane fittedPlane(triangulatedCirclesObjectPts_, true);
-        
-        if (true)
-        {
-            for (int numCircle = 0; numCircle < cam0CirclesImPts.at(numIm).size(); numCircle++)
-            {
-                cv::Vec3d intersection = imPlane.intersect(cams[0].backprojectLocal(cam0CirclesImPts.at(numIm).at(numCircle)));
-                circlesObjectPts_.push_back(cv::Point3d(intersection[0], intersection[1], intersection[2]));
-            }
-        }
-        else
-        {
-            for (int numCircle = 0; numCircle < cam0CirclesImPts.at(numIm).size(); numCircle++)
-            {
-                cv::Vec3d intersection = fittedPlane.intersect(cams[0].backprojectLocal(cam0CirclesImPts.at(numIm).at(numCircle)));
-                circlesObjectPts_.push_back(cv::Point3d(intersection[0], intersection[1], intersection[2]));
-            }
-        }
-
-        circlesObjectPts.push_back(circlesObjectPts_);
-        triangulatedCirclesObjectPts.push_back(triangulatedCirclesObjectPts_);
-        planes.push_back(Plane(planeRigid));
-
-        fittedPlanes.push_back(Plane(fittedPlane));
-
-        pointCloudCirclesVec.push_back(new PointCloud(circlesObjectPts_));
-        triangulatedPointCloudCirclesVec.push_back(new PointCloud(triangulatedCirclesObjectPts_));
-
-        // for visualization
-        if (numIm == visImIdx)
-        {
-            planeVis = new Plane(planeRigid);
-
-            fittedPlaneVis = new Plane(triangulatedCirclesObjectPts_);
-        }
-    }
-
-    cv::Mat projK = Mat::eye(3, 3, CV_64F);
-    projK.at<double>(0, 0) = 2500;
-    projK.at<double>(1, 1) = 2500;
-    projK.at<double>(0, 2) = projSize.width * 0.5;
-    projK.at<double>(1, 2) = projSize.height * 0.5;
-    cv::Mat projDistCoeffs = Mat::zeros(8, 1, CV_64F);
-
-    vector<cv::Mat> projRs, projTs;
-
-    // compute projector calibration
-    cout << "RMS (projector calibration): " << cv::calibrateCamera(circlesObjectPts, circlesProjPts, projSize,
-        projK, projDistCoeffs, projRs, projTs,
-        cv::CALIB_USE_INTRINSIC_GUESS | cv::CALIB_FIX_ASPECT_RATIO | cv::CALIB_FIX_PRINCIPAL_POINT |
-        cv::CALIB_FIX_K1 | cv::CALIB_FIX_K2 | cv::CALIB_FIX_K3 | cv::CALIB_FIX_K4 | cv::CALIB_FIX_K5 | cv::CALIB_FIX_K6 |
-        cv::CALIB_ZERO_TANGENT_DIST) << endl;
-
-    for (int numIm = 0; numIm < numIms; numIm++)
-    {
-        cv::Mat rot;
-        cv::Rodrigues(projRs.at(numIm), rot);
-
-        // write out projector intrinsics + extrinsics
-        stringstream ssProj;
-        ssProj << outDir << "\\proj_" << numIm << ".yml";
-        cv::FileStorage fsProj(ssProj.str(), cv::FileStorage::WRITE);
-
-        fsProj << "K" << projK;
-        fsProj << "R" << rot;
-        fsProj << "t" << projTs.at(numIm);
-        fsProj << "width" << projSize.width;
-        fsProj << "height" << projSize.height;
-        fsProj << "distCoeffs" << projDistCoeffs;
-
-        fsProj.release();
-
-        Camera proj(
-            projK, rot, projTs.at(numIm),
-            projSize.width, projSize.height, 0.02);
-
-        float verticalOffset = proj.getf() * targetWidth / projSize.width;
-        cout << "verticalOffset 1: " << verticalOffset << endl;
-        cv::Mat H;
-
-        cv::Mat virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT;
-        Homography::computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], proj, verticalOffset, virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT);
-
-        Camera transformedProj(
-            projK, alignedVirtualProjR, alignedVirtualProjT,
-            projSize.width, projSize.height, 0.02);
-
-        Homography::computePlaneInducedHomography(planes[numIm], proj, transformedProj, H);
-
-        // write out homography
-        stringstream ssH;
-        ssH << outDir << "\\homography_" << numIm << ".yml";
-        std::cout << ssH.str() << std::endl;
-        cv::FileStorage fsH(ssH.str(), cv::FileStorage::WRITE);
-
-        fsH << "H" << H;
-
-        fsH.release();
-    }
-
-
-    // visualization
-    {
-        int numIm = visImIdx;
-
-        cv::Mat camToProjR, camToProjT;
-        cv::Rodrigues(projRs.at(numIm), camToProjR);
-        projTs.at(numIm).copyTo(camToProjT);
-
-        cams.push_back(Camera(
-            projK, camToProjR, camToProjT,
-            projSize.width, projSize.height, 0.02));
-
-        cv::Mat planeRigid;
-        planes[numIm].getRigid(planeRigid);
-
-        std::vector<cv::Point3f> transformedChessboardObjectPts;
-        for (int i = 0; i < chessboardObjectPts[0].size(); i++)
-        {
-            cv::Vec3d pt(chessboardObjectPts[0][i].x, chessboardObjectPts[0][i].y, chessboardObjectPts[0][i].z);
-            cv::Vec3d outPt = Ancillary::Mat44dTimesVec3dHomog(planeRigid, pt);
-
-            transformedChessboardObjectPts.push_back(cv::Point3f((float)outPt[0], (float)outPt[1], (float)outPt[2]));
-            centroidChessboardObjectPts += outPt;
-
-            cv::Vec2f px = cams[0].projectLocal(Vec3f((float)outPt[0], (float)outPt[1], (float)outPt[2]));
-            cv::circle(cam0ImVis, cv::Point(int(px[0]), int(px[1])), 5, cv::Scalar(0, 0, 255), 1);
-        }
-        centroidChessboardObjectPts[0] /= chessboardObjectPts[0].size();
-        centroidChessboardObjectPts[1] /= chessboardObjectPts[0].size();
-        centroidChessboardObjectPts[2] /= chessboardObjectPts[0].size();
-
-        pointCloud = new PointCloud(transformedChessboardObjectPts);
-        
-        cv::resize(cam0ImVis, cam0ImVis, cv::Size(cam0ImVis.cols * 0.5, cam0ImVis.rows * 0.5));
-        cv::imshow("cam0ImVis", cam0ImVis);
-
-        Plane planeProjLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
-        planeProjLocal.rigidTransform(cams[2].getRt44());
-
-        cv::Vec3d projPlaneIntersectionLocal = planeProjLocal.intersect(
-            cams[2].backprojectLocal(cv::Point2f(projSize.width * 0.5, projSize.height * 0.5)));
-
-        projPlaneIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[2].getRt44Inv(), projPlaneIntersectionLocal);
-
-        cv::Vec3d projCamIntersectionLocal = planes[numIm].intersect(
-            cams[0].backprojectLocal(cv::Point2f(camSize.width * 0.5, camSize.height * 0.5)));
-
-        projCamIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[2].getRt44Inv(), projCamIntersectionLocal);
-
-
-
-
-        cv::Mat H, virtualProjR, virtualProjT;
-        Homography::computeBirdsEyeViewHomography(planes[numIm], cams[2], H, virtualProjR, virtualProjT);
-        cams.push_back(Camera(
-            projK, virtualProjR, virtualProjT,
-            projSize.width, projSize.height, 0.02));
-
-        cv::Mat outIm;
-        //cv::warpPerspective(visIm, outIm, H, projSize);
-
-        //cv::imshow("warped image (w.r.t. virtual projector homography)", outIm);
-        //cv::waitKey(5);
-
-        float verticalOffset = cams[cams.size() - 1].getf() * targetWidth / projSize.width;
-
-        cv::Mat virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT;
-        Homography::computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], cams[2],
-            verticalOffset, virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT);
-
-        cams.push_back(Camera(
-            projK, alignedVirtualProjR, alignedVirtualProjT,
-            projSize.width, projSize.height, 0.02));
-
-        cams.push_back(Camera(
-            cam0K, virtualCamR, virtualCamT,
-            camSize.width, camSize.height, 0.02));
-
-        Homography::computePlaneInducedHomography(planes[numIm], cams[2], cams[4], H);
-
-        cv::warpPerspective(visIm, outIm, H, projSize);
-
-        cv::imshow("warped image (w.r.t. final virtual projector homography)", outIm);
-        cv::waitKey(5);
-
-        vector<Point3f> imVisPts, imVisColors;
-        for (int y = 0; y < projSize.height; y += 1)
-        {
-            for (int x = 0; x < projSize.width; x += 1)
-            {
-                cv::Vec3d intersectionLocal = planeProjLocal.intersect(cams[2].backprojectLocal(cv::Point2f(x, y)));
-                cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[2].getRt44Inv(), intersectionLocal);
-                imVisPts.push_back(cv::Point3d(intersectionGlobal[0], intersectionGlobal[1], intersectionGlobal[2]));
-
-                cv::Vec3b color = visIm.at<cv::Vec3b>(cv::Point2f(x, y));
-                imVisColors.push_back(cv::Point3d(color[2] / 255., color[1] / 255., color[0] / 255.));
-            }
-        }
-        pointCloudImVis = new PointCloud(imVisPts, imVisColors);
-
-        Plane planeProjVirtualLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
-        planeProjVirtualLocal.rigidTransform(cams[4].getRt44());
-
-        vector<Point3f> circlesObjectPtsVirtual_;
-        for (int numCircle = 0; numCircle < circlesProjPts.at(numIm).size(); numCircle++)
-        {
-            cv::Vec3d intersectionLocal = planeProjVirtualLocal.intersect(cams[4].backprojectLocal(circlesProjPts.at(numIm).at(numCircle)));
-            cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[4].getRt44Inv(), intersectionLocal);
-            circlesObjectPtsVirtual_.push_back(cv::Point3d(intersectionGlobal[0], intersectionGlobal[1], intersectionGlobal[2]));
-        }
-        pointCloud2Circles = new PointCloud(circlesObjectPtsVirtual_);
-
-        vector<Point3f> imVis2Pts, imVis2Colors;
-        for (int y = 0; y < projSize.height; y += 1)
-        {
-            for (int x = 0; x < projSize.width; x += 1)
-            {
-                cv::Vec3d intersectionLocal = planeProjLocal.intersect(cams[2].backprojectLocal(cv::Point2f(x, y)));
-                cv::Vec3d intersectionGlobal = Ancillary::Mat44dTimesVec3dHomog(cams[2].getRt44Inv(), intersectionLocal);
-                imVis2Pts.push_back(cv::Point3d(intersectionGlobal[0], intersectionGlobal[1], intersectionGlobal[2]));
-
-                cv::Vec3b color = outIm.at<cv::Vec3b>(cv::Point2f(x, y));
-                imVis2Colors.push_back(cv::Point3d(color[2] / 255., color[1] / 255., color[0] / 255.));
-            }
-        }
-        pointCloud2ImVis = new PointCloud(imVis2Pts, imVis2Colors);
-
-        Plane planCamVirtualLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
-        planCamVirtualLocal.rigidTransform(cams[5].getRt44());
-
-        cv::Vec3d virtualCamPlaneIntersectionLocal = planCamVirtualLocal.intersect(
-            cams[5].backprojectLocal(cv::Point2f(camSize.width * 0.5, camSize.height * 0.5)));
-
-        virtualCamPlaneIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[5].getRt44Inv(), virtualCamPlaneIntersectionLocal);
-
-
-
-        Plane planCamLocal(planes[numIm].getNormal(), planes[numIm].getDistance());
-        planCamLocal.rigidTransform(cams[0].getRt44());
-
-        cv::Vec3d camPlaneIntersectionLocal = planCamLocal.intersect(
-            cams[0].backprojectLocal(cv::Point2f(camSize.width * 0.5, camSize.height * 0.5)));
-
-        camPlaneIntersection = Ancillary::Mat44dTimesVec3dHomog(cams[0].getRt44Inv(), camPlaneIntersectionLocal);
-    }
+    projCanonical = Camera(cams[0]);
 
     glutInit(&argc, argv);
     reshape(-1, -1);
@@ -1280,55 +711,81 @@ int main(int argc, char** argv)
         glfwPollEvents();
 
         /* Navigation handling (I could not figure out how to handle key combinations using keyboard callback) */
-        if ((glfwGetKey(window, GLFW_KEY_UP) || glfwGetKey(window, 'W')) && (glfwGetKey(window, GLFW_KEY_RIGHT) || glfwGetKey(window, 'D'))) // NE
+        if ((glfwGetKey(window, 'W')) && (glfwGetKey(window, 'D'))) // NE
         {
             cloudX += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
             cloudY -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if ((glfwGetKey(window, GLFW_KEY_DOWN) || glfwGetKey(window, 'S')) && (glfwGetKey(window, GLFW_KEY_RIGHT) || glfwGetKey(window, 'D'))) // SE
+        else if ((glfwGetKey(window, 'S')) && (glfwGetKey(window, 'D'))) // SE
         {
             cloudX += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
             cloudY += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if ((glfwGetKey(window, GLFW_KEY_DOWN) || glfwGetKey(window, 'S')) && (glfwGetKey(window, GLFW_KEY_LEFT) || glfwGetKey(window, 'A'))) // SW
+        else if ((glfwGetKey(window, 'S')) && (glfwGetKey(window, 'A'))) // SW
         {
             cloudX -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
             cloudY += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if ((glfwGetKey(window, GLFW_KEY_UP) || glfwGetKey(window, 'W')) && (glfwGetKey(window, GLFW_KEY_LEFT) || glfwGetKey(window, 'A'))) // NW
+        else if ((glfwGetKey(window, 'W')) && (glfwGetKey(window, 'A'))) // NW
         {
             cloudX -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
             cloudY -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, GLFW_KEY_UP) || glfwGetKey(window, 'W')) // N
+        else if (glfwGetKey(window, 'W')) // N
         {
             cloudY -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, GLFW_KEY_RIGHT) || glfwGetKey(window, 'D'))	// E
+        else if (glfwGetKey(window, 'D'))	// E
         {
             cloudX += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, GLFW_KEY_DOWN) || glfwGetKey(window, 'S')) // S
+        else if (glfwGetKey(window, 'S')) // S
         {
             cloudY += (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
 
             newEvent = true;
         }
-        else if (glfwGetKey(window, GLFW_KEY_LEFT) || glfwGetKey(window, 'A')) // W
+        else if (glfwGetKey(window, 'A')) // W
         {
             cloudX -= (fastMove) ? fastMult * cloudArrowKeyStep : cloudArrowKeyStep;
+
+            newEvent = true;
+        }
+
+        // pan (up, down), tilt (left, right)
+        else if (glfwGetKey(window, GLFW_KEY_UP)) // N
+        {
+            pan -= (fastMove) ? fastMult * step : step;
+
+            newEvent = true;
+        }
+        else if (glfwGetKey(window, GLFW_KEY_RIGHT))	// E
+        {
+            tilt += (fastMove) ? fastMult * step : step;
+
+            newEvent = true;
+        }
+        else if (glfwGetKey(window, GLFW_KEY_DOWN)) // S
+        {
+            pan += (fastMove) ? fastMult * step : step;
+
+            newEvent = true;
+        }
+        else if (glfwGetKey(window, GLFW_KEY_LEFT)) // W
+        {
+            tilt -= (fastMove) ? fastMult * step : step;
 
             newEvent = true;
         }

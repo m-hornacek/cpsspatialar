@@ -7,6 +7,7 @@ class Camera
 public:
 	Camera(); // default constructor
 	Camera(const Camera& cam); // copy constructor
+	Camera(cv::Mat& K43d, cv::Mat& Rt34d, int width, int height, float CCDWidth = -1);
 	Camera(cv::Mat& K33d, cv::Mat& R33d, cv::Mat& T31d, int width, int height, float CCDWidth = -1);
 
 	double getf() { return f_; }
