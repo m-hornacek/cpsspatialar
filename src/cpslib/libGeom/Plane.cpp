@@ -55,6 +55,34 @@ Plane::Plane(cv::Vec3d normal, float distance)
 
 	for (int i = 0; i < 3; i++)
 		rigid_.at<double>(i, 3) = ptEigen[i];
+
+	std::cout << "rigid_: " << rigid_ << std::endl;
+}
+
+Plane::Plane(cv::Vec3d normal, cv::Vec3d pt)
+{
+	normal_ = cv::Vec3d(normal);
+	distance_ = -normal.dot(pt);
+
+	cv::Mat rot = Ancillary::getMinArclengthRotationMat33d(cv::Vec3d(0, 0, -1), normal_);
+
+	Eigen::Matrix3d rotEigen;
+	for (int y = 0; y < 3; y++)
+		for (int x = 0; x < 3; x++)
+			rotEigen(y, x) = rot.at<double>(y, x);
+
+	Eigen::Vector3d ptEigen(pt[0], pt[1], pt[2]);
+	Eigen::Vector3d tEigen = -rotEigen * ptEigen;
+
+	rigid_ = cv::Mat::eye(cv::Size(4, 4), CV_64F);
+	for (int y = 0; y < 3; y++)
+		for (int x = 0; x < 3; x++)
+			rigid_.at<double>(y, x) = rot.at<double>(y, x);
+
+	for (int i = 0; i < 3; i++)
+		rigid_.at<double>(i, 3) = pt[i];
+
+	std::cout << "rigid_: " << rigid_ << std::endl;
 }
 
 Plane::Plane(std::vector<cv::Point3f> points, bool ransac)
@@ -137,7 +165,7 @@ Plane::Plane(std::vector<cv::Point3f> points, bool ransac)
 			rigid_.at<double>(y, x) = rot.at<double>(y, x);
 
 	for (int i = 0; i < 3; i++)
-		rigid_.at<double>(i, 3) = ptEigen[i];
+		rigid_.at<double>(i, 3) = tEigen[i];
 }
 
 void Plane::rigidTransform(cv::Mat & rigid44d)

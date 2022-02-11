@@ -171,7 +171,7 @@ void display()
         // here we compute pose of virtual projector relative to canonical projector
         {
             // rotation in degrees
-            float rot_p = pan;
+            float rot_p = pan + 90;
             float rot_t = tilt;
 
             // this never ever changes
@@ -202,8 +202,9 @@ void display()
                 std::sin(w_p), std::cos(w_p), 0,
                 0, 0, 1;
 
-            Eigen::Vector3d MC = R_p * (R_t * (M0 + dt)) + dp; // Mirror "center" MC
-            Eigen::Vector3d mn = (MC - dp) / (MC - dp).dot(MC - dp); // normalized mn mirror plane normal
+            Eigen::Vector3d MP = M0 + dp;
+            Eigen::Vector3d MC = M0 + R_p * (R_t * dt) + dp; // Mirror "center" MC
+            Eigen::Vector3d mn = (MC - MP) / sqrt((MC - MP).dot(MC - MP)); // normalized mn mirror plane normal
 
             Eigen::Vector3d PC_dash = PC - 2 * (PC - MC).dot(mn) * mn;  // new projector center
             Eigen::Vector3d Pf_dash = Pf - 2 * Pf.dot(mn) * mn; // new normalized forward projection vector
@@ -219,11 +220,11 @@ void display()
             //    glVertex3f(PC_dash[0] + Pf_dash[0], PC_dash[1] + Pf_dash[1], PC_dash[2] + Pf_dash[2]);
             //glEnd();
 
+            std::cout << "dist(M0, MP) = " << sqrt((M0 - MP).dot(M0 - MP)) << std::endl;
+            std::cout << "dist(MP, MC) = " << sqrt((MP - MC).dot(MP - MC)) << std::endl;
 
-
-
-            Plane plane(cv::Vec3d(mn[0], mn[1], mn[2]), -mn.dot(MC));
-            plane.display(2);
+            Plane plane(cv::Vec3d(mn[0], mn[1], mn[2]), cv::Vec3d(MC[0], MC[1], MC[2]));
+            plane.display(0.1);
 
             cv::Vec3d lookDirPlaneIntersection = plane.intersect(projCanonical.getLookDir());
 
@@ -269,8 +270,6 @@ void display()
                 0, 0, -1, 0,
                 0, 0, 0, 1;
 
-
-
             
             Eigen::Matrix4d transformationMat = translationMatInv * rotMatInv * reflectionMat * rotMat * translationMat;
             Eigen::Matrix4d projVirtualPose = transformationMat * projCanonicalPose;
@@ -286,9 +285,9 @@ void display()
                 for (int j = 0; j < 4; j++)
                     Rt34d.at<double>(i, j) = projVirtualPoseCV.at<double>(i, j);
 
-            Camera projVirtual(projCanonical.getK(), Rt34d, projCanonical.getWidth(), projCanonical.getHeight(), 0.01);
+            Camera projVirtual(projCanonical.getK(), Rt34d, projCanonical.getWidth(), projCanonical.getHeight(), 0.1);
 
-            projVirtual.displayWorld();
+            projVirtual.displayWorld(0.5, 0.5, 0.5);
 
             glBegin(GL_LINES);
                 glVertex3f(PC[0], PC[1], PC[2]);
@@ -298,6 +297,41 @@ void display()
             glBegin(GL_LINES);
                 glVertex3f(projVirtual.getC()[0], projVirtual.getC()[1], projVirtual.getC()[2]);
                 glVertex3f(lookDirPlaneIntersection[0], lookDirPlaneIntersection[1], lookDirPlaneIntersection[2]);
+            glEnd();
+
+            glColor3f(0, 1, 0); // green
+
+            glBegin(GL_LINES);
+                glVertex3f(0, 0, 0);
+                glVertex3f(M0[0], M0[1], M0[2]);
+            glEnd();
+
+            glColor3f(0, 0, 1); // blue 
+
+            glBegin(GL_LINES);
+            glVertex3f(M0[0], M0[1], M0[2]);
+            glVertex3f(MP[0], MP[1], MP[2]);
+            glEnd();
+
+            glColor3f(0, 1, 1); // light blue
+
+            glBegin(GL_LINES);
+            glVertex3f(MP[0], MP[1], MP[2]);
+            glVertex3f(MC[0], MC[1], MC[2]);
+            glEnd();
+
+            glColor3f(1, 0, 1);
+            glBegin(GL_LINES);
+                glVertex3f(0, 0, 0);
+                glVertex3f(1, 0, 0);
+            glEnd();
+            glBegin(GL_LINES);
+                glVertex3f(0, 0, 0);
+                glVertex3f(0, 1, 0);
+            glEnd();
+            glBegin(GL_LINES);
+                glVertex3f(0, 0, 0);
+                glVertex3f(0, 0, 1);
             glEnd();
         }
 
@@ -508,8 +542,8 @@ void zoom(GLFWwindow* window, double xoffset, double pos)
 
 void init(double w, double h)
 {
-    pan = 0;
-    tilt = 0;
+    pan = 90;
+    tilt = 45;
     
     viewportWidth = w;
     viewportHeight = h;
@@ -528,7 +562,7 @@ void init(double w, double h)
     fastMove = false;
     fastMult = 10;
     toggleWireframe = false;
-    defaultPointSize = 3;
+    defaultPointSize = 10;
     pointSize = defaultPointSize;
     resizePoints = false;
     hasAlt = false;
@@ -697,8 +731,7 @@ int main(int argc, char** argv)
 
     cams.push_back(Camera(
         cam0K, cam0R, cam0T,
-        imWidth, imHeight, 0.02));
-
+        imWidth, imHeight, 0.01));
 
     projCanonical = Camera(cams[0]);
 
@@ -769,11 +802,17 @@ int main(int argc, char** argv)
         {
             pan -= (fastMove) ? fastMult * step : step;
 
+            if (pan < 0)
+                pan = 0;
+
             newEvent = true;
         }
         else if (glfwGetKey(window, GLFW_KEY_RIGHT))	// E
         {
             tilt += (fastMove) ? fastMult * step : step;
+
+            if (tilt > 90)
+                tilt = 90;
 
             newEvent = true;
         }
@@ -781,11 +820,17 @@ int main(int argc, char** argv)
         {
             pan += (fastMove) ? fastMult * step : step;
 
+            if (pan > 180)
+                pan = 180;
+
             newEvent = true;
         }
         else if (glfwGetKey(window, GLFW_KEY_LEFT)) // W
         {
             tilt -= (fastMove) ? fastMult * step : step;
+
+            if (tilt < 1)
+                tilt = 1; // at 0 some weird stuff happens...
 
             newEvent = true;
         }
