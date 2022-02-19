@@ -33,11 +33,15 @@ Camera::Camera(const Camera& cam)
 	f_mm_ = cam.f_mm_;
 
 	P34d_ = cv::Mat(3, 4, CV_64F);
+	principalPt_ = cv::Vec2d();
 	K33d_ = cv::Mat(3, 3, CV_64F);
 	KInv33d_ = cv::Mat(3, 3, CV_64F);
 	R33d_ = cv::Mat(3, 3, CV_64F);
 	M33d_ = cv::Mat(3, 3, CV_64F);
 	MInv33d_ = cv::Mat(3, 3, CV_64F);
+	C_ = cv::Vec3d();
+	lookDir_ = cv::Vec3d();
+	t_ = cv::Vec3d();
 	Rt34d_ = cv::Mat(3, 4, CV_64F);
 	Rt44d_ = cv::Mat(4, 4, CV_64F);
 	RtInv44d_ = cv::Mat(4, 4, CV_64F);
@@ -58,7 +62,49 @@ Camera::Camera(const Camera& cam)
 	t_ = cv::Vec3d((cam.t_)[0], (cam.t_)[1], (cam.t_)[2]);
 
 	hasDisplayList_ = false;
+	//initVariables();
 }
+
+//Camera::Camera(const Camera& cam)
+//{
+//	f_ = cam.f_;
+//	f_mm_ = cam.f_mm_;
+//
+//	width_ = cam.width_;
+//	height_ = cam.height_;
+//	CCDWidth_ = cam.CCDWidth_;
+//	CCDHeight_ = cam.CCDHeight_;
+//
+//	P34d_ = cv::Mat(3, 4, CV_64F);
+//	K33d_ = cv::Mat(3, 3, CV_64F);
+//	KInv33d_ = cv::Mat(3, 3, CV_64F);
+//	R33d_ = cv::Mat(3, 3, CV_64F);
+//	M33d_ = cv::Mat(3, 3, CV_64F);
+//	MInv33d_ = cv::Mat(3, 3, CV_64F);
+//	Rt34d_ = cv::Mat(3, 4, CV_64F);
+//	Rt44d_ = cv::Mat(4, 4, CV_64F);
+//	RtInv44d_ = cv::Mat(4, 4, CV_64F);
+//
+//	cam.K33d_.copyTo(K33d_);
+//	cam.Rt34d_.copyTo(Rt34d_);
+//	cam.R33d_.copyTo(R33d_);
+//
+//	principalPt_ = cv::Vec2d();
+//	KInv33d_ = cv::Mat(3, 3, CV_64F);
+//	M33d_ = cv::Mat(3, 3, CV_64F);
+//	MInv33d_ = cv::Mat(3, 3, CV_64F);
+//	C_ = cv::Vec3d();
+//	lookDir_ = cv::Vec3d();
+//	t_ = cv::Vec3d();
+//	Rt34d_ = cv::Mat(3, 4, CV_64F);
+//	Rt44d_ = cv::Mat(4, 4, CV_64F);
+//	RtInv44d_ = cv::Mat(4, 4, CV_64F);
+//
+//	hasDisplayList_ = false;
+//	initVariables();
+//	initDisplayList();
+//}
+
 
 Camera::Camera(cv::Mat& K33d, cv::Mat& Rt34d, int width, int height, float CCDWidth)
 {

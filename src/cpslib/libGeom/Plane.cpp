@@ -7,6 +7,14 @@
 #include <pcl/sample_consensus/model_types.h>
 #include <pcl/segmentation/sac_segmentation.h>
 
+Plane::Plane()
+{
+	normal_ = cv::Vec3d(0, 0, -1);
+	distance_ = 0;
+
+	rigid_ = cv::Mat::eye(cv::Size(4, 4), CV_64F);
+}
+
 Plane::Plane(const Plane & plane)
 {
 	normal_ = cv::Vec3d(plane.normal_);

@@ -11,6 +11,7 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <cmath>
 
 #include "headers.h"
 #include "Camera.h"
@@ -113,8 +114,110 @@ static const char* keys =
 
 void help()
 {
-    cout << "calibrate <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <cam0ImDir> <cam1ImDir> <cam0Path> <cam1Path> <circlesImPath> <targetWidth> [<visImIdx>] [<visIm>]\n"
+    cout << "visPanTilt <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <cam0ImDir> <cam1ImDir> <cam0Path> <cam1Path> <circlesImPath> <targetWidth> [<visImIdx>] [<visIm>]\n"
         << endl;
+}
+
+void reflectProj(Camera & proj, float pan, float tilt, cv::Mat & outProjReflectedPose34d, Plane & outPlane)
+{
+    // we'll optimize over these
+    float delta_p = 86 / 1000.0; // length of PAN axis
+    float delta_t = 24 / 1000.0; // offset of mirror from the PAN axis
+    float delta_0 = 200 / 1000.0; // offset of mirror system origin relative to projector
+
+    // rotation angles in degrees
+    float rot_p = pan - 90;
+    float rot_t = tilt;
+
+    // rotation angles in radians
+    float w_p = rot_p * M_PI / 180.0;
+    float w_t = rot_t * M_PI / 180.0;
+
+    Eigen::Vector3d M0(0, 0, delta_0); // mirror system origin relative to projector
+    Eigen::Vector3d dt(0, delta_t, 0); // offset vector
+    Eigen::Vector3d dp(0, 0, -delta_p); // offset vector
+
+    Eigen::Matrix3d R_t; // rotation matrix for Tilt(X axis)
+    R_t << 1, 0, 0,
+        0, std::cos(w_t), -std::sin(w_t),
+        0, std::sin(w_t), std::cos(w_t);
+
+    Eigen::Matrix3d R_p; // rotation matrix for Pan(Z axis)
+    R_p << std::cos(w_p), -std::sin(w_p), 0,
+        std::sin(w_p), std::cos(w_p), 0,
+        0, 0, 1;
+
+    Eigen::Vector3d MP = M0 + dp;
+    Eigen::Vector3d MC = M0 + R_p * (R_t * dt) + dp; // Mirror "center" MC
+    Eigen::Vector3d mn = (MC - MP) / std::sqrt((MC - MP).dot(MC - MP)); // normalized mn mirror plane normal
+
+    outPlane = Plane(cv::Vec3d(mn[0], mn[1], mn[2]), cv::Vec3d(MC[0], MC[1], MC[2]));
+    cv::Vec3d lookDirPlaneIntersection = outPlane.intersect(proj.getLookDir());
+
+    Eigen::Matrix4d translationMat;
+    translationMat << 1, 0, 0, -lookDirPlaneIntersection[0],
+        0, 1, 0, -lookDirPlaneIntersection[1],
+        0, 0, 1, -lookDirPlaneIntersection[2],
+        0, 0, 0, 1;
+
+    Eigen::Matrix4d translationMatInv = translationMat.inverse();
+
+    Eigen::Matrix4d projPose;
+    cv::Mat projPoseCV = proj.getRt44();
+    cv::Mat projPoseInvCV = proj.getRt44Inv();
+    cv::cv2eigen(projPoseCV, projPose);
+
+    cv::Vec3d planeXCV = outPlane.intersect(cv::Vec3d(
+        projPoseCV.at<double>(0, 0),
+        projPoseCV.at<double>(0, 1),
+        projPoseCV.at<double>(0, 2))) -
+        outPlane.intersect(cv::Vec3d(
+            projPoseCV.at<double>(2, 0),
+            projPoseCV.at<double>(2, 1),
+            projPoseCV.at<double>(2, 2)));
+
+    // handle case where X axis is parallel to plane
+    if (std::isnan(planeXCV[2]))
+    {
+        planeXCV = cv::Vec3d(
+            projPoseCV.at<double>(0, 0),
+            projPoseCV.at<double>(0, 1),
+            projPoseCV.at<double>(0, 2));
+    }
+
+    planeXCV /= std::sqrt(planeXCV.dot(planeXCV));
+
+    Eigen::Vector3d planeZ = mn;
+    Eigen::Vector3d planeX(planeXCV[0], planeXCV[1], planeXCV[2]);
+    Eigen::Vector3d planeY = planeX.cross(planeZ);
+
+    Eigen::Matrix4d rotMatInv;
+    rotMatInv << planeX[0], planeY[0], planeZ[0], 0,
+        planeX[1], planeY[1], planeZ[1], 0,
+        planeX[2], planeY[2], planeZ[2], 0,
+        0, 0, 0, 1;
+
+    Eigen::Matrix4d rotMat = rotMatInv.inverse();
+
+    Eigen::Matrix4d reflectionMat;
+    reflectionMat << 1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, -1, 0,
+        0, 0, 0, 1;
+
+    Eigen::Matrix4d transformationMat = translationMatInv * rotMatInv * reflectionMat * rotMat * translationMat;
+    Eigen::Matrix4d projVirtualPose = transformationMat * projPose;
+
+    cv::Mat projVirtualPoseCV;
+    cv::eigen2cv(projVirtualPose, projVirtualPoseCV);
+
+    cv::Mat Rt34d(3, 4, CV_64F);
+    for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 4; j++)
+            Rt34d.at<double>(i, j) = projVirtualPoseCV.at<double>(i, j);
+
+    Rt34d.copyTo(outProjReflectedPose34d);
+    outPlane.rigidTransform(projPoseInvCV);
 }
 
 void displayText(float x, float y, float z, float r, float g, float b, const char* string)
@@ -168,172 +271,217 @@ void display()
         std::stringstream ss;
         ss << "pan " << pan << "; tilt " << tilt;
 
-        // here we compute pose of virtual projector relative to canonical projector
         {
-            // rotation in degrees
-            float rot_p = pan + 90;
-            float rot_t = tilt;
+            cv::Mat projReflectedPose34d;
+            Plane plane;
+            reflectProj(projCanonical, pan, tilt, projReflectedPose34d, plane);
 
-            // this never ever changes
-            // all in mm = > 1px = 1mm
-            float delta_p = 86 / 1000.0;                 // length of PAN axis
-            float delta_t = 24 / 1000.0;                // offset of mirror from the PAN axis
-
-            Eigen::Vector3d PC(projCanonical.getC()[0], projCanonical.getC()[1], projCanonical.getC()[2]); // position of projector
-
-            cv::Vec3d lookDirCV = projCanonical.backprojectLocal(projCanonical.getPrincipalPt());
-            Eigen::Vector3d Pf(lookDirCV[0], lookDirCV[1], lookDirCV[2]); // look dir of projector
-            //Eigen::Vector3d Pf(projCanonical.getLookDir()[0], projCanonical.getLookDir()[1], projCanonical.getLookDir()[2]); // look dir of projector
-
-            Eigen::Vector3d M0(0, 0, 200 / 1000.0); // mirror system origin relative to canonical pose of projector
-            Eigen::Vector3d dt(0, delta_t, 0); // offset vector
-            Eigen::Vector3d dp(0, 0, -delta_p); // offset vector
-
-            float w_p = rot_p * M_PI / 180.0;
-            float w_t = rot_t * M_PI / 180.0;
-
-            Eigen::Matrix3d R_t; // rotation matrix for Tilt(X axis)
-            R_t << 1, 0, 0,
-                0, std::cos(w_t), -std::sin(w_t),
-                0, std::sin(w_t), std::cos(w_t); 
-
-            Eigen::Matrix3d R_p; // rotation matrix for Pan(Z axis)
-            R_p << std::cos(w_p), -std::sin(w_p), 0,
-                std::sin(w_p), std::cos(w_p), 0,
-                0, 0, 1;
-
-            Eigen::Vector3d MP = M0 + dp;
-            Eigen::Vector3d MC = M0 + R_p * (R_t * dt) + dp; // Mirror "center" MC
-            Eigen::Vector3d mn = (MC - MP) / sqrt((MC - MP).dot(MC - MP)); // normalized mn mirror plane normal
-
-            Eigen::Vector3d PC_dash = PC - 2 * (PC - MC).dot(mn) * mn;  // new projector center
-            Eigen::Vector3d Pf_dash = Pf - 2 * Pf.dot(mn) * mn; // new normalized forward projection vector
-
-            std::cout << Pf_dash << std::endl;
-
-            //glBegin(GL_POINTS);
-            //glVertex3f(PC_dash[0], PC_dash[1], PC_dash[2]);
-            //glEnd();
-
-            //glBegin(GL_LINES);
-            //    glVertex3f(PC_dash[0], PC_dash[1], PC_dash[2]);
-            //    glVertex3f(PC_dash[0] + Pf_dash[0], PC_dash[1] + Pf_dash[1], PC_dash[2] + Pf_dash[2]);
-            //glEnd();
-
-            std::cout << "dist(M0, MP) = " << sqrt((M0 - MP).dot(M0 - MP)) << std::endl;
-            std::cout << "dist(MP, MC) = " << sqrt((MP - MC).dot(MP - MC)) << std::endl;
-
-            Plane plane(cv::Vec3d(mn[0], mn[1], mn[2]), cv::Vec3d(MC[0], MC[1], MC[2]));
+            // projReflected.displayWorld(0.5, 0.5, 0.5);
+            Camera(projCanonical.getK(), projReflectedPose34d, projCanonical.getWidth(), projCanonical.getHeight(), 0.005).displayWorld(0.5, 0.5, 0.5);
             plane.display(0.1);
 
-            cv::Vec3d lookDirPlaneIntersection = plane.intersect(projCanonical.getLookDir());
+            std::cout << "projReflectedPose34d: " << projReflectedPose34d << std::endl;
 
-            Eigen::Matrix4d translationMat;
-            translationMat << 1, 0, 0, -lookDirPlaneIntersection[0],
-                0, 1, 0, -lookDirPlaneIntersection[1],
-                0, 0, 1, -lookDirPlaneIntersection[2],
-                0, 0, 0, 1;
+            //glColor3f(0, 1, 0); // green
 
-            Eigen::Matrix4d translationMatInv = translationMat.inverse();
+            //glBegin(GL_LINES);
+            //    glVertex3f(0, 0, 0);
+            //    glVertex3f(M0[0], M0[1], M0[2]);
+            //glEnd();
 
-            Eigen::Matrix4d projCanonicalPose;
-            cv::Mat projCanonicalPoseCV = projCanonical.getRt44();
-            cv::cv2eigen(projCanonicalPoseCV, projCanonicalPose);
+            //glColor3f(0, 0, 1); // blue 
 
-            cv::Vec3d planeXCV = plane.intersect(cv::Vec3d(
-                projCanonicalPoseCV.at<double>(0, 0),
-                projCanonicalPoseCV.at<double>(0, 1),
-                projCanonicalPoseCV.at<double>(0, 2))) -
-                plane.intersect(cv::Vec3d(
-                    projCanonicalPoseCV.at<double>(2, 0),
-                    projCanonicalPoseCV.at<double>(2, 1),
-                    projCanonicalPoseCV.at<double>(2, 2)));
+            //glBegin(GL_LINES);
+            //    glVertex3f(M0[0], M0[1], M0[2]);
+            //    glVertex3f(MP[0], MP[1], MP[2]);
+            //glEnd();
 
-            planeXCV /= planeXCV.dot(planeXCV);
+            //glColor3f(0, 1, 1); // light blue
 
-            Eigen::Vector3d planeZ = mn;
-            Eigen::Vector3d planeX(planeXCV[0], planeXCV[1], planeXCV[2]);
-            Eigen::Vector3d planeY = planeX.cross(planeZ);
-
-
-            Eigen::Matrix4d rotMatInv;
-            rotMatInv << planeX[0], planeY[0], planeZ[0], 0,
-                planeX[1], planeY[1], planeZ[1], 0,
-                planeX[2], planeY[2], planeZ[2], 0,
-                0, 0, 0, 1;
-
-            Eigen::Matrix4d rotMat = rotMatInv.inverse();
-
-            Eigen::Matrix4d reflectionMat;
-            reflectionMat << 1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, -1, 0,
-                0, 0, 0, 1;
-
-            
-            Eigen::Matrix4d transformationMat = translationMatInv * rotMatInv * reflectionMat * rotMat * translationMat;
-            Eigen::Matrix4d projVirtualPose = transformationMat * projCanonicalPose;
-            std::cout << "transformationMat: " << transformationMat << std::endl;
-            std::cout << "projCanonicalPose: " << projCanonicalPose << std::endl;
-            std::cout << "projVirtualPose: " << projVirtualPose << std::endl;
-
-            cv::Mat projVirtualPoseCV;
-            cv::eigen2cv(projVirtualPose, projVirtualPoseCV);
-            
-            cv::Mat Rt34d(3, 4, CV_64F);
-            for (int i = 0; i < 3; i++)
-                for (int j = 0; j < 4; j++)
-                    Rt34d.at<double>(i, j) = projVirtualPoseCV.at<double>(i, j);
-
-            Camera projVirtual(projCanonical.getK(), Rt34d, projCanonical.getWidth(), projCanonical.getHeight(), 0.1);
-
-            projVirtual.displayWorld(0.5, 0.5, 0.5);
-
-            glBegin(GL_LINES);
-                glVertex3f(PC[0], PC[1], PC[2]);
-                glVertex3f(lookDirPlaneIntersection[0], lookDirPlaneIntersection[1], lookDirPlaneIntersection[2]);
-            glEnd();
-
-            glBegin(GL_LINES);
-                glVertex3f(projVirtual.getC()[0], projVirtual.getC()[1], projVirtual.getC()[2]);
-                glVertex3f(lookDirPlaneIntersection[0], lookDirPlaneIntersection[1], lookDirPlaneIntersection[2]);
-            glEnd();
-
-            glColor3f(0, 1, 0); // green
-
-            glBegin(GL_LINES);
-                glVertex3f(0, 0, 0);
-                glVertex3f(M0[0], M0[1], M0[2]);
-            glEnd();
-
-            glColor3f(0, 0, 1); // blue 
-
-            glBegin(GL_LINES);
-            glVertex3f(M0[0], M0[1], M0[2]);
-            glVertex3f(MP[0], MP[1], MP[2]);
-            glEnd();
-
-            glColor3f(0, 1, 1); // light blue
-
-            glBegin(GL_LINES);
-            glVertex3f(MP[0], MP[1], MP[2]);
-            glVertex3f(MC[0], MC[1], MC[2]);
-            glEnd();
-
-            glColor3f(1, 0, 1);
-            glBegin(GL_LINES);
-                glVertex3f(0, 0, 0);
-                glVertex3f(1, 0, 0);
-            glEnd();
-            glBegin(GL_LINES);
-                glVertex3f(0, 0, 0);
-                glVertex3f(0, 1, 0);
-            glEnd();
-            glBegin(GL_LINES);
-                glVertex3f(0, 0, 0);
-                glVertex3f(0, 0, 1);
-            glEnd();
+            //glBegin(GL_LINES);
+            //    glVertex3f(MP[0], MP[1], MP[2]);
+            //    glVertex3f(MC[0], MC[1], MC[2]);
+            //glEnd();
         }
+
+        //// here we compute pose of virtual projector relative to canonical projector
+        //{
+        //    // rotation in degrees
+        //    float rot_p = pan - 90;
+        //    float rot_t = tilt;
+
+        //    // this never ever changes
+        //    // all in mm = > 1px = 1mm
+        //    float delta_p = 86 / 1000.0;                 // length of PAN axis
+        //    float delta_t = 24 / 1000.0;                // offset of mirror from the PAN axis
+
+        //    Eigen::Vector3d PC(projCanonical.getC()[0], projCanonical.getC()[1], projCanonical.getC()[2]); // position of projector
+
+        //    cv::Vec3d lookDirCV = projCanonical.backprojectLocal(projCanonical.getPrincipalPt());
+        //    Eigen::Vector3d Pf(lookDirCV[0], lookDirCV[1], lookDirCV[2]); // look dir of projector
+        //    //Eigen::Vector3d Pf(projCanonical.getLookDir()[0], projCanonical.getLookDir()[1], projCanonical.getLookDir()[2]); // look dir of projector
+
+        //    Eigen::Vector3d M0(0, 0, 200 / 1000.0); // mirror system origin relative to canonical pose of projector
+        //    Eigen::Vector3d dt(0, delta_t, 0); // offset vector
+        //    Eigen::Vector3d dp(0, 0, -delta_p); // offset vector
+
+        //    float w_p = rot_p * M_PI / 180.0;
+        //    float w_t = rot_t * M_PI / 180.0;
+
+        //    Eigen::Matrix3d R_t; // rotation matrix for Tilt(X axis)
+        //    R_t << 1, 0, 0,
+        //        0, std::cos(w_t), -std::sin(w_t),
+        //        0, std::sin(w_t), std::cos(w_t); 
+
+        //    Eigen::Matrix3d R_p; // rotation matrix for Pan(Z axis)
+        //    R_p << std::cos(w_p), -std::sin(w_p), 0,
+        //        std::sin(w_p), std::cos(w_p), 0,
+        //        0, 0, 1;
+
+        //    Eigen::Vector3d MP = M0 + dp;
+        //    Eigen::Vector3d MC = M0 + R_p * (R_t * dt) + dp; // Mirror "center" MC
+        //    Eigen::Vector3d mn = (MC - MP) / sqrt((MC - MP).dot(MC - MP)); // normalized mn mirror plane normal
+
+        //    Eigen::Vector3d PC_dash = PC - 2 * (PC - MC).dot(mn) * mn;  // new projector center
+        //    Eigen::Vector3d Pf_dash = Pf - 2 * Pf.dot(mn) * mn; // new normalized forward projection vector
+
+        //    std::cout << Pf_dash << std::endl;
+
+        //    //glBegin(GL_POINTS);
+        //    //glVertex3f(PC_dash[0], PC_dash[1], PC_dash[2]);
+        //    //glEnd();
+
+        //    //glBegin(GL_LINES);
+        //    //    glVertex3f(PC_dash[0], PC_dash[1], PC_dash[2]);
+        //    //    glVertex3f(PC_dash[0] + Pf_dash[0], PC_dash[1] + Pf_dash[1], PC_dash[2] + Pf_dash[2]);
+        //    //glEnd();
+
+        //    std::cout << "dist(M0, MP) = " << sqrt((M0 - MP).dot(M0 - MP)) << std::endl;
+        //    std::cout << "dist(MP, MC) = " << sqrt((MP - MC).dot(MP - MC)) << std::endl;
+
+        //    Plane plane(cv::Vec3d(mn[0], mn[1], mn[2]), cv::Vec3d(MC[0], MC[1], MC[2]));
+        //    plane.display(0.1);
+
+        //    cv::Vec3d lookDirPlaneIntersection = plane.intersect(projCanonical.getLookDir());
+
+        //    Eigen::Matrix4d translationMat;
+        //    translationMat << 1, 0, 0, -lookDirPlaneIntersection[0],
+        //        0, 1, 0, -lookDirPlaneIntersection[1],
+        //        0, 0, 1, -lookDirPlaneIntersection[2],
+        //        0, 0, 0, 1;
+
+        //    Eigen::Matrix4d translationMatInv = translationMat.inverse();
+
+        //    Eigen::Matrix4d projCanonicalPose;
+        //    cv::Mat projCanonicalPoseCV = projCanonical.getRt44();
+        //    cv::cv2eigen(projCanonicalPoseCV, projCanonicalPose);
+
+        //    cv::Vec3d planeXCV = plane.intersect(cv::Vec3d(
+        //        projCanonicalPoseCV.at<double>(0, 0),
+        //        projCanonicalPoseCV.at<double>(0, 1),
+        //        projCanonicalPoseCV.at<double>(0, 2))) -
+        //        plane.intersect(cv::Vec3d(
+        //            projCanonicalPoseCV.at<double>(2, 0),
+        //            projCanonicalPoseCV.at<double>(2, 1),
+        //            projCanonicalPoseCV.at<double>(2, 2)));
+
+        //    if (std::isnan(planeXCV[2]))
+        //    {
+        //        planeXCV = cv::Vec3d(
+        //            projCanonicalPoseCV.at<double>(0, 0),
+        //            projCanonicalPoseCV.at<double>(0, 1),
+        //            projCanonicalPoseCV.at<double>(0, 2));
+        //    }
+
+        //    planeXCV /= std::sqrt(planeXCV.dot(planeXCV));
+
+        //    Eigen::Vector3d planeZ = mn;
+        //    Eigen::Vector3d planeX(planeXCV[0], planeXCV[1], planeXCV[2]);
+        //    Eigen::Vector3d planeY = planeX.cross(planeZ);
+
+
+        //    Eigen::Matrix4d rotMatInv;
+        //    rotMatInv << planeX[0], planeY[0], planeZ[0], 0,
+        //        planeX[1], planeY[1], planeZ[1], 0,
+        //        planeX[2], planeY[2], planeZ[2], 0,
+        //        0, 0, 0, 1;
+
+        //    std::cout << "rotMatInv: " << rotMatInv << std::endl;
+
+        //    Eigen::Matrix4d rotMat = rotMatInv.inverse();
+
+        //    std::cout << "rotMat: " << rotMat << std::endl;
+
+        //    Eigen::Matrix4d reflectionMat;
+        //    reflectionMat << 1, 0, 0, 0,
+        //        0, 1, 0, 0,
+        //        0, 0, -1, 0,
+        //        0, 0, 0, 1;
+
+        //    
+        //    Eigen::Matrix4d transformationMat = translationMatInv * rotMatInv * reflectionMat * rotMat * translationMat;
+        //    Eigen::Matrix4d projVirtualPose = transformationMat * projCanonicalPose;
+        //    std::cout << "transformationMat: " << transformationMat << std::endl;
+        //    std::cout << "projCanonicalPose: " << projCanonicalPose << std::endl;
+        //    std::cout << "projVirtualPose: " << projVirtualPose << std::endl;
+
+        //    cv::Mat projVirtualPoseCV;
+        //    cv::eigen2cv(projVirtualPose, projVirtualPoseCV);
+        //    
+        //    cv::Mat Rt34d(3, 4, CV_64F);
+        //    for (int i = 0; i < 3; i++)
+        //        for (int j = 0; j < 4; j++)
+        //            Rt34d.at<double>(i, j) = projVirtualPoseCV.at<double>(i, j);
+
+        //    Camera projVirtual(projCanonical.getK(), Rt34d, projCanonical.getWidth(), projCanonical.getHeight(), 0.005);
+
+        //    projVirtual.displayWorld(0.5, 0.5, 0.5);
+
+        //    glBegin(GL_LINES);
+        //        glVertex3f(PC[0], PC[1], PC[2]);
+        //        glVertex3f(lookDirPlaneIntersection[0], lookDirPlaneIntersection[1], lookDirPlaneIntersection[2]);
+        //    glEnd();
+
+        //    glBegin(GL_LINES);
+        //        glVertex3f(projVirtual.getC()[0], projVirtual.getC()[1], projVirtual.getC()[2]);
+        //        glVertex3f(lookDirPlaneIntersection[0], lookDirPlaneIntersection[1], lookDirPlaneIntersection[2]);
+        //    glEnd();
+
+        //    glColor3f(0, 1, 0); // green
+
+        //    glBegin(GL_LINES);
+        //        glVertex3f(0, 0, 0);
+        //        glVertex3f(M0[0], M0[1], M0[2]);
+        //    glEnd();
+
+        //    glColor3f(0, 0, 1); // blue 
+
+        //    glBegin(GL_LINES);
+        //    glVertex3f(M0[0], M0[1], M0[2]);
+        //    glVertex3f(MP[0], MP[1], MP[2]);
+        //    glEnd();
+
+        //    glColor3f(0, 1, 1); // light blue
+
+        //    glBegin(GL_LINES);
+        //    glVertex3f(MP[0], MP[1], MP[2]);
+        //    glVertex3f(MC[0], MC[1], MC[2]);
+        //    glEnd();
+
+        //    //glColor3f(1, 0, 1);
+        //    //glBegin(GL_LINES);
+        //    //    glVertex3f(0, 0, 0);
+        //    //    glVertex3f(1, 0, 0);
+        //    //glEnd();
+        //    //glBegin(GL_LINES);
+        //    //    glVertex3f(0, 0, 0);
+        //    //    glVertex3f(0, 1, 0);
+        //    //glEnd();
+        //    //glBegin(GL_LINES);
+        //    //    glVertex3f(0, 0, 0);
+        //    //    glVertex3f(0, 0, 1);
+        //    //glEnd();
+        //}
 
         displayText(15, 20, 0, 0, 0, ss.str().c_str());
 
@@ -593,7 +741,7 @@ void init(double w, double h)
 
     glfwInit();
 
-    window = glfwCreateWindow(viewportWidth, viewportHeight, "calibrateProj (IMW-CPS TU Vienna / michael.hornacek@gmail.com)", NULL, NULL);
+    window = glfwCreateWindow(viewportWidth, viewportHeight, "visPanTilt (IMW-CPS TU Vienna / michael.hornacek@gmail.com)", NULL, NULL);
     if (!window) {
         std::cerr << "Failed to create window" << std::endl;
         exit(-1);
@@ -714,7 +862,7 @@ int main(int argc, char** argv)
 
     // read in intrinsics and extrinsics of cam0
     FileStorage fsCam0;
-    fsCam0.open(cam0Path, FileStorage::READ);
+    fsCam0.open(cam1Path, FileStorage::READ);
 
     cv::Mat cam0K, cam0R, cam0T, cam0DistCoeffs;
     fsCam0["K"] >> cam0K;
@@ -731,7 +879,7 @@ int main(int argc, char** argv)
 
     cams.push_back(Camera(
         cam0K, cam0R, cam0T,
-        imWidth, imHeight, 0.01));
+        imWidth, imHeight, 0.005));
 
     projCanonical = Camera(cams[0]);
 

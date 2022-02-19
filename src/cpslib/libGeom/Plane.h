@@ -5,6 +5,7 @@
 class Plane
 {
 public:
+	Plane();
 	Plane(const Plane & a);
 
 	Plane(cv::Mat & rigid);
