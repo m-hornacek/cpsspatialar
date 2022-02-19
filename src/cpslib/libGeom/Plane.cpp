@@ -95,6 +95,15 @@ Plane::Plane(cv::Vec3d normal, cv::Vec3d pt)
 
 Plane::Plane(std::vector<cv::Point3f> points, bool ransac)
 {
+	// copy coordinates to  matrix in Eigen format
+	size_t numPts = points.size();
+	Eigen::MatrixXd pointsEigen(3, numPts);
+	for (size_t i = 0; i < numPts; ++i)
+		pointsEigen.col(i) = Eigen::Vector3d(points[i].x, points[i].y, points[i].z);
+
+	// calculate centroid
+	Eigen::Vector3d centroidEigen(pointsEigen.row(0).mean(), pointsEigen.row(1).mean(), pointsEigen.row(2).mean());
+
 	if (ransac) // todo
 	{
 		std::cout << "carrying out RANSAC plane fit" << std::endl;
@@ -130,15 +139,6 @@ Plane::Plane(std::vector<cv::Point3f> points, bool ransac)
 	{
 		// from https://stackoverflow.com/questions/40589802/eigen-best-fit-of-a-plane-to-n-points
 
-		// copy coordinates to  matrix in Eigen format
-		size_t numPts = points.size();
-		Eigen::MatrixXd pointsEigen(3, numPts);
-		for (size_t i = 0; i < numPts; ++i)
-			pointsEigen.col(i) = Eigen::Vector3d(points[i].x, points[i].y, points[i].z);
-
-		// calculate centroid
-		Eigen::Vector3d centroidEigen(pointsEigen.row(0).mean(), pointsEigen.row(1).mean(), pointsEigen.row(2).mean());
-
 		// subtract centroid
 		pointsEigen.row(0).array() -= centroidEigen(0);
 		pointsEigen.row(1).array() -= centroidEigen(1);
@@ -162,10 +162,7 @@ Plane::Plane(std::vector<cv::Point3f> points, bool ransac)
 		for (int x = 0; x < 3; x++)
 			rotEigen(y, x) = rot.at<double>(y, x);
 
-	cv::Vec3d pt = -normal_ * distance_;
-
-	Eigen::Vector3d ptEigen(pt[0], pt[1], pt[2]);
-	Eigen::Vector3d tEigen = -rotEigen * ptEigen;
+	Eigen::Vector3d tEigen = -rotEigen * centroidEigen;
 
 	rigid_ = cv::Mat::eye(cv::Size(4, 4), CV_64F);
 	for (int y = 0; y < 3; y++)
@@ -173,7 +170,7 @@ Plane::Plane(std::vector<cv::Point3f> points, bool ransac)
 			rigid_.at<double>(y, x) = rot.at<double>(y, x);
 
 	for (int i = 0; i < 3; i++)
-		rigid_.at<double>(i, 3) = tEigen[i];
+		rigid_.at<double>(i, 3) = centroidEigen[i];
 }
 
 void Plane::rigidTransform(cv::Mat & rigid44d)

@@ -74,9 +74,11 @@ std::vector<PointCloud*> triangulatedPointCloudCirclesVec;
 PointCloud* pointCloudImVis;
 PointCloud* pointCloud2ImVis;
 
-Plane* fittedPlane;
+Plane * planeVis;
+Plane* fittedPlaneVis;
 
 std::vector<Plane> planes;
+std::vector<Plane> fittedPlanes;
 
 cv::Vec3d projCamIntersection;
 cv::Vec3d projPlaneIntersection;
@@ -305,8 +307,8 @@ void display()
             {
                 for (int i = 0; i < triangulatedPointCloudCirclesVec.size(); i++)
                 {
-                    pointCloudCirclesVec[i]->display(pointSize, 1, 0, 0); // red
-                    triangulatedPointCloudCirclesVec[i]->display(pointSize, 0, 1, 0); // green
+                    pointCloudCirclesVec[i]->display(pointSize, 1, 0, 0);
+                    triangulatedPointCloudCirclesVec[i]->display(pointSize, 0, 1, 0);
                 }
 
                 std::vector<cv::Point3f> points = pointCloudCirclesVec[viewIdx]->getPoints();
@@ -332,6 +334,12 @@ void display()
 
                     cv::Vec3d projPt(CCDWidth_half_mm * pt[0] / pt[2], CCDWidth_half_mm * pt[1] / pt[2], CCDWidth_half_mm);
                     cv::Vec3d projPtLocal = Ancillary::Mat44dTimesVec3dHomog(Rt44Inv, projPt);
+
+                    glBegin(GL_POINTS);
+                        glPointSize(0.5 * pointSize);
+                        glColor3f(1.0, 0.0, 0.0);
+                        glVertex3f(projPtLocal[0], projPtLocal[1], projPtLocal[2]);
+                    glEnd();
                 }
                    
                 for (int ptIdx = 0; ptIdx < points2.size(); ptIdx++)
@@ -345,7 +353,8 @@ void display()
             }
         }
 
-        fittedPlane->display(2, pointSize);
+        planeVis->display(2, pointSize);
+        fittedPlaneVis->display(2, pointSize);
 
         char* str;
         if (camIdx == 0)
@@ -693,7 +702,7 @@ void init(double w, double h)
 
     glfwInit();
 
-    window = glfwCreateWindow(viewportWidth, viewportHeight, "calibrateProjMirror (IMW-CPS TU Vienna / michael.hornacek@gmail.com)", NULL, NULL);
+    window = glfwCreateWindow(viewportWidth, viewportHeight, "calibrateProj (IMW-CPS TU Vienna / michael.hornacek@gmail.com)", NULL, NULL);
     if (!window) {
         std::cerr << "Failed to create window" << std::endl;
         exit(-1);
@@ -941,7 +950,7 @@ int main(int argc, char** argv)
 
         fsPlane << "Rt" << planeRigid;
 
-        std::vector<cv::Point3f> triangulatedCirclesObjectPts_;
+        std::vector<cv::Point3f> circlesObjectPts_, triangulatedCirclesObjectPts_;
         cv::Mat intersectionsHomog(4, numIm, CV_64F);
        
         cv::triangulatePoints(
@@ -961,27 +970,43 @@ int main(int argc, char** argv)
             triangulatedCirclesObjectPts_.push_back(pt);
         }
 
+        Plane fittedPlane(triangulatedCirclesObjectPts_, true);
+        
+        if (true)
+        {
+            for (int numCircle = 0; numCircle < cam0CirclesImPts.at(numIm).size(); numCircle++)
+            {
+                cv::Vec3d intersection = imPlane.intersect(cams[0].backprojectLocal(cam0CirclesImPts.at(numIm).at(numCircle)));
+                circlesObjectPts_.push_back(cv::Point3d(intersection[0], intersection[1], intersection[2]));
+            }
+        }
+        else
+        {
+            for (int numCircle = 0; numCircle < cam0CirclesImPts.at(numIm).size(); numCircle++)
+            {
+                cv::Vec3d intersection = fittedPlane.intersect(cams[0].backprojectLocal(cam0CirclesImPts.at(numIm).at(numCircle)));
+                circlesObjectPts_.push_back(cv::Point3d(intersection[0], intersection[1], intersection[2]));
+            }
+        }
+
+        circlesObjectPts.push_back(circlesObjectPts_);
+
         for (int i = 0; i < triangulatedCirclesObjectPts_.size(); i++)
             triangulatedCirclesObjectPts.push_back(triangulatedCirclesObjectPts_[i]);
         
         planes.push_back(Plane(planeRigid));
-        triangulatedPointCloudCirclesVec.push_back(new PointCloud(triangulatedCirclesObjectPts_));
-    }
 
-    fittedPlane = new Plane(triangulatedCirclesObjectPts, true);
+        fittedPlanes.push_back(Plane(fittedPlane));
 
-    for (int numIm = 0; numIm < numIms; numIm++)
-    {
-        std::vector<cv::Point3f> circlesObjectPts_;
-        for (int numCircle = 0; numCircle < cam0CirclesImPts.at(numIm).size(); numCircle++)
-        {
-            cv::Vec3d intersection = fittedPlane->intersect(cams[0].backprojectLocal(cam0CirclesImPts.at(numIm).at(numCircle)));
-            circlesObjectPts_.push_back(cv::Point3d(intersection[0], intersection[1], intersection[2]));
-        }
-
-        circlesObjectPts.push_back(circlesObjectPts_);
         pointCloudCirclesVec.push_back(new PointCloud(circlesObjectPts_));
+        triangulatedPointCloudCirclesVec.push_back(new PointCloud(triangulatedCirclesObjectPts_));
+
+        // for visualization
+        if (numIm == visImIdx)
+            planeVis = new Plane(planeRigid);
     }
+
+    fittedPlaneVis = new Plane(triangulatedCirclesObjectPts, true);
 
     cv::Mat projK = Mat::eye(3, 3, CV_64F);
     projK.at<double>(0, 0) = 2500;
@@ -1027,13 +1052,13 @@ int main(int argc, char** argv)
         cv::Mat H;
 
         cv::Mat virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT;
-        Homography::computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(*fittedPlane, cams[0], proj, verticalOffset, virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT);
+        Homography::computeBirdsEyeViewVirtualProjAlignedWithVirtualCam(planes[numIm], cams[0], proj, verticalOffset, virtualCamR, virtualCamT, alignedVirtualProjR, alignedVirtualProjT);
 
         Camera transformedProj(
             projK, alignedVirtualProjR, alignedVirtualProjT,
             projSize.width, projSize.height, 0.02);
 
-        Homography::computePlaneInducedHomography(*fittedPlane, proj, transformedProj, H);
+        Homography::computePlaneInducedHomography(planes[numIm], proj, transformedProj, H);
 
         // write out homography
         stringstream ssH;
