@@ -3,15 +3,16 @@
  *   michael.hornacek@gmail.com
  *   IMW-CPS TU Vienna, Austria
  *
- *   calibrateProj <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <cam0ImDir> <cam1ImDir> <cam0Path> <cam1Path> <circlesImPath> <targetWidth> [<visImIdx>] [<visIm>]
+ *   calibrateProjMirror <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <cam0ImDir> <cam1ImDir> <cam0Path> <cam1Path> <circlesImPath> <targetWidth> <anglesCSVPath> [<visImIdx>] [<visIm>]
  *
  *   Example invocation:
- *   calibrateProjMirror 0.0565 4 6 4 11 C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\out 11 C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outLeft C:\Users\micha\Desktop\spatial-ar\in_out\splitZed\projCalib\outRight C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_0.yml  C:\Users\micha\Desktop\spatial-ar\in_out\calibrateCam\out\cam_1.yml C:\Users\micha\Desktop\spatial-ar\in_out\calibrateProj\acircles_pattern_960x600.png 1.0 3 C:\Users\micha\Desktop\spatial-ar\in_out\applyHomography\holodeck.png
+ *   calibrateProjMirror 0.0565 4 6 4 11 C:\Users\micha\Desktop\20210920_dypro\calibrateProjMirror\out 10 C:\Users\micha\Desktop\20210920_dypro\splitZed\proj_calib_circles\outLeft C:\Users\micha\Desktop\20210920_dypro\splitZed\proj_calib_circles\outRight C:\Users\micha\Desktop\20210920_dypro\calibrateCam\out\cam_0.yml C:\Users\micha\Desktop\20210920_dypro\calibrateCam\out\cam_1.yml C:\Users\micha\Desktop\20210920_dypro\calibrateProjMirror\acircles_pattern_960x600.png 1.0 C:\Users\micha\Desktop\20210920_dypro\angles.csv 3 C:\Users\micha\Desktop\20210920_dypro\projim.png
  */
 
 // CMake projects should use: "-DCMAKE_TOOLCHAIN_FILE=C:/Users/micha/vcpkg/scripts/buildsystems/vcpkg.cmake"
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <vector>
 #include <sstream>
@@ -56,7 +57,8 @@ GLdouble * cameraPos;
 
 int camIdx;
 int viewIdx;
-vector<Camera> cams;
+std::vector<Camera> cams;
+std::vector<cv::Vec3f> colors;
 int imWidth, imHeight;
 
 Camera projCam;
@@ -66,12 +68,12 @@ int numPatterns;
 vector<vector<Mat>> capturedPattern;
 
 std::vector<PointCloud*> pointCloudCirclesVec;
-PointCloud* pointCloud2Circles;
 std::vector<PointCloud*> triangulatedPointCloudCirclesVec;
 PointCloud* pointCloudImVis;
 PointCloud* pointCloud2ImVis;
 
 Plane* fittedPlane;
+Plane* reflectionPlane = new Plane();
 
 cv::Vec3d projCamIntersection;
 cv::Vec3d projPlaneIntersection;
@@ -125,13 +127,14 @@ static const char* keys =
     "{@cam1Path | | ...}"
     "{@circlesImPath | | ...}"
     "{@targetWidth | | ...}"
+    "{@anglesCSVPath | | ...}"
     "{@visImIdx | | ...}"
     "{@visIm | | ...}"
 };
 
 void help()
 {
-    cout << "calibrate <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <cam0ImDir> <cam1ImDir> <cam0Path> <cam1Path> <circlesImPath> <targetWidth> [<visImIdx>] [<visIm>]\n"
+    cout << "calibrate <boardSqSize> <boardDimsX> <boardDimsY> <circlesDimsX> <circlesDimsY> <outDir> <numIms> <cam0ImDir> <cam1ImDir> <cam0Path> <cam1Path> <circlesImPath> <targetWidth> <anglesCSVPath> [<visImIdx>] [<visIm>]\n"
         << endl;
 }
 
@@ -143,7 +146,7 @@ void reflectProj(Camera& proj, float pan, float tilt, cv::Mat& outProjReflectedP
     float delta_0 = 200 / 1000.0; // offset of mirror system origin relative to projector
 
     // rotation angles in degrees
-    float rot_p = pan - 90;
+    float rot_p = pan -90;
     float rot_t = tilt;
 
     // rotation angles in radians
@@ -292,39 +295,12 @@ void display()
         }
         else
         {
-            if (showVirtual)
-                pointCloud2Circles->display(pointSize, 0, 1, 0);
-            else
+            for (int i = 0; i < triangulatedPointCloudCirclesVec.size(); i++)
             {
-                for (int i = 0; i < triangulatedPointCloudCirclesVec.size(); i++)
-                {
-                    pointCloudCirclesVec[i]->display(pointSize, 1, 0, 0); // red
-                    triangulatedPointCloudCirclesVec[i]->display(pointSize, 0, 1, 0); // green
-                }
-
-                std::vector<cv::Point3f> points = pointCloudCirclesVec[viewIdx]->getPoints();
-
-                float f = cams[0].getf();
-                float CCDWidth_half_mm = 20.0 * 0.02 * 0.5;
-
-                float fProj = cams[2].getf();
-                cv::Vec3d projC = cams[2].getC();
-                cv::Mat Rt44 = cams[2].getRt44();
-                cv::Mat Rt44Inv = cams[2].getRt44Inv();
-
-                for (int ptIdx = 0; ptIdx < points.size(); ptIdx++)
-                {
-                    glBegin(GL_POINTS);
-                        glPointSize(0.5 * pointSize);
-                        glColor3f(1.0, 0.0, 0.0);
-                        glVertex3f(CCDWidth_half_mm * points[ptIdx].x / points[ptIdx].z, CCDWidth_half_mm * points[ptIdx].y / points[ptIdx].z, CCDWidth_half_mm);
-                    glEnd();
-
-                    cv::Vec3d pt = Ancillary::Mat44dTimesVec3dHomog(Rt44, cv::Vec3d(points[ptIdx].x, points[ptIdx].y, points[ptIdx].z));
-
-                    cv::Vec3d projPt(CCDWidth_half_mm * pt[0] / pt[2], CCDWidth_half_mm * pt[1] / pt[2], CCDWidth_half_mm);
-                    cv::Vec3d projPtLocal = Ancillary::Mat44dTimesVec3dHomog(Rt44Inv, projPt);
-                }
+                pointCloudCirclesVec[i]->display(
+                    pointSize, colors[i][0], colors[i][1], colors[i][2]);
+                triangulatedPointCloudCirclesVec[i]->display(
+                    pointSize, colors[i][0], colors[i][1], colors[i][2], 0.25);
             }
         }
 
@@ -335,36 +311,41 @@ void display()
             str = "cam0"; //"cam0";
         else if (camIdx == 1)
             str = "cam1";
-        else if (camIdx == 2)
+        else if (camIdx >= 2)
             str = "proj";
 
         std::stringstream ss;
         ss << "Rendering according to " << string(str);
+
+        if (camIdx >= 2)
+            ss << camIdx - 2;
 
         displayText(15, 20, 0, 0, 0, ss.str().c_str());
 
         float offset = 0.02;
         for (int i = 0; i < cams.size(); i++)
         {
-            if (viewIdx == 0 && (i == 4 || i == 5))
-                continue;
+            float r = 0.0;
+            float g = 0.0;
+            float b = 0.0;
 
-            if (viewIdx == 1 && (i == 4))
-                continue;
-
-            float r = 0.5;
-            float g = 0.5;
-            float b = 0.5;
-
-            if (i == 0 || i == 2)
-            { 
-                r = 0.0;
-                g = 0.0;
-                b = 0.0;
+            if (i == 1)
+            {
+                r = 0.5;
+                g = 0.5;
+                b = 0.5;
+            }
+            else if (i > 1)
+            {
+                r = colors[i - 2][0];
+                g = colors[i - 2][1];
+                b = colors[i - 2][2];
             }
 
             cams[i].displayWorld(r, g, b);
         }
+
+        //reflectionPlane->display(1, 1);
 
         glFlush();
         glfwSwapBuffers(window);
@@ -780,16 +761,53 @@ int main(int argc, char** argv)
     String cam1Path = parser.get<String>(10);
     String circlesImPath = parser.get<String>(11);
     float targetWidth = parser.get<float>(12);
+    String anglesCSVPath = parser.get<String>(13);
+
+    std::vector<std::vector<float>> panTilt;
+    {
+        std::vector<std::string> lines;
+
+        std::ifstream input_file(anglesCSVPath);
+        if (!input_file.is_open()) {
+            std::cerr << "Could not open the file - '"
+                << anglesCSVPath << "'" << endl;
+            return EXIT_FAILURE;
+        }
+
+        std::string line;
+        while (std::getline(input_file, line)) {
+
+            std::vector<float> tokens;
+            std::stringstream check1(line);
+            std::string intermediate;
+
+            while (std::getline(check1, intermediate, ','))
+                tokens.push_back(std::stof(intermediate));
+
+            panTilt.push_back(tokens);
+        }
+
+        for (int i = 0; i < panTilt.size(); i++)
+        {
+            for (int j = 0; j < panTilt[i].size(); j++)
+            {
+                std::cout << panTilt[i][j] << " ";
+            }
+            std::cout << "\n";
+        }
+
+        input_file.close();
+    }
 
     int visImIdx = 0;
-    if (argc >= 15)
-        visImIdx = parser.get<int>(13);
+    if (argc >= 16)
+        visImIdx = parser.get<int>(14);
 
     string visImPath;
     bool hasVisIm = false;
-    if (argc == 16)
+    if (argc == 17)
     {
-        visImPath = parser.get<String>(14);
+        visImPath = parser.get<String>(15);
         hasVisIm = true;
     }
 
@@ -1061,18 +1079,74 @@ int main(int argc, char** argv)
 
     // visualization
     {
-        int numIm = visImIdx;
+        //int numIm = visImIdx;
 
-        cv::Mat camToProjR, camToProjT;
-        cv::Rodrigues(projRs.at(numIm), camToProjR);
-        projTs.at(numIm).copyTo(camToProjT);
+        for (int numIm = 0; numIm < numIms; numIm++)
+        {
+            cv::Mat camToProjR, camToProjT;
+            cv::Rodrigues(projRs.at(numIm), camToProjR);
+            projTs.at(numIm).copyTo(camToProjT);
 
-        cams.push_back(Camera(
-            projK, camToProjR, camToProjT,
-            projSize.width, projSize.height, 0.02));
+            cams.push_back(Camera(
+                projK, camToProjR, camToProjT,
+                projSize.width, projSize.height, 0.02));
+
+            colors.push_back(cv::Vec3f(
+                (float)rand() / (float)RAND_MAX,
+                (float)rand() / (float)RAND_MAX,
+                (float)rand() / (float)RAND_MAX));
+        }
+
         
-        cv::resize(cam0ImVis, cam0ImVis, cv::Size(cam0ImVis.cols * 0.5, cam0ImVis.rows * 0.5));
-        cv::imshow("cam0ImVis", cam0ImVis);
+        //cv::resize(cam0ImVis, cam0ImVis, cv::Size(cam0ImVis.cols * 0.5, cam0ImVis.rows * 0.5));
+        //cv::imshow("cam0ImVis", cam0ImVis);
+
+        //float pan = panTilt[numIm][0];
+        //float tilt = panTilt[numIm][1];
+
+        //cv::Mat outProjReflectedPose34d;
+
+        //reflectProj(cams[2], pan, tilt, outProjReflectedPose34d, *reflectionPlane);
+
+        //std::cout << outProjReflectedPose34d << std::endl;
+
+        //cv::Mat Rt44d = cv::Mat(4, 4, CV_64F);
+        //for (int i = 0; i <= 3; i++)
+        //    for (int j = 0; j <= 4; j++)
+        //        Rt44d.at<double>(i, j) = outProjReflectedPose34d.at<double>(i, j);
+
+        //Rt44d.at<double>(3, 0) = 0;
+        //Rt44d.at<double>(3, 1) = 0;
+        //Rt44d.at<double>(3, 2) = 0;
+        //Rt44d.at<double>(3, 3) = 1;
+
+        //std::cout << Rt44d << std::endl;
+
+        //cv::Mat Rt44Invd;
+        //cv::invert(Rt44d, Rt44Invd, cv::DECOMP_SVD);
+
+        //std::cout << Rt44Invd << std::endl;
+
+        //cv::Mat Rt44FinalInvd(4, 4, CV_64F);
+        //cv::gemm(/*Rt44Invd*/ cv::Mat::eye(4, 4, CV_64F), /*cams[2].getRt44Inv()*/ Rt44d, 1.0, cv::Mat(), 0.0, Rt44FinalInvd);
+
+        //std::cout << cv::Mat::eye(4, 4, CV_64F) << std::endl;
+
+        //cv::Mat Rt44Finald(4, 4, CV_64F);
+        //cv::invert(Rt44FinalInvd, Rt44Finald, cv::DECOMP_SVD);
+
+        //cv::Mat Rt34Finald = cv::Mat(3, 4, CV_64F);
+        //for (int i = 0; i <= 3; i++)
+        //    for (int j = 0; j <= 4; j++)
+        //        Rt34Finald.at<double>(i, j) = Rt44Finald.at<double>(i, j);
+
+        //std::cout << Rt34Finald << std::endl;
+
+
+
+        //cams.push_back(Camera(
+        //    projK, outProjReflectedPose34d,
+        //    projSize.width, projSize.height, 0.02));
     }
 
     glutInit(&argc, argv);

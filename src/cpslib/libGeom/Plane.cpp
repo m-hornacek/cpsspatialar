@@ -104,7 +104,7 @@ Plane::Plane(std::vector<cv::Point3f> points, bool ransac)
 	// calculate centroid
 	Eigen::Vector3d centroidEigen(pointsEigen.row(0).mean(), pointsEigen.row(1).mean(), pointsEigen.row(2).mean());
 
-	if (ransac) // todo
+	if (ransac)
 	{
 		std::cout << "carrying out RANSAC plane fit" << std::endl;
 
@@ -132,8 +132,9 @@ Plane::Plane(std::vector<cv::Point3f> points, bool ransac)
 		seg.setInputCloud(cloud);
 		seg.segment(*inliers, *coefficients);
 
-		normal_ = cv::Vec3d(coefficients->values[0], coefficients->values[1], coefficients->values[2]);
-		distance_ = coefficients->values[3];
+		// todo: ensure normal faces camera
+		normal_ = -1 * cv::Vec3d(coefficients->values[0], coefficients->values[1], coefficients->values[2]);
+		distance_ = -1 * coefficients->values[3];
 	}
 	else
 	{

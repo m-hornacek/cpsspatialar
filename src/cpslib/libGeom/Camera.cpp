@@ -440,7 +440,7 @@ void Camera::displayWorld(float r, float g, float b)
 	if (!hasDisplayList_)
 		initDisplayList();
 
-	glColor3f(r, g, b);
+	glColor4f(r, g, b, 1.0);
 	glPushMatrix();
 	glMultMatrixd(Ancillary::flattenMat44d(RtInv44d_));
 	glCallList(displayList_);

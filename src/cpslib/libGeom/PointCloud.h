@@ -14,7 +14,7 @@ public:
 	std::vector<cv::Point3f> getColors() { return colors_; };
 
 	void display(float pointSize);
-	void display(float pointSize, float r, float g, float b);
+	void display(float pointSize, float r, float g, float b, float a = 1.0);
 
 	~PointCloud(void) { };
 private:

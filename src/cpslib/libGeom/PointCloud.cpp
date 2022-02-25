@@ -77,12 +77,12 @@ void PointCloud::display(float pointSize)
 	glFlush();
 }
 
-void PointCloud::display(float pointSize, float r, float g, float b)
+void PointCloud::display(float pointSize, float r, float g, float b, float a)
 {
 	if (!hasDisplayList_)
 		initPointsDisplayList();
 
-	glColor3f(r, g, b);
+	glColor4f(r, g, b, a);
 	glPointSize(pointSize);
 	glCallList(displayList_);
 
