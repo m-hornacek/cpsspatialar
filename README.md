@@ -1,5 +1,7 @@
 # cpsspatialar
 
+This code implements the approach described in [Hornacek, M., Küffner-McCauley, H., Trimmel, M., Rupprecht, P., & Schlund, S. (2022). A spatial AR system for wide-area axis-aligned metric augmentation of planar scenes. CIRP Journal of Manufacturing Science and Technology, 37, 219-226](https://www.sciencedirect.com/science/article/abs/pii/S1755581722000190?dgcid=author). Please cite that paper if you use or build on this code for your own academic work.
+
 ## Building the Code in Visual Studio 2019
 
 Cf. the last section of the [docs](docs/docs.pdf)...
