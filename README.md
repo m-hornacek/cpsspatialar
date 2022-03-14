@@ -20,7 +20,7 @@ Find the corresponding sample images [here](docs/sample_data), to be used for ru
 
 Besides serving to calibrate the projector and compute homographies, `calibrateProj` enables visualizing the geometric setup for a selected input calibration image (indicated using the `visImIdx` argument):
 
-![](docs/splash.png)
+![](docs/1-s2.0-S1755581722000190-gr5.jpg)
 
 Important keys for navigating the 3D viewer:
 
