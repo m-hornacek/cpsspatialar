@@ -8,7 +8,7 @@ Please cite that paper if you use or build on this code for your own academic wo
 
 ## Building the Code in Visual Studio 2019
 
-Cf. the last section of the [docs](docs/docs.pdf)...
+Cf. the last section of the [docs](docs/docs.docx)...
 
 ## Sample Invocations
 
