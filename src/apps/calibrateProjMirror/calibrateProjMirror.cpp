@@ -65,7 +65,7 @@ Camera projCam;
 int projWidth, projHeight;
 
 int numPatterns;
-vector<vector<Mat>> capturedPattern;
+std::vector<std::vector<cv::Mat>> capturedPattern;
 
 std::vector<PointCloud*> pointCloudCirclesVec;
 std::vector<PointCloud*> triangulatedPointCloudCirclesVec;
@@ -298,9 +298,9 @@ void display()
             for (int i = 0; i < triangulatedPointCloudCirclesVec.size(); i++)
             {
                 pointCloudCirclesVec[i]->display(
-                    pointSize, colors[i][0], colors[i][1], colors[i][2]);
-                triangulatedPointCloudCirclesVec[i]->display(
                     pointSize, colors[i][0], colors[i][1], colors[i][2], 0.25);
+                triangulatedPointCloudCirclesVec[i]->display(
+                    pointSize, colors[i][0], colors[i][1], colors[i][2]);
             }
         }
 
@@ -308,7 +308,7 @@ void display()
 
         char* str;
         if (camIdx == 0)
-            str = "cam0"; //"cam0";
+            str = "cam0";
         else if (camIdx == 1)
             str = "cam1";
         else if (camIdx >= 2)

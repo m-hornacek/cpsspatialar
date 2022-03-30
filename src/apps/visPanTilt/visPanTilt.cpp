@@ -68,9 +68,9 @@ int mousePrevWheelPos;
 int timeMousePrevWheelPos;
 int timeBetZeroAndOne;
 
+std::vector<std::vector<float>> panTilt;
 
-
-float x, y, cloudX, cloudY, pan, tilt;
+float x, y, cloudX, cloudY, panOffset, tiltOffset;
 float initX, initY, initCloudX, initCloudY;
 float step;
 int arrowKeyStep;
@@ -126,8 +126,8 @@ void reflectProj(Camera & proj, float pan, float tilt, cv::Mat & outProjReflecte
     float delta_0 = 200 / 1000.0; // offset of mirror system origin relative to projector
 
     // rotation angles in degrees
-    float rot_p = pan - 90;
-    float rot_t = tilt;
+    float rot_p = pan + panOffset; // -90;
+    float rot_t = tilt + tiltOffset; // 0;
 
     // rotation angles in radians
     float w_p = rot_p * M_PI / 180.0;
@@ -269,9 +269,13 @@ void display()
         projCanonical.displayWorld(0.0, 0.0, 0.0);
 
         std::stringstream ss;
-        ss << "pan " << pan << "; tilt " << tilt;
+        ss << "panOffset " << panOffset << "; tiltOffset " << tiltOffset;
 
+        for (int numIm = 0; numIm < 1 /*panTilt.size()*/; numIm++)
         {
+            float pan = panTilt[numIm][0];
+            float tilt = panTilt[numIm][1];
+
             cv::Mat projReflectedPose34d;
             Plane plane;
             reflectProj(projCanonical, pan, tilt, projReflectedPose34d, plane);
@@ -690,8 +694,8 @@ void zoom(GLFWwindow* window, double xoffset, double pos)
 
 void init(double w, double h)
 {
-    pan = 90;
-    tilt = 45;
+    panOffset = -90; //90;
+    tiltOffset = 0; //45;
     
     viewportWidth = w;
     viewportHeight = h;
@@ -846,14 +850,50 @@ int main(int argc, char** argv)
     String cam1Path = parser.get<String>(10);
     String circlesImPath = parser.get<String>(11);
     float targetWidth = parser.get<float>(12);
+    String anglesCSVPath = parser.get<String>(13);
+
+    {
+        std::vector<std::string> lines;
+
+        std::ifstream input_file(anglesCSVPath);
+        if (!input_file.is_open()) {
+            std::cerr << "Could not open the file - '"
+                << anglesCSVPath << "'" << endl;
+            return EXIT_FAILURE;
+        }
+
+        std::string line;
+        while (std::getline(input_file, line)) {
+
+            std::vector<float> tokens;
+            std::stringstream check1(line);
+            std::string intermediate;
+
+            while (std::getline(check1, intermediate, ','))
+                tokens.push_back(std::stof(intermediate));
+
+            panTilt.push_back(tokens);
+        }
+
+        for (int i = 0; i < panTilt.size(); i++)
+        {
+            for (int j = 0; j < panTilt[i].size(); j++)
+            {
+                std::cout << panTilt[i][j] << " ";
+            }
+            std::cout << "\n";
+        }
+
+        input_file.close();
+    }
 
     int visImIdx = 0;
-    if (argc >= 15)
-        visImIdx = parser.get<int>(13);
+    if (argc >= 16)
+        visImIdx = parser.get<int>(14);
 
     string visImPath;
     bool hasVisIm = false;
-    if (argc == 16)
+    if (argc == 17)
     {
         visImPath = parser.get<String>(14);
         hasVisIm = true;
@@ -948,37 +988,37 @@ int main(int argc, char** argv)
         // pan (up, down), tilt (left, right)
         else if (glfwGetKey(window, GLFW_KEY_UP)) // N
         {
-            pan -= (fastMove) ? fastMult * step : step;
+            panOffset -= (fastMove) ? fastMult * step : step;
 
-            if (pan < 0)
-                pan = 0;
+            if (panOffset < -180)
+                panOffset = -180;
 
             newEvent = true;
         }
         else if (glfwGetKey(window, GLFW_KEY_RIGHT))	// E
         {
-            tilt += (fastMove) ? fastMult * step : step;
+            tiltOffset += (fastMove) ? fastMult * step : step;
 
-            if (tilt > 90)
-                tilt = 90;
+            if (tiltOffset > 90)
+                tiltOffset = 90;
 
             newEvent = true;
         }
         else if (glfwGetKey(window, GLFW_KEY_DOWN)) // S
         {
-            pan += (fastMove) ? fastMult * step : step;
+            panOffset += (fastMove) ? fastMult * step : step;
 
-            if (pan > 180)
-                pan = 180;
+            if (panOffset > 180)
+                panOffset = 180;
 
             newEvent = true;
         }
         else if (glfwGetKey(window, GLFW_KEY_LEFT)) // W
         {
-            tilt -= (fastMove) ? fastMult * step : step;
+            tiltOffset -= (fastMove) ? fastMult * step : step;
 
-            if (tilt < 1)
-                tilt = 1; // at 0 some weird stuff happens...
+            if (tiltOffset < -90)
+                tiltOffset = -90;
 
             newEvent = true;
         }
